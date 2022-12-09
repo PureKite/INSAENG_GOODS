@@ -1,12 +1,11 @@
 {% load static %}
-<link rel="stylesheet" type="text/css" href="static/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="static/style.css">
+<link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 <!doctype html>
 <html lang="ko">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
     <title>인생굿즈</title>
 </head>
 <body>
@@ -15,7 +14,7 @@
             <div class="container-fluid align-self-center">
                 <ul class="navbar-nav mr-auto">
                     <a class="navbar-brand" href="#">
-                        <img src="static/img/cat.jpg" alt="" width="50" height="40">
+                        <img src="{% static 'img/cat.jpg' %}" alt="" width="50" height="40">
                         인생굿즈
                     </a>
                 </ul>
@@ -46,10 +45,6 @@
             <span>고객센터 Tel.062-522-0989</span> |
             <span>Mady by. 연봉 19조(강병국, 김예지, 문강현, 문지호, 박현종, 순수연, 표동우)</span>
         </div>
-    </div>
-    </div>
-
-</div>
     </div>
 </body>
 </html>
