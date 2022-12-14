@@ -1,6 +1,6 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import authenticate
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth import authenticate, get_user_model
 from accounts.models import Account
  
 # 회원 가입 폼
@@ -52,3 +52,10 @@ class AccountAuthForm(forms.ModelForm):
             password = self.cleaned_data['password']
             if not authenticate(username=username, password=password):
                 raise forms.ValidationError("Invalid login")
+
+
+# 회원정보 수정 폼
+class CustomUserChangeForm(UserChangeForm):
+    class Meta:
+        model = get_user_model()
+        fields = ['username', 'name', 'nickname', 'email']

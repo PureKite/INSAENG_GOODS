@@ -1,11 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from django.urls import reverse
-from django.contrib.auth import login, authenticate, logout
-from accounts.forms import SignupForm, AccountAuthForm
+from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate
+from accounts.forms import SignupForm, AccountAuthForm, CustomUserChangeForm
+from django.contrib.auth import get_user_model
  
  
-def signup_view(request, *args, **kwargs):
+def signup(request, *args, **kwargs):
     user = request.user
     if user.is_authenticated:
         return HttpResponse("You are already authenticated as " + str(user.username))
@@ -21,7 +21,7 @@ def signup_view(request, *args, **kwargs):
             print(username)
             raw_password = form.cleaned_data.get('password1')
             account = authenticate(username=username, password=raw_password)
-            login(request, account)
+            auth_login(request, account)
             # destination = kwargs.get("next")
             destination = get_redirect_if_exists(request)
             if destination: # if destination != None
@@ -36,12 +36,12 @@ def signup_view(request, *args, **kwargs):
     return render(request, 'accounts/signup.html', context)
  
  
-def logout_view(request):
-    logout(request)
+def logout(request):
+    auth_logout(request)
     return redirect("/")
  
  
-def login_view(request, *args, **kwargs):
+def login(request, *args, **kwargs):
     context = {}
  
     user = request.user
@@ -57,7 +57,7 @@ def login_view(request, *args, **kwargs):
             password = request.POST.get('password')
             user = authenticate(username=username, password=password)
             if user:
-                login(request, user)
+                auth_login(request, user)
                 if destination:
                     return redirect(destination)
                 return redirect("goods:main")
@@ -75,3 +75,25 @@ def get_redirect_if_exists(request):
         if request.GET.get("next"):
             redirect = str(request.GET.get("next"))
     return redirect
+
+def detail(request):
+    User = get_user_model()
+    user = get_object_or_404(User, username=request.user)
+    context = {
+        'user': user
+    }
+    print(context)
+    return render(request, 'accounts/detail.html', context)
+
+def update(request):
+    if request.method == 'POST':
+        form = CustomUserChangeForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('articles:index')
+    else:
+        form = CustomUserChangeForm(instance=request.user)
+    context = {
+        'form': form
+    }
+    return render(request, 'accounts/update.html', context)

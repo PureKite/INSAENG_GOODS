@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block content%}
+<h1>{{ user.pk }} : {{ user.username }}</h1>
+<hr>
+<a style="text-decoration: none;" class="success" href="{% url 'accountsapp:update' %}">개인정보 수정</a>
+{% endblock %}
