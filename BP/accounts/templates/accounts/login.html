@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+<link rel="stylesheet" href="{% static 'css/accounts.css' %}">
+<div class="content">
+    <div class="container">
+        <div class="forms">
+            <div class="form login">
+                <span class="title">Login</span>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="input-field">
+                        <input type="text" name="username" placeholder="아이디" required>
+                        <i class="uil uil-user icon"></i>
+                    </div>
+                    <div class="input-field">
+                        <input type="password" name="password" id="inputPassword" class="password" placeholder="비밀번호" required>
+                        <i class="uil uil-lock icon"></i>
+                    </div>
+                    <div class="input-field button">
+                        <input type="submit" value="로그인">
+                    </div>
+                    {% for field in login_form %}
+                    <p>
+                        {% for error in field.errors %}
+                            <p style="color: red">{{ error }}</p>
+                        {% endfor %}
+                    </p>
+                    {% endfor %}
+                    {% if login_form.non_field_errors %}
+                        <div style="color: red">
+                            <p>{{ login_form.non_field_errors }}</p>
+                        </div>
+        
+                    {% endif %}
+                </form>
+
+                <div class="login-signup">
+                    <span class="text">Not a member?
+                        <a href="{% url 'accountsapp:signup' %}" class="text signup-link">Signup Now</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/accounts.js'%}"></script>
+{% endblock %}

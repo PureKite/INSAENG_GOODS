@@ -1,21 +1,20 @@
 {% load static %}
-<link rel="stylesheet" type="text/css" href="static/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="static/style.css">
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
 <!doctype html>
 <html lang="ko">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
     <title>인생굿즈</title>
 </head>
 <body>
-    <div>
-        <nav class="navbar navbar-expand-lg">
+    <div class="w-100">
+        <nav class="navbar navbar-expand-lg p-0">
             <div class="container-fluid align-self-center">
                 <ul class="navbar-nav mr-auto">
                     <a class="navbar-brand" href="#">
-                        <img src="static/img/cat.jpg" alt="" width="50" height="40">
+                        <img src="{% static 'img/cat.jpg' %}" alt="" width="50" height="40">
                         인생굿즈
                     </a>
                 </ul>
@@ -27,9 +26,15 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">공유 게시판</a>
                         </li>
+                        {% if request.user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link" href="#">로그인</a>
+                            <a class="nav-link" href="{% url 'accountsapp:logout' %}">로그아웃</a>
                         </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'accountsapp:login' %}">로그인</a>
+                        </li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
