@@ -1,6 +1,6 @@
 {% load static %}
-<link rel="stylesheet" type="text/css" href="static/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="static/style.css">
+<link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 <!doctype html>
 <html lang="ko">
 <head>
@@ -15,7 +15,7 @@
             <div class="container-fluid align-self-center">
                 <ul class="navbar-nav mr-auto">
                     <a class="navbar-brand" href="#">
-                        <img src="static/img/cat.jpg" alt="" width="50" height="40">
+                        <img src="{% static 'img/cat.jpg' %}" alt="" width="50" height="40">
                         인생굿즈
                     </a>
                 </ul>

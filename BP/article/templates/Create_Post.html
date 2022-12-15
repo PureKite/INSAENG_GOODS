@@ -1,0 +1,79 @@
+<style>
+    #id_Board_gtype, .errorlist{
+        padding-left:0rem;
+        margin-bottom: 0rem
+    }
+    li{
+        list-style: none; 
+        display: inline-block;
+    }
+</style>
+<script>
+    let ImageId = 0
+    function addImage(){
+        const ImageModule = document.getElementById('image');
+        const newNode = ImageModule.cloneNode(true);
+        
+        ImageId++;
+        newNode.id = 'image'+ImageId;
+        ImageModule.after(newNode);
+        newNode.getElementsByClassName('h_btn')[0].style.display='block'
+        newNode.getElementsByClassName('h_btn')[0].id = 'h_btn' + ImageId;
+    }
+    function removeImage(btn_id){
+        const id = document.getElementById(btn_id);
+        parent = id.parentNode.parentNode;
+        parent.remove();
+    }
+</script>
+{% extends 'base.html' %}
+{% block content %}
+<form method='post' action="" enctype="multipart/form-data" >
+    {% csrf_token %}
+    <div style = 'text-align:center'>
+    <h2>게시판 글쓰기</h2><br>
+    </div>
+    <table style='margin-left:auto; margin-right:auto;'>
+        <tr>
+            <th>공구여부</th>
+            <td>{{ post_form.Board_share }}</td>
+        </tr>
+        <tr>
+            <th>굿즈종류</th>
+            <td>{{ post_form.Board_gtype}}</td>
+        </tr>
+        <tr>
+            <th></th>
+            <td>
+            {% if post_form.Board_gtype.errors %}
+                <span style="color:red;}">{{post_form.Board_gtype.errors}}</span>
+            {% endif %}</td>
+        </tr>
+        <tr>
+            <th>제목</th>
+            <td>{{ post_form.Board_title }}</td>
+        </tr>
+        <tr>
+            <th>내용</th>
+            <td>{{ post_form.Board_content }}</td>
+        </tr>
+        <tr id = 'image'>
+            <th>이미지 첨부</th>
+            <td>
+            {{ post_imageform.Board_image }}</td>
+            <th></th>
+            <td>
+            <input class='h_btn' style='display:none; margin-left:auto;' type="button" value="이미지 삭제" onclick="removeImage(this.id)">
+            </td>
+        </tr>
+        <tr>
+            <th></th>
+            <td><div style='margin-left:auto; margin-right:auto; float : right;'><input type="button" value="이미지 추가" onclick="addImage()"></div><td>
+        </tr>
+        <tr>
+            <th></th>
+            <td><div style='margin-left:auto; margin-right:auto; float : right;'><input type='submit' value='저장'></div><td>
+        </tr>
+    </table>
+</form>
+{% endblock %}
