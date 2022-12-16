@@ -98,28 +98,6 @@
     left: 0;
 }
 
-input[type="date"]::before{
-    content: attr(data-placeholder);
-    width: 100%;
-    color: #999;
-}
-
-input[type="date"]:focus::before, input[type="date"]:valid::before{
-    display: none;
-}
-
-
-/* .input-field button.duplicate-check{
-    position: absolute;
-    right: 0;
-    background-color: #4070f4;
-    border: none;
-    border-radius: 6px;
-    color: #fff;
-    cursor: pointer;
-    padding: 10px;
-} */
-
 .form .checkbox-text{
     display: flex;
     align-items: center;
@@ -173,4 +151,61 @@ input[type="date"]:focus::before, input[type="date"]:valid::before{
 .form .login-signup{
     margin-top: 30px;
     text-align: center;
+}
+
+.profile{
+    position: relative;
+    max-width: 40vw;
+    width: 100%;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin: 0 20px;
+    padding: 10px;
+    height: 65vh;
+}
+
+.profile .user {
+    display: flex;
+    height: 40%;
+    margin: 20px 0 40px 0;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile .user .user-image{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px;
+    border-right: #999 solid 1px;
+    width: 30%;
+}
+
+.profile .user .user-image img{
+    width: 80%;
+    border-radius: 20px;
+}
+
+.profile .user .user-image button{
+    margin-bottom: 10px;
+}
+
+.profile .user .user-detail{
+    width: 70%;
+    padding: 20px;
+}
+
+.profile .user .user-detail .user-introduce{
+    height: 50%;
+    margin: 10px 0;
+    padding: 8px;
+    border-radius: 2px;
+    border: #ccc solid 1px;
+}
+
+.profile .user .user-detail button{
+    position: absolute;
+    right: 30px;
 }

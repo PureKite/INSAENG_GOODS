@@ -8,7 +8,7 @@
         <div class="forms">
             <div class="form login">
                 <span class="title">Login</span>
-                <form method="post">
+                <form action="{% url 'accountsapp:login' %}" method="post">
                     {% csrf_token %}
                     <div class="input-field">
                         <input type="text" name="username" placeholder="아이디" required>

@@ -44,6 +44,8 @@ class Account(AbstractBaseUser):
     name        = models.CharField(max_length=40, null=False, blank=False)    
     nickname    = models.CharField(max_length=30, unique=True)
     email       = models.EmailField(verbose_name='email', max_length=60, unique=True)
+    # userimage   = models.ImageField()
+    # introduce   = models.TextField(max_length=300, null=True)
     create_at   = models.DateTimeField(verbose_name='date joined', auto_now_add=True)
     last_login  = models.DateTimeField(verbose_name='last login', auto_now=True)
     is_admin    = models.BooleanField(default=False)
@@ -58,3 +60,9 @@ class Account(AbstractBaseUser):
  
     def __str__(self):
         return self.username
+    
+    def has_perm(self, perm, obj=None):
+        return self.is_admin
+ 
+    def has_module_perms(self, app_lable):
+        return True

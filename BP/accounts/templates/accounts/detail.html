@@ -1,6 +1,30 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content%}
-<h1>{{ user.pk }} : {{ user.username }}</h1>
-<hr>
-<a style="text-decoration: none;" class="success" href="{% url 'accountsapp:update' %}">개인정보 수정</a>
+<link rel="stylesheet" href="{% static 'css/accounts.css' %}">
+<div class="profile">
+    <div class="user">
+        <div class="user-image">
+            <img src="{% static 'img/user.jpg' %}" alt="">
+            <button class="btn btn-success w-50">이미지 업로드</button>
+            <button class="btn btn-danger w-50">이미지 제거</button>
+        </div>
+        <div class="user-detail">
+            <div class="user-name">
+                <h2>{{ user.username }}</h2>
+            </div>
+            <div class="user-introduce">
+                <p>소개</p>
+            </div>
+            <button class="btn btn-secondary">
+                <a href="% url 'profileapp:update' target_profile.pk %}">수정하기</a>
+            </button>
+        </div>
+    </div>
+    <div class="">
+        <div>
+            kjkdkfjdkjdkjqudnrrnlkjaslkjfl
+        </div>
+    </div>
+</div>
 {% endblock %}

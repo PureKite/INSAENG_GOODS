@@ -8,17 +8,15 @@ from django.contrib.auth import get_user_model
 def signup(request, *args, **kwargs):
     user = request.user
     if user.is_authenticated:
-        return HttpResponse("You are already authenticated as " + str(user.username))
+        return redirect("goods:main")
  
     context = {}
     if request.POST:
-        print('11')
         form = SignupForm(request.POST)
+        print(form)
         if form.is_valid():
             form.save()
-            print(form)
             username = form.cleaned_data.get('username').lower()
-            print(username)
             raw_password = form.cleaned_data.get('password1')
             account = authenticate(username=username, password=raw_password)
             auth_login(request, account)
@@ -26,7 +24,7 @@ def signup(request, *args, **kwargs):
             destination = get_redirect_if_exists(request)
             if destination: # if destination != None
                 return redirect(destination)
-            return redirect('goods:main')
+            return redirect("goods:main")
         else:
             context['registration_form'] = form
     else:
@@ -76,9 +74,9 @@ def get_redirect_if_exists(request):
             redirect = str(request.GET.get("next"))
     return redirect
 
-def detail(request):
+def detail(request, pk):
     User = get_user_model()
-    user = get_object_or_404(User, username=request.user)
+    user = get_object_or_404(User, pk=pk)
     context = {
         'user': user
     }

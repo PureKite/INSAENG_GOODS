@@ -1,9 +1,9 @@
-{% extends 'base.html' %}
+{% comment %} {% extends 'base.html' %}
 {% load bootstrap4 %}
 {% block content %} 
-    <form action="" method="POST">
+    <form method="POST">
         {% csrf_token %}
         {% bootstrap_form form %}
         <button class="btn btn-primary">수정</button>
     </form>
-{% endblock %}
+{% endblock %} {% endcomment %}
