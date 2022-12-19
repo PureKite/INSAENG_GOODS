@@ -6,8 +6,6 @@
     <div class="user">
         <div class="user-image">
             <img src="{% static 'img/user.jpg' %}" alt="">
-            <button class="btn btn-success w-50">이미지 업로드</button>
-            <button class="btn btn-danger w-50">이미지 제거</button>
         </div>
         <div class="user-detail">
             <div class="user-name">
@@ -17,7 +15,7 @@
                 <p>소개</p>
             </div>
             <button class="btn btn-secondary">
-                <a href="% url 'profileapp:update' target_profile.pk %}">수정하기</a>
+                <a href="{% url 'profilesapp:update' user.pk %}">수정하기</a>
             </button>
         </div>
     </div>
