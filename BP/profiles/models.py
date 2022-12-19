@@ -7,5 +7,5 @@ from accounts.models import Account
 class Profile(models.Model):
     user = models.OneToOneField(Account, on_delete=models.CASCADE,
                                 related_name='profile')
-    image = models.ImageField(upload_to='profile/', blank=True)
-    message = models.CharField(max_length=300, blank=True)
+    image = models.ImageField(upload_to='profile/', null=True)
+    message = models.CharField(max_length=300, null=True)
