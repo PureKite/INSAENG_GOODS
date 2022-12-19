@@ -8,7 +8,7 @@ from django.contrib.auth import get_user_model
 def signup(request, *args, **kwargs):
     user = request.user
     if user.is_authenticated:
-        return redirect("goods:main")
+        return redirect("mainapp:main")
  
     context = {}
     if request.POST:
@@ -24,7 +24,7 @@ def signup(request, *args, **kwargs):
             destination = get_redirect_if_exists(request)
             if destination: # if destination != None
                 return redirect(destination)
-            return redirect("goods:main")
+            return redirect("mainapp:main")
         else:
             context['registration_form'] = form
     else:
@@ -44,7 +44,7 @@ def login(request, *args, **kwargs):
  
     user = request.user
     if user.is_authenticated:
-        return redirect("goods:main")
+        return redirect("mainapp:main")
  
     destination = get_redirect_if_exists(request)
     if request.POST:
@@ -58,7 +58,7 @@ def login(request, *args, **kwargs):
                 auth_login(request, user)
                 if destination:
                     return redirect(destination)
-                return redirect("goods:main")
+                return redirect("mainapp:main")
     else:
         form = AccountAuthForm()
     print('111')
