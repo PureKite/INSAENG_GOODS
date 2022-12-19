@@ -7,6 +7,10 @@
         list-style: none; 
         display: inline-block;
     }
+    th{
+        font-size:25px;
+        text-align:center;
+    }
 </style>
 <script>
     let ImageId = 0
@@ -44,10 +48,12 @@
 {% block content %}
 <form method='post' action="" enctype="multipart/form-data" >
     {% csrf_token %}
-    <div style = 'text-align:center'>
-    <h2>게시판 글쓰기</h2><br>
+    <div>
+        <hr />
+        <ul>공구 게시판 > 글쓰기</ul>
+        <hr />
     </div>
-    <table style='margin-left:auto; margin-right:auto;'>
+    <table style='margin-left:5%'>
         <tr>
             <th>공구여부</th>
             <td>{{ post_form.Board_share }}</td>
