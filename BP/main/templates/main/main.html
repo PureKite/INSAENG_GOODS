@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <link href="{% static 'css/main/style_main.css' %}" rel="stylesheet">
+    <div id='maintitle' class="row">
+        <div class="col-lg-6 col-sm-12 text-lg-start text-center">
+            미리보기
+        </div>
+        <div class="col-lg-6 col-sm-12 text-lg-end">
+            <button id="plus_button" class="btn btn-outline-primary btn-lg" type="button" href="#">더보기</button>
+        </div>
+    </div>
+    <div id="preview" class="justify-content-center">
+        <div class="row">
+            {% for i in "x"|rjust:"6" %}
+                <div class="col-sm-4 mb-5">
+                    <div class="card" style="width: 50%;">
+                        <div class="embed-responsive embed-responsive-4by3">
+                            <a href="#">
+                                <img href="#" class="card-img-top embed-responsive-item" src="{% static 'img/cat.jpg' %}" alt="cat" width="75">
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <a class="card-title h4" href="#">제목</a>
+                            <ul class="navbar-nav ml-auto">
+                                <li class="card-user">작성자</li>
+                                <li class="card-date">일시</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

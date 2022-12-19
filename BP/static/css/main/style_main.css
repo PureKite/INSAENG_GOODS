@@ -1,0 +1,33 @@
+/* main page */
+#maintitle {
+    font-size: 50px;
+    /*margin-top: 10px;*/
+    /*margin-left: 50px;*/
+}
+
+#plus_button {
+    margin-top: 10px;
+}
+
+#preview {
+    /*background-color: #0dcaf0;*/
+    margin: 50px 20px 0px 20px;
+}
+
+.card-title {
+    font-size: 35px;
+}
+
+.card-user {
+    font-size: 20px;
+}
+
+.card-date {
+    font-size: 15px;
+    color: #bbccdd;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}

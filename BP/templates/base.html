@@ -8,44 +8,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
     <title>인생굿즈</title>
 </head>
 <body>
-    <div>
-        <nav class="navbar navbar-expand-lg">
-            <div class="container-fluid align-self-center">
-                <ul class="navbar-nav mr-auto">
-                    <a class="navbar-brand" href="#">
-                        <img src="{% static 'img/cat.jpg' %}" alt="" width="50" height="40">
-                        인생굿즈
-                    </a>
-                </ul>
-                <div class="justify-content-end" id="navbar">
-                    <ul class="navbar-nav ml-auto">
+    <div class="wrap">
+        <nav id="navbar" class="navbar navbar-default navbar-expand-sm fixed-top bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">
+                    <img href="/" src="{% static 'img/cat.jpg' %}" alt="" width="50" height="40">
+                    인생굿즈
+                </a>
+                <button class="navbar-toggler" type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                    <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">굿즈 만들기</a>
+                            <a class="nav-link active" href="#">굿즈 만들기</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">공유 게시판</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">로그인</a>
+                            <a class="nav-link" href="/mydesign">마이 페이지</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">로그아웃</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
-    </div>
-    <div class='content'>
-        <!-- 채울 부분 -->
-        {% block content%}
+        <div class='container'>
+            <!-- 채울 부분 -->
+            {% block content%}
 
-        {% endblock %}
-    </div>
-    <div class='footer'>
-        <div class="extra">
-            <span>고객센터 Tel.062-522-0989</span> |
-            <span>Mady by. 연봉 19조(강병국, 김예지, 문강현, 문지호, 박현종, 순수연, 표동우)</span>
+            {% endblock %}
+        </div>
+        <div class='footer'>
+            <div class="extra">
+                <span>고객센터 Tel.062-522-0989</span> |
+                <span>Mady by. 연봉 19조(강병국, 김예지, 문강현, 문지호, 박현종, 순수연, 표동우)</span>
+            </div>
         </div>
     </div>
 </body>
