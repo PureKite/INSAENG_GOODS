@@ -15,16 +15,30 @@
         const newNode = ImageModule.cloneNode(true);
         
         ImageId++;
+        console.log(ImageId);
         newNode.id = 'image'+ImageId;
         ImageModule.after(newNode);
-        newNode.getElementsByClassName('h_btn')[0].style.display='block'
+        newNode.getElementsByClassName('h_btn')[0].style.display='block';
         newNode.getElementsByClassName('h_btn')[0].id = 'h_btn' + ImageId;
+        if(ImageId >= 3){
+            document.getElementsByClassName('p_btn')[0].style.display='none';
+        }else{
+            document.getElementsByClassName('p_btn')[0].style.display='block';
+        }
     }
     function removeImage(btn_id){
         const id = document.getElementById(btn_id);
         parent = id.parentNode.parentNode;
         parent.remove();
+        ImageId--;
+        console.log(ImageId);
+        if(ImageId >= 3){
+            document.getElementsByClassName('p_btn')[0].style.display='none';
+        }else{
+            document.getElementsByClassName('p_btn')[0].style.display='block';
+        }
     }
+    
 </script>
 {% extends 'base.html' %}
 {% block content %}
@@ -68,7 +82,7 @@
         </tr>
         <tr>
             <th></th>
-            <td><div style='margin-left:auto; margin-right:auto; float : right;'><input type="button" value="이미지 추가" onclick="addImage()"></div><td>
+            <td><div style='margin-left:auto; margin-right:auto; float : right;'><input class='p_btn' style='display:block;' type="button" value="이미지 추가" onclick="addImage()"></div><td>
         </tr>
         <tr>
             <th></th>
