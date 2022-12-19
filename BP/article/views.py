@@ -26,7 +26,7 @@ def CreatePost(request):
                     Post = post,
                     Board_image = image
                 )    
-            return redirect('main:main')
+            return redirect('mainapp:main')
         return render(request, 'Create_Post.html',  {'post_form': post_form, 'post_imageform' : post_imageform})
     else:
         post_form = PostForm()
@@ -45,7 +45,7 @@ def DetailPost(request, postid):
 def DeletePost(request, postid):
     post = get_object_or_404(Post, Board_id=postid)
     post.delete()
-    return redirect('main:main')
+    return redirect('mainapp:main')
 
 def UpdatePost(request, postid):
     post = get_object_or_404(Post, Board_id=postid)

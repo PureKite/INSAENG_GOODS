@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'main',
     'profiles',
     'article',
+    'imageconvert',
+
 ]
 
 MIDDLEWARE = [
