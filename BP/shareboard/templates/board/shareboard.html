@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="content">
+        <div>
+            <form action="" method="post" enctype="form-data">
+                {% csrf_token %}
+                <div style="background-color: #00ddff; border-radius: 0.75rem; margin: 1.75rem" class="left-box">
+                    <table>
+                        <tr>
+                            <td><pre></pre></td>
+                            <div class="right-box">    
+                                <button class="btn btn-primary" type="submit" style="float:right;">글쓰기</button>
+                            </div>
+                        </tr>
+                        <tr>
+                            <div>
+                                <td>&nbsp;카테고리</td>
+                            </div>
+                            
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <div>
+                                <td>&nbsp;공구여부&nbsp;</td>
+                                <td>
+                                    <input type="radio" name="share" value="yes"> 한다&nbsp;&nbsp;
+                                </td>
+                                <td>
+                                    <input type="radio" name="share" value="no"> 안한다&nbsp;&nbsp;
+                                </td>
+                            </div>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <div>
+                                <td>&nbsp;굿즈종류&nbsp;</td>
+                                <td>
+                                    <input type="checkbox" name="cup" value="cup"> cup&nbsp;&nbsp;
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="key_ring" value="key_ring"> key_ring&nbsp;&nbsp;
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="phone_case" value="phone_case"> phone_case&nbsp;&nbsp;
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="t-shirt" value="t-shirt"> t-shirt&nbsp;&nbsp;
+                                </td>
+                            </div>
+                            <div class="right-box">
+                                <button class="btn btn-primary" type="submit" style="float:right;">검색</button>
+                            </div>
+                        </tr>
+                    </table>
+                    <table><tr><pre></pre></tr></table>
+                </div>
+            </form>
+        </div>
+        <div>
+            <table class='table'>
+                {% for t_r in "x"|rjust:"4" %}
+                    <tr>
+                        {% for table_data in "y"|rjust:"5" %}
+                            <td>
+                                <div style="background-color: #00ddff; border-radius: 1rem; margin: 1rem">
+                                    <a href='#'>
+                                        <pre><img src="/static/img/cat.jpg" alt="제목" width="200" height="150"></pre>
+                                        <pre><cite>제목</cite></pre>
+                                        <pre>작성자 일시</pre>
+                                        <pre></pre>
+                                    </a>
+                                </div>
+                            </td>
+                        {% endfor %}
+                {% endfor %}
+            </table>
+        </div>
+        <div id="paging">
+            <ul class="pagination justify-content-center" style="margin-top: 2rem;">
+                <!-- 이전 페이지 -->
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="[depth설정]/?&page={{page_obj.previous_page_number}}">이전</a>
+                    <!-- href로 뎁스 설정 -->
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+                </li>
+                {% endif %}
+                <!-- 페이지리스트 -->
+                {% for page_number in page_obj.paginator.page_range %}
+                {% if page_number == page_obj.number %}
+                <li class="page-item active" aria-current="page">
+                    <a class="page-link" href="[depth설정]/?&page={{page_number}}">{{page_number}}</a>
+                </li>
+                {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="[depth설정]/?&page={{page_number}}">{{page_number}}</a>
+                </li>
+                {% endif %}
+                {% endfor %}
+                <!-- 다음페이지 -->
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="[depth설정]/?&page={{page_obj.next_page_number}}">다음</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+{% endblock content %} 
