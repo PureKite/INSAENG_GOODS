@@ -27,3 +27,6 @@ def update(request, pk):
     else:
         messages.warning(request,"작성자가 아닙니다.")
         return redirect('accountsapp:detail', pk)
+
+def mydesign(request):
+    return render(request, 'profiles/mydesign.html')
