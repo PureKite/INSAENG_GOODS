@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+<link rel="stylesheet" href="{% static 'css/accounts.css' %}">
+<div class="content">
+    <div class="container active">
+        <div class="forms">
+            <div class="form signup">
+                <span class="title">Sign up</span>
+
+                <form  method="post">
+                    {% csrf_token %}
+                    <div class="input-field">
+                        <input type="text" name="username" id="username" placeholder="아이디" required>
+                        <i class="uil uil-user"></i>
+                    </div>
+                    <div class="input-field">
+                        <input type="text" name="name" id="name" placeholder="이름" required>
+                        <i class="uil uil-smile"></i>
+                    </div>
+                    <div class="input-field">
+                        <input type="text" name="nickname" id="nickname"  placeholder="닉네임" required>
+                        <i class="uil uil-laughing"></i>
+                        <!-- <button class="duplicate-check">중복확인</button> -->
+                    </div>
+                    <div class="input-field">
+                        <input type="email" name="email" id="inputEmail"  placeholder="이메일" required>
+                        <i class="uil uil-envelope icon"></i>
+                    </div>
+                    <div class="input-field">
+                        <input type="password" name="password1" class="password" placeholder="비밀번호" required>
+                        <i class="uil uil-lock icon"></i>
+                    </div>
+                    <div class="input-field">
+                        <input type="password" name="password2" class="password" placeholder="비밀번호 확인" required>
+                        <i class="uil uil-lock icon"></i>
+                    </div>
+
+                    <div class="checkbox-text">
+                        <div class="checkbox-content">
+                            <input type="checkbox" id="termCon">
+                            <label for="termCon" class="text">회원가입 동의</label>
+                        </div>
+                    </div>
+
+                    <div class="input-field button">
+                        <input type="submit" value="회원가입">
+                    </div>
+                </form>
+
+                <div class="login-signup">
+                    <span class="text">Already a member?
+                        <a href="{% url 'accountsapp:login' %}" class="text login-link">Login Now</a>
+                    </span>
+                </div>
+                {% for field in registration_form %}
+                    <p>
+                        {% for error in field.errors %}
+                            <p style="color: red">{{ error }}</p>
+                        {% endfor %}
+                    </p>
+                {% endfor %}
+                {% if registration_form.non_field_errors %}
+                    <div style="color: red">
+                        <p>{{ registration_form.non_field_errors }}</p>
+                    </div>
+    
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

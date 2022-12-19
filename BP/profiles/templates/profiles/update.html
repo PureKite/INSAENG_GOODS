@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+
+<div class="text-center mw-500">
+    <div class="m-5">
+        <h4>Update Profile</h4>
+    </div>
+    <div class="profile">
+        <form action="{% url 'profileapp:update' pk=target_profile.pk %}"
+              enctype="multipart/form-data"
+              method="post">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <div class="m-5">
+                <input class="btn btn-success" type="submit" value="입력완료">
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
