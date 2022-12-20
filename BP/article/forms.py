@@ -19,6 +19,22 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ['Board_share', 'Board_gtype', 'Board_title', 'Board_content']
+        widgets = {
+            'Board_share' : forms.Select(attrs={
+                'class':'form-select',
+            }),
+            'Board_title' : forms.TextInput(attrs={
+                'class':'form-control',
+                'placeholder':"제목을 입력해주세요.",
+                'style':'border: none;'
+            }),
+            'Board_content' : forms.Textarea(attrs={
+                'class':'form-control',
+                'rows':'10',
+                'placeholder':"내용을 입력해주세요.",
+                'style':'height: 300px; border: none;resize: none;'
+            }),
+        }
         
 class Post_ImageForm(forms.ModelForm):
     class Meta:

@@ -1,0 +1,72 @@
+#id_Board_gtype, .errorlist{
+    padding-left:0rem;
+    margin-bottom: 0rem
+}
+li{
+    list-style: none; 
+    display: inline-block;
+}
+.thst{
+    font-size:21px;
+    width:300px;
+    text-align:right;
+    padding-right: 1rem;
+    border-right: 1px solid #b5c8ff;
+}
+td{
+    padding-left: 1rem;
+    font-size:20px;
+    padding: 5px;
+}
+.formst{
+    margin-left:auto;
+    margin-right: auto;
+}
+.table-responsive{
+    margin-top: 1rem;
+    
+}
+table{
+    margin-left:auto;
+    margin-right: auto;
+}
+.h_btn{
+    width:90px;
+    height: 30px;
+    display:none; 
+    font-size: 1rem;
+    background-color: #b5c8ff;
+    color:white;
+    border: 0px; 
+    border-radius : 12px;
+}
+.p_btn{
+    width:90px;
+    height: 30px;
+    float : right;
+    font-size: 1rem;
+    display:block;
+    background-color: #b5c8ff;
+    color:white;
+    border: 0px; 
+    border-radius : 12px;
+}
+hr{
+    background-color: #b5c8ff;
+}
+.b_info{
+    height:50px;
+    background-color: #b5c8ff;
+}
+input[type="checkbox"]{
+    width:35px;
+    transform: scale(1.4) rotateZ(0deg);
+}
+input[type="checkbox"]:checked{
+    accent-color:#b5c8ff;
+}
+input#id_Board_image{
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    accent-color:#b5c8ff;
+}

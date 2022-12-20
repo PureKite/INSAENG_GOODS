@@ -5,8 +5,7 @@ from .forms import PostForm, Post_ImageForm
 from .models import Post, PostImage
 import logging
 from django.shortcuts import get_object_or_404
-from django.contrib import messages
-from django.utils import timezone
+from django.core.paginator import Paginator
 import datetime
 
 logger = logging.getLogger('mylogger')
@@ -75,4 +74,20 @@ def UpdatePost(request, postid):
         post_form = PostForm(instance=post)
         post_imageform = Post_ImageForm()
         return render(request, 'Update_Post.html',  {'post_form': post_form, 'post_imageform' : post_imageform, 'postid' : postid})
-    
+
+def ListPost(request):
+    login_session = request.session.get('login_session', '')
+    context = {'login_session':login_session}
+    return render(request, 'List_Post.html', context)
+
+def input_test(request):
+    if request.POST:
+        list_item = request.POST.getlist('test')
+        print(list_item)
+        
+def page(request):
+    board_list = Post.objects.all()
+    page = request.GET.get('page', '1')
+    paginator = Paginator(board_list, '10')
+    page_obj = paginator.page(page)
+    return render(request, 'template_name', {'page_obj':page_obj})

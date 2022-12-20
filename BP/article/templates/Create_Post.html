@@ -1,17 +1,3 @@
-<style>
-    #id_Board_gtype, .errorlist{
-        padding-left:0rem;
-        margin-bottom: 0rem
-    }
-    li{
-        list-style: none; 
-        display: inline-block;
-    }
-    th{
-        font-size:25px;
-        text-align:center;
-    }
-</style>
 <script>
     let ImageId = 0
     function addImage(){
@@ -40,60 +26,62 @@
             document.getElementsByClassName('p_btn')[0].style.display='none';
         }else{
             document.getElementsByClassName('p_btn')[0].style.display='block';
+            document.getElementsByClassName('p_btn')[0].hide()
         }
     }
-    
 </script>
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-<form method='post' action="" enctype="multipart/form-data" >
+<link rel="stylesheet" href="{% static 'css/article.css' %}">
+<form method='post' action="" enctype="multipart/form-data" style=''>
     {% csrf_token %}
-    <div>
+    <div class='b_info'>
         <hr />
-        <ul>공구 게시판 > 글쓰기</ul>
+        <ul>공유 게시판 > 글쓰기</ul>
         <hr />
     </div>
-    <table style='margin-left:5%'>
-        <tr>
-            <th>공구여부</th>
-            <td>{{ post_form.Board_share }}</td>
-        </tr>
-        <tr>
-            <th>굿즈종류</th>
-            <td>{{ post_form.Board_gtype}}</td>
-        </tr>
-        <tr>
-            <th></th>
-            <td>
-            {% if post_form.Board_gtype.errors %}
-                <span style="color:red;}">{{post_form.Board_gtype.errors}}</span>
-            {% endif %}</td>
-        </tr>
-        <tr>
-            <th>제목</th>
-            <td>{{ post_form.Board_title }}</td>
-        </tr>
-        <tr>
-            <th>내용</th>
-            <td>{{ post_form.Board_content }}</td>
-        </tr>
-        <tr id = 'image'>
-            <th>이미지 첨부</th>
-            <td>
-            {{ post_imageform.Board_image }}</td>
-            <th></th>
-            <td>
-            <input class='h_btn' style='display:none; margin-left:auto;' type="button" value="이미지 삭제" onclick="removeImage(this.id)">
-            </td>
-        </tr>
-        <tr>
-            <th></th>
-            <td><div style='margin-left:auto; margin-right:auto; float : right;'><input class='p_btn' style='display:block;' type="button" value="이미지 추가" onclick="addImage()"></div><td>
-        </tr>
-        <tr>
-            <th></th>
-            <td><div style='margin-left:auto; margin-right:auto; float : right;'><input type='submit' value='저장'></div><td>
-        </tr>
-    </table>
+    <div class='table-responsive'>
+        <table>
+            <tr>
+                <th class='thst' height=36px;>공구여부</th>
+                <td colspan="2" width=700px;>{{ post_form.Board_share }}</td>
+            </tr>
+            <tr>
+                <th rowspan="2" class='thst' height=36px;>굿즈종류</th>
+                <td colspan="2" width=700px;>{{ post_form.Board_gtype}}</td>
+            </tr>
+            <tr>
+                <td colspan="2" width=700px>
+                {% if post_form.Board_gtype.errors %}
+                    <span style="color:red;}">{{post_form.Board_gtype.errors}}</span>
+                {% endif %}</td>
+            </tr>
+            <tr>
+                <th class='thst' height=36px;>제목</th>
+                <td colspan="2" width=700px>{{ post_form.Board_title }}</td>
+            </tr>
+            <tr>
+                <th class='thst'>내용</th>
+                <td colspan="2" width=700px>{{ post_form.Board_content }}</td>
+            </tr>
+            <tr id = 'image'>
+                <th class='thst' height=36px;>이미지 첨부</th>
+                <td width=600px>
+                {{ post_imageform.Board_image }}</td>
+                <td width=100px>
+                <input class='h_btn' type="button" value="이미지 삭제" onclick="removeImage(this.id)">
+                </td>
+            </tr>
+            <tr>
+                <th class='thst'></th>
+                <td colspan="2" width=700px><input class='p_btn' type="button" value="이미지 추가" onclick="addImage()"></div></td>
+            </tr>
+            <tr>
+                <th class='thst' height=36px;></th>
+                <td colspan="2" width=700px><div style='float : right;'><input class="btn btn-primary" type='submit' value='저장'></div></td>
+            </tr>
+        </table>
+    </div>
 </form>
 {% endblock %}
