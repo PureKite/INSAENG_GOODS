@@ -12,7 +12,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('profiles/', include('profiles.urls')),
     path('imageconvert', include('imageconvert.urls')),
-    
+    path('goods/', include('goods.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
