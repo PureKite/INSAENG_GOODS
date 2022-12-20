@@ -4,7 +4,7 @@
     <link href="{% static 'css/main/style_mydesign.css' %}" rel="stylesheet">
     <div class="container-fluid">
         <div class="row flex-nowrap">
-            <div class="col-6 bd-sidebar">
+            <div class="col-md-4 bd-sidebar">
                 <div class="bd-sidebar-body">
                     <ul class="nav">
                         <li><a href="/profiles/mydesign" class="btn btn-lg mt-5" role="button">나의 디자인</a></li>
@@ -12,7 +12,7 @@
                     </ul>
                 </div>
             </div>
-            <div id="designList" class="col-9 py-md-3 pl-md-5 bd-content" role="main">
+            <div id="designList" class="col-md-8 py-md-3 pl-md-5 bd-content" role="main">
                 <div class="container row justify-content-center">
                     {% for i in "x"|rjust:"20" %}
                         <div class="col-sm-3 mb-5">

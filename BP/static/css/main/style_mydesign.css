@@ -1,5 +1,5 @@
 .bd-sidebar {
-  position: fixed;
+  position: sticky;
   top: 4rem;
   z-index: 1000;
   height: calc(100vh - 4rem);
@@ -30,5 +30,5 @@
 }
 
 #designList {
-  margin-left: 250px;
+  margin: 0 auto;
 }
