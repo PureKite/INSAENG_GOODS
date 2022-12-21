@@ -3,22 +3,34 @@ from django.http import Http404
 from django.http import HttpResponse
 from .forms import PostForm, Post_ImageForm
 from .models import Post, PostImage
+from accounts.models import Account
 import logging
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator
 import datetime
 
 logger = logging.getLogger('mylogger')
-
+ 
 def CreatePost(request):
+    logger.error(request.user)
+    if not request.user.is_authenticated:
+        return redirect('mainapp:main')
     if request.method == 'POST' and request.FILES['Board_image']:
         post_form = PostForm(request.POST)
         post_imageform = Post_ImageForm(request.POST, request.FILES)
         # image = request.FILES['Board_image']
         images = request.FILES.getlist('Board_image')
         if post_form.is_valid():
-            post_form.save(commit=False)
-            post_form.save()
+            user_id = request.user
+            user = Account.objects.get(username = user_id)
+            p_form = Post(
+                Board_share = post_form.cleaned_data['Board_share'],
+                Board_gtype = post_form.cleaned_data['Board_gtype'],
+                Board_title = post_form.cleaned_data['Board_title'],
+                Board_content = post_form.cleaned_data['Board_content'],
+                Board_writer = user,
+            )
+            p_form.save()
             post = Post.objects.last()
             for image in images:
                 PostImage.objects.create(
@@ -26,27 +38,33 @@ def CreatePost(request):
                     Board_image = image
                 )    
             return redirect('mainapp:main')
-        return render(request, 'Create_Post.html',  {'post_form': post_form, 'post_imageform' : post_imageform})
+        #return render(request, 'Create_Post.html',  {'post_form': post_form, 'post_imageform' : post_imageform})
     else:
         post_form = PostForm()
         post_imageform = Post_ImageForm()
-        return render(request, 'Create_Post.html',  {'post_form': post_form, 'post_imageform' : post_imageform})
+    return render(request, 'Create_Post.html',  {'post_form': post_form, 'post_imageform' : post_imageform})
     
 def DetailPost(request, postid):
+    if not request.user.is_authenticated:
+        return redirect('mainapp:main')
     post = get_object_or_404(Post, Board_id=postid)
     imagelist = PostImage.objects.filter(Post=postid)
-    logger.error(imagelist)
+    
     if imagelist.exists():
         return render(request, 'Detail_Post.html', {'post':post, 'imagelist':imagelist, 'postid':postid})
     else:
         return Http404('해당 게시물을 찾을 수 없습니다.')
     
 def DeletePost(request, postid):
+    if not request.user.is_authenticated:
+        return redirect('mainapp:main')
     post = get_object_or_404(Post, Board_id=postid)
     post.delete()
     return redirect('mainapp:main')
 
 def UpdatePost(request, postid):
+    if not request.user.is_authenticated:
+        return redirect('mainapp:main')
     post = get_object_or_404(Post, Board_id=postid)
     imagelist = PostImage.objects.filter(Post=postid)
     

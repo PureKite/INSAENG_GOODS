@@ -1,5 +1,5 @@
-#id_Board_gtype, .errorlist{
-    padding-left:0rem;
+#id_Board_gtype, .errorlist, #id_Board_share{
+    padding-left:1rem;
     margin-bottom: 0rem
 }
 li{
@@ -8,14 +8,16 @@ li{
 }
 .thst{
     font-size:21px;
-    width:300px;
+    width:200px;
     text-align:right;
     padding-right: 1rem;
-    border-right: 1px solid #b5c8ff;
+    background-color: #6288f9;
+    border-bottom: 1px solid #bebfc3;
+    color:white;
 }
 td{
     padding-left: 1rem;
-    font-size:20px;
+    font-size:18px;
     padding: 5px;
 }
 .formst{
@@ -23,33 +25,10 @@ td{
     margin-right: auto;
 }
 .table-responsive{
-    margin-top: 1rem;
-    
+    width:1200px;
 }
 table{
-    margin-left:auto;
-    margin-right: auto;
-}
-.h_btn{
-    width:90px;
-    height: 30px;
-    display:none; 
-    font-size: 1rem;
-    background-color: #b5c8ff;
-    color:white;
-    border: 0px; 
-    border-radius : 12px;
-}
-.p_btn{
-    width:90px;
-    height: 30px;
-    float : right;
-    font-size: 1rem;
-    display:block;
-    background-color: #b5c8ff;
-    color:white;
-    border: 0px; 
-    border-radius : 12px;
+    float:left;
 }
 hr{
     background-color: #b5c8ff;
@@ -57,16 +36,44 @@ hr{
 .b_info{
     height:50px;
     background-color: #b5c8ff;
+    margin:0 0 0 0;
 }
-input[type="checkbox"]{
-    width:35px;
+.b_info>span{
+    float:right;
+    padding-right:1.5rem;
+}
+input[type="checkbox"], input[type="radio"]{
     transform: scale(1.4) rotateZ(0deg);
+    margin-left:0.2rem;
 }
-input[type="checkbox"]:checked{
-    accent-color:#b5c8ff;
+#id_Board_share > li, #id_Board_gtype > li{
+    background-color: #7e9df9;
+    border-radius: 80px 80px 80px 80px;
+    color:white;
+    padding-left: 10px;
+}
+#id_Board_share > li > label, #id_Board_gtype > li > label{
+    width:130px;
+    margin: 2 2 2 2;
+}
+input[type="checkbox"]:checked, input[type="radio"]:checked{
+    accent-color:#6288f9;
 }
 input#id_Board_image{
     padding: 0.375rem 0.75rem;
     font-size: 1rem;
-    accent-color:#b5c8ff;
+    color:#848897;
+}
+.insert > .file-list{
+    border: none;
+    padding: 10px;
+    height: 150px;
+}
+.insert .file-list .name {
+    font-size: 13px;
+    color:#848897;
+}
+mark.red {
+    color:#ff0000;
+    background: none;
 }

@@ -1,32 +1,50 @@
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
-    let ImageId = 0
-    function addImage(){
-        const ImageModule = document.getElementById('image');
-        const newNode = ImageModule.cloneNode(true);
-        
-        ImageId++;
-        console.log(ImageId);
-        newNode.id = 'image'+ImageId;
-        ImageModule.after(newNode);
-        newNode.getElementsByClassName('h_btn')[0].style.display='block';
-        newNode.getElementsByClassName('h_btn')[0].id = 'h_btn' + ImageId;
-        if(ImageId >= 3){
-            document.getElementsByClassName('p_btn')[0].style.display='none';
-        }else{
-            document.getElementsByClassName('p_btn')[0].style.display='block';
+    function addFile(obj){
+        $('.file-list').empty();
+        let htmlData = '';
+        var maxFileCnt = 4;   // 첨부파일 최대 개수
+        var curFileCnt = obj.files.length;  // 현재 선택된 첨부파일 개수
+
+        // 첨부파일 개수 확인
+        if (curFileCnt > maxFileCnt) {
+            swal("첨부파일은 최대 " + maxFileCnt + "개 까지 첨부 가능합니다.");
+            document.querySelector("input[type=file]").value = '';
+        } else {
+            for (const file of obj.files) {
+                // 첨부파일 검증
+                if (validation(file)) {
+                    let htmlData = '';
+                    htmlData += '<p class="name">' + file.name + '</p>';
+                    $('.file-list').append(htmlData);
+                } else {
+                    document.querySelector("input[type=file]").value='';
+                    continue;
+                }
+            }
         }
     }
-    function removeImage(btn_id){
-        const id = document.getElementById(btn_id);
-        parent = id.parentNode.parentNode;
-        parent.remove();
-        ImageId--;
-        console.log(ImageId);
-        if(ImageId >= 3){
-            document.getElementsByClassName('p_btn')[0].style.display='none';
-        }else{
-            document.getElementsByClassName('p_btn')[0].style.display='block';
-            document.getElementsByClassName('p_btn')[0].hide()
+    /* 첨부파일 검증 */
+    function validation(obj){
+        const fileTypes = ['image/gif', 'image/jpeg', 'image/png', 'image/bmp', 'image/tif'];
+        if (obj.name.length > 100) {
+            swal("파일명이 100자 이상인 파일은 제외되었습니다.");
+            return false;
+        } else if (obj.size > (100 * 1024 * 1024)) {
+            swal("최대 파일 용량인 100MB를 초과한 파일은 제외되었습니다.");
+            document.querySelector("input[type=file]").value='';
+            return false;
+        } else if (obj.name.lastIndexOf('.') == -1) {
+            swal("확장자가 없는 파일은 제외되었습니다.");
+            return false;
+        } else if (!fileTypes.includes(obj.type)) {
+            swal("첨부가 불가능한 파일은 제외되었습니다.");
+            return false;
+        } else {
+            return true;
         }
     }
 </script>
@@ -34,54 +52,52 @@
 {% load static %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/article.css' %}">
-<form method='post' action="" enctype="multipart/form-data" style=''>
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+  />
+<form class='form-control' method='post' enctype="multipart/form-data">
     {% csrf_token %}
+    <div>
+        <h3>공유 게시판</h3>
+    </div>
     <div class='b_info'>
         <hr />
-        <ul>공유 게시판 > 글쓰기</ul>
+        <span>공유 게시판 > 글쓰기</span>
         <hr />
     </div>
+    <span style='font-size: 1.15rem;float:right;color:#848897;'><mark class="red">*</mark>표시는 필수 입력 항목입니다.</span>
     <div class='table-responsive'>
         <table>
             <tr>
-                <th class='thst' height=36px;>공구여부</th>
-                <td colspan="2" width=700px;>{{ post_form.Board_share }}</td>
+                <td class='thst' height=36px;><mark class="red">*</mark>공구여부</td>
+                <td width=1000px;>{{ post_form.Board_share }}</td>
             </tr>
             <tr>
-                <th rowspan="2" class='thst' height=36px;>굿즈종류</th>
-                <td colspan="2" width=700px;>{{ post_form.Board_gtype}}</td>
+                <td rowspan="2" class='thst' height=36px;><mark class="red">*</mark>굿즈종류</td>
+                <td width=1000px;>{{ post_form.Board_gtype}}</td>
             </tr>
             <tr>
-                <td colspan="2" width=700px>
+                <td width=1000px>
                 {% if post_form.Board_gtype.errors %}
                     <span style="color:red;}">{{post_form.Board_gtype.errors}}</span>
                 {% endif %}</td>
             </tr>
             <tr>
-                <th class='thst' height=36px;>제목</th>
-                <td colspan="2" width=700px>{{ post_form.Board_title }}</td>
+                <td class='thst' height=36px;><mark class="red">*</mark>제목</td>
+                <td width=1000px;>{{ post_form.Board_title }}</td>
             </tr>
             <tr>
-                <th class='thst'>내용</th>
-                <td colspan="2" width=700px>{{ post_form.Board_content }}</td>
+                <td class='thst'><mark class="red">*</mark>내용</td>
+                <td width=1000px;>{{ post_form.Board_content }}</td>
             </tr>
             <tr id = 'image'>
-                <th class='thst' height=36px;>이미지 첨부</th>
-                <td width=600px>
-                {{ post_imageform.Board_image }}</td>
-                <td width=100px>
-                <input class='h_btn' type="button" value="이미지 삭제" onclick="removeImage(this.id)">
-                </td>
-            </tr>
-            <tr>
-                <th class='thst'></th>
-                <td colspan="2" width=700px><input class='p_btn' type="button" value="이미지 추가" onclick="addImage()"></div></td>
-            </tr>
-            <tr>
-                <th class='thst' height=36px;></th>
-                <td colspan="2" width=700px><div style='float : right;'><input class="btn btn-primary" type='submit' value='저장'></div></td>
+                <td class='thst' style='border-bottom:none;'><mark class="red">*</mark>이미지 첨부</td>
+                <td width=800px class='insert'>
+                {{ post_imageform.Board_image }}<div class="file-list"></div></td>
             </tr>
         </table>
     </div>
+    <div style='text-align:center'><input class="btn btn-secondary" type='button' value='취소'>&nbsp&nbsp<input class="btn btn-primary" onchange="submitForm()" type='submit' value='등록'></div>
 </form>
 {% endblock %}
