@@ -1,22 +1,49 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
     <div class="content">
         <!doctype html>
         <html lang="ko">
-        <head>
+        <head>            
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
-            <title>Bootstrap 4</title>
+            {% comment %} <title>Bootstrap 4</title> {% endcomment %}
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+            <style>
+                .nav-pills > .nav-item > .active {
+                    color: rgb(0, 0, 0) !important;
+                    background-color : #4CE9F7 !important;
+                    border-radius: 5px 5px 0px 0px;
+                }
+                .center {
+                    display: flex;
+                    justify-content: center;
+                }
+                .tab-content{
+                    background-color: #4CE9F7 !important;
+                }
+            </style>
+            <script> 
+                function btn1(){
+                    if (confirm("메인으로 이동할까요?")) {                        
+                        location.href='/';
+                    }
+                }
+                function btn2(){
+                    if (confirm("게시글 작성으로 이동할까요?")) {                        
+                        location.href='/article/create';
+                    }
+                }
+            </script> 
         </head>
         <body>
-            <div style="padding-top: 0px;" class="container">
+            <div style="padding-top:0px; width:760;" class="container">
             <div class="row">
                 <div class="col">
-                <p style = " font-size:2.5em;  color: #00FFFF;">굿즈 도안 샘플</p>
-                    <ul class="nav nav-tabs">
+                <p style = "font-size:2em;  color: #F587F6;">굿즈 샘플 도안</p>
+                    <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#hd">핸드폰케이스</a>
+                        <a class="nav-link active" data-toggle="tab" href="#hp">핸드폰케이스</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#gt">그립톡</a>
@@ -31,24 +58,55 @@
                         <a class="nav-link" data-toggle="tab" href="#wp">바탕화면</a>
                     </li>
                     </ul>
-                    <div class="tab-content">
+                    <div style=" padding:30px; background-color: #007BFF; border-radius:5px; height:400px;" class="tab-content center">
                     <div class="tab-pane fade show active" id="hp">
-                        <p>핸드폰 케이스</p>
+                        <div>
+                            <img href="/" src="{% static 'img/test_hp.jpg' %}" alt="" width="300" height="300">
+                        </div>
+                        <div style="margin-top:10; text-align: center;">
+                            <form action="{% url 'goods:downloadFile'  %}">
+                                <button style="padding:5px; border-radius:5px;" onclick="">다운로드</button>
+                            </form>
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="gt">
-                        <p>그립톡</p>
+                        <div>
+                            <img href="/" src="{% static 'img/test_gt.jpg' %}" alt="" width="300" height="300">
+                        </div>
+                        <div style="margin-top:10; text-align: center;">
+                            <button style="padding:5px; border-radius:5px;" onclick="">다운로드</button>
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="kr">
-                        <p>키링</p>
+                        <div>
+                            <img href="/" src="{% static 'img/test_kr.png' %}" alt="" width="300" height="300">
+                        </div>
+                        <div style="margin-top:10; text-align: center;">
+                            <button style="padding:5px; border-radius:5px; border-radius:5px;" onclick="">다운로드</button>
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="ts">
-                        <p>티셔츠</p>
+                        <div>
+                            <img href="/" src="{% static 'img/test_ts.png' %}" alt="" width="300" height="300">
+                        </div>
+                        <div style="margin-top:10; text-align: center;">
+                            <button style="padding:5px; border-radius:5px;" onclick="">다운로드</button>
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="wp">
-                        <p>바탕화면</p>
+                        <div>
+                            <img href="/" src="{% static 'img/test_wp.jpg' %}" alt="" width="300" height="300">
+                        </div>
+                        <div style="margin-top:10; text-align: center;">
+                            <button style="padding:5px; border-radius:5px;">다운로드</button>
+                        </div>
                     </div>
                     </div>
                 </div>
+                <div style="padding-right:15; margin-top:10px; text-align:right;">
+                    <button style="padding:5px; border-radius:5px;" onclick="javascript:btn1()"> 메인으로 이동 </button>
+                    <button style="padding:5px; border-radius:5px;" onclick="javascript:btn2()"> 내 굿즈 자랑 </button>
+                </div>                
             </div>
             </div>
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
