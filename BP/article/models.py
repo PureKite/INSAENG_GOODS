@@ -14,7 +14,7 @@ def user_directory_path(instance, filename):
     filename = filename.split('.')[0]
     now = datetime.datetime.now()
     filename = filename + now.strftime('%Y%m%d%H%M%S')
-    filepath = 'media/article/image/'
+    filepath = 'article/image/'
     return filepath + filename + '.' + ext
 
 class Post(models.Model):

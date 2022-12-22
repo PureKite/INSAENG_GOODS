@@ -94,9 +94,9 @@ def UpdatePost(request, postid):
         return render(request, 'Update_Post.html',  {'post_form': post_form, 'post_imageform' : post_imageform, 'postid' : postid})
 
 def ListPost(request):
-    login_session = request.session.get('login_session', '')
-    context = {'login_session':login_session}
-    return render(request, 'List_Post.html', context)
+    # login_session = request.session.get('login_session', '')
+    # context = {'login_session':login_session}
+    return render(request, 'List_Post.html')#, context)
 
 def input_test(request):
     if request.POST:

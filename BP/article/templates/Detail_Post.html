@@ -3,84 +3,78 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-    <script>
-        function p_del(){
-            var res = confirm('게시글을 정말로 삭제하시겠습니까?');
-            if(res){
-                window.location.href = "{% url 'articleapp:DeletePost' post.Board_id %}"
-                swal("성공적으로 삭제되었습니다.");
-            }
+<link rel="stylesheet" href="{% static 'css/article.css' %}">
+<script>
+    function p_del(){
+        var res = confirm('게시글을 정말로 삭제하시겠습니까?');
+        if(res){
+            window.location.href = "{% url 'articleapp:DeletePost' post.Board_id %}"
+            swal("성공적으로 삭제되었습니다.");
         }
-        function p_udt(){
-            window.location.href = "{% url 'articleapp:UpdatePost' post.Board_id %}"
-        }
-        $(function(){
-            $(".thumbs a").click(function(){          
-                var imgPath = $(this).children("img");
-                console.log(imgPath)
-                $("#mainImg>img").attr("src", imgPath.attr("src"));//.attr("alt", imgPath.attr("alt"));
-                return false;                       
-            });
+    }
+    function p_udt(){
+        window.location.href = "{% url 'articleapp:UpdatePost' post.Board_id %}"
+    }
+    $(function(){
+        $(".thumbs a").click(function(){          
+            var imgPath = $(this).children("img");
+            console.log(imgPath)
+            $("#mainImg>img").attr("src", imgPath.attr("src"));//.attr("alt", imgPath.attr("alt"));
+            return false;                       
         });
-    </script>
-    <div style = 'text-align:center'>
-        <h2>게시판 상세보기</h2><br>     
+    });
+</script>
+<div>
+    <h3>공유 게시판</h3>
+</div>
+<div class='b_info'>
+    <hr />
+    <span>공유 게시판 > 게시글</span>
+    <hr />
+</div>
+<div class="thumbnail" >
+    {% for image in imagelist %}
+        {% if forloop.counter == 1%}
+            <div id="mainImg"><img src ="{{ image.Board_image.url }}" alt="image"></div><div class="thumbs">
+        {% endif %}
+        <a href="" alt="image{{ forloop.counter }}"><img src ="{{ image.Board_image.url }}"></a>
+    {% endfor %}
     </div>
-    <div style="width:1000px;margin-left:auto;margin-right:auto;">
-        <div style="width:55%;float:left;">
-            <br>
-            {% for image in imagelist %}
-                {% if forloop.counter == 1%}
-                    <div id="mainImg"><img src ="{{ image.Board_image.url }}" height=500px width=520px alt="image"></div><div class="thumbs">
+</div>
+<div class='detail'>
+    <table class='detail_table'>
+        <tr style='height:10%;'>
+            <td colspan='2'>
+                {% if request.user == post.Board_writer%}
+                    <input style='float:right;' type='button' class="btn btn-primary" onclick='p_udt();' value='수정'>
+                    <input style='float:right;margin-right:8px;' type='button' class="btn btn-secondary" onclick='p_del();' value='삭제'>
                 {% endif %}
-                <a href="" alt="image{{ forloop.counter }}"><img src ="{{ image.Board_image.url }}" height=100px width=127px margin-top=20px></a>
-            {% endfor %}
-            </div>
-        </div>
-        <div style="width:45%;float:right;">
-            <table>
-                <tr>
-                    <td colspan="5">
-                        {% if request.user == post.Board_writer%}
-                            <input style='float:right;' type='button' onclick='p_del();' value='삭제'>
-                            <input style='float:right;' type='button' onclick='p_udt();' value='수정'>
-                        {% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <td style='width:400px; height:50px; text-align:center'>공구 여부 : {{post.Board_share}}</td>
-                        <tr><td style='width:400px; height:50px; text-align:center'>굿즈 종류 : {{ post.Board_gtype|cut:"["|cut:"'"|cut:","|cut:"]" }}</td></tr>
-                        <tr><td style='width:400px; height:100px; text-align:center'>제목 : {{post.Board_title}}</td></tr>
-                        <tr><td style='width:400px; height:280px; text-align:center;'>내용 : {{post.Board_content}}</td></tr>
-                        <tr><td style='width:400px; height:20px; text-align:center'>일시 : {{post.Board_datetime}}</td>
-                            <tr><td style='width:400px; height:20px; text-align:center'>작성자 : {{post.Board_writer.nickname}}</td>
-                    </tr>
-            </table>
-        </div><div style="clear:both;"></div>
-    </div>
-    {% comment %} <table style='margin-left:auto; margin-right:auto;'>
-        <tr>
-            <td colspan="5">
-                <input style='float:right;' type='button' onclick='p_del();' value='삭제'>
-                <input style='float:right;' type='button' value='수정'>
             </td>
         </tr>
         <tr>
-        {% for image in imagelist %}
-            {% if forloop.counter == 1 %}
-                <td colspan="4" rowspan="5"><img src ="{{ image.Board_image.url }}" height=500px width=400px></td>
-                {% comment %} <td style='width:400px; height:50px; text-align:center'>{{post.Board_id}}번째 게시글</td> {% endcomment %}
-                {% comment %} <td style='width:400px; height:50px; text-align:center'>공구 여부 : {{post.Board_share}}</td>
-                <tr><td style='width:400px; height:50px; text-align:center'>굿즈 종류 : {{ post.Board_gtype|cut:"["|cut:"'"|cut:","|cut:"]" }}</td></tr>
-                <tr><td style='width:400px; height:100px; text-align:center'>제목 : {{post.Board_title}}</td></tr>
-                <tr><td style='width:400px; height:280px; text-align:center;'>내용 : {{post.Board_content}}</td></tr>
-                <tr><td style='width:400px; height:20px; text-align:center'>일시 : {{post.Board_datetime}}</td></tr><tr>
-            {% elif forloop.counter <= 4 %}
-                <td><img src ="{{ image.Board_image.url }}" height=100px width=100px></td>
-            {% else %}
-            {% endif %}
-        {% endfor %}
+            <td class='detail_td1'>공구 여부</td>
+            <td class='detail_td2'>{{post.Board_share}}</td>
         </tr>
-    </table> {% endcomment %}
+        <tr>
+            <td class='detail_td1'>굿즈 종류</td>
+            <td class='detail_td2'>{{ post.Board_gtype|cut:"["|cut:"'"|cut:"]" }}</td>
+        </tr>
+        <tr style='height:10%;text-align:center;border-bottom: 1px solid #7e9df9;'>
+            <td colspan='2'>{{post.Board_title}}</td>
+        </tr>
+        <tr style='height:40%;text-align:center;border-bottom: 1px solid #7e9df9;'>
+            <td colspan='2'>{{post.Board_content|linebreaksbr}}</td>
+        </tr>
+        <tr>
+            <td class='detail_td1'>작성자</td>
+            <td class='detail_td2'>{{post.Board_writer.nickname}}</td>
+        </tr>
+        <tr>
+            <td class='detail_td1'>작성일</td>
+            <td class='detail_td2'>{{post.Board_datetime}}</td>
+        </tr>
+    </table>
+</div><div style="clear:both;overflow:auto;"></div>
 {% endblock %}
