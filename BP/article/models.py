@@ -2,6 +2,8 @@ from django.db import models
 from django.utils import timezone
 import datetime
 from django.conf import settings
+from django.urls import reverse
+import os
 # Create your models here.
 
 share_choice = [
@@ -29,3 +31,9 @@ class Post(models.Model):
 class PostImage(models.Model):
     Post = models.ForeignKey('article.Post', on_delete=models.CASCADE)
     Board_image = models.ImageField(upload_to=user_directory_path)
+    
+class Comment(models.Model):
+    Comment_post = models.ForeignKey('article.Post', on_delete=models.CASCADE)
+    Comment_content = models.CharField(max_length=200)
+    Comment_writer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    Comment_datetime = models.DateTimeField(auto_now=True)

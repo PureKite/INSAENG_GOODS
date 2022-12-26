@@ -20,33 +20,35 @@
     </div>
     <span style='font-size: 1.15rem;float:right;color:#848897;'><mark class="red">*</mark>표시는 필수 입력 항목입니다.</span>
     <div class='table-responsive'>
-        <table>
+        <table class='create_table'>
             <tr>
                 <td class='thst' height=36px;><mark class="red">*</mark>공구여부</td>
-                <td>{{ post_form.Board_share }}</td>
+                <td class='tdst'>{{ post_form.Board_share }}</td>
             </tr>
             <tr>
                 <td rowspan="2" class='thst' height=36px;><mark class="red">*</mark>굿즈종류</td>
-                <td>{{ post_form.Board_gtype}}</td>
+                <td class='tdst'>{{ post_form.Board_gtype}}</td>
             </tr>
             <tr>
-                <td>
+                <td class='tdst'>
                 {% if post_form.Board_gtype.errors %}
                     <span style="color:red;}">{{post_form.Board_gtype.errors}}</span>
                 {% endif %}</td>
             </tr>
             <tr>
                 <td class='thst' height=36px;><mark class="red">*</mark>제목</td>
-                <td>{{ post_form.Board_title }}</td>
+                <td class='tdst'>{{ post_form.Board_title }}</td>
             </tr>
             <tr>
                 <td class='thst'><mark class="red">*</mark>내용</td>
-                <td>{{ post_form.Board_content }}</td>
+                <td class='tdst'>{{ post_form.Board_content }}</td>
             </tr>
             <tr id = 'image'>
-                <td class='thst' style='border-bottom:none;'><mark class="red">*</mark>이미지 첨부</td>
+                <td class='thst' style='border-bottom:none;' rowspan='2'><mark class="red">*</mark>이미지 첨부</td>
+            </tr>
+            <tr>
                 <td class='insert'>
-                {{ post_imageform.Board_image }}<div class="file-list"></div></td>
+                    {{ post_imageform.Board_image }}<div class="file-list"></div></td>
             </tr>
         </table>
     </div>
