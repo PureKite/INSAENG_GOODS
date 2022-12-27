@@ -61,7 +61,7 @@
                     <div style=" padding:30px; background-color: #007BFF; border-radius:5px; height:400px;" class="tab-content center">
                     <div class="tab-pane fade show active" id="hp">
                         <div>
-                            <img href="/" src="{% static 'img/test_hp.jpg' %}" alt="" width="300" height="300">
+                            <img src='{{ design.design_hp.url }}' alt="" width="300" height="300">
                         </div>
                         <div style="margin-top:10; text-align: center;">
                             <form action="{% url 'goods:downloadFile'  %}">
@@ -71,7 +71,7 @@
                     </div>
                     <div class="tab-pane fade" id="gt">
                         <div>
-                            <img href="/" src="{% static 'img/test_gt.jpg' %}" alt="" width="300" height="300">
+                            <img href="/" src="{{ design.design_gr.url }}" alt="" width="300" height="300">
                         </div>
                         <div style="margin-top:10; text-align: center;">
                             <button style="padding:5px; border-radius:5px;" onclick="">다운로드</button>
@@ -79,7 +79,7 @@
                     </div>
                     <div class="tab-pane fade" id="kr">
                         <div>
-                            <img href="/" src="{% static 'img/test_kr.png' %}" alt="" width="300" height="300">
+                            <img href="/" src="{{ design.design_kr.url }}" alt="" width="300" height="300">
                         </div>
                         <div style="margin-top:10; text-align: center;">
                             <button style="padding:5px; border-radius:5px; border-radius:5px;" onclick="">다운로드</button>
@@ -87,7 +87,7 @@
                     </div>
                     <div class="tab-pane fade" id="ts">
                         <div>
-                            <img href="/" src="{% static 'img/test_ts.png' %}" alt="" width="300" height="300">
+                            <img href="/" src="{{ design.design_ts.url }}" alt="" width="300" height="300">
                         </div>
                         <div style="margin-top:10; text-align: center;">
                             <button style="padding:5px; border-radius:5px;" onclick="">다운로드</button>
@@ -95,7 +95,7 @@
                     </div>
                     <div class="tab-pane fade" id="wp">
                         <div>
-                            <img href="/" src="{% static 'img/test_wp.jpg' %}" alt="" width="300" height="300">
+                            <img href="/" src="{{ design.design_wp.url }}" alt="" width="300" height="300">
                         </div>
                         <div style="margin-top:10; text-align: center;">
                             <button style="padding:5px; border-radius:5px;">다운로드</button>
