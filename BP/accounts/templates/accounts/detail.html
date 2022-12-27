@@ -9,32 +9,53 @@
             <div class="bd-sidebar-body">
                 <ul class="nav">
                     <li><a href="/profiles/mydesign" class="btn btn-lg mt-5" role="button">나의 디자인</a></li>
-                    <li><a href="#" class="btn btn-lg mt-5" role="button">개인 정보 수정</a></li>
+                    <li><a href="{% url 'accountsapp:detail' user.pk %}" class="btn btn-lg mt-5" role="button">개인 정보 수정</a></li>
                 </ul>
             </div>
         </div>
         <div class="profile">
+            <h1 class="title">프로필</h1>
             <div class="user">
                 <div class="user-image">
-                    <img src="{% static 'img/user.jpg' %}" alt="">
+                    {% if not user.profile.image %}
+                        <img src="{{ user.profile.image.url }}" alt="">
+                    {% else %}
+                        <img src="{{ user.profile.image.url }}" alt="">
+                    {% endif%}
                 </div>
                 <div class="user-detail">
                     <div class="user-name">
                         <h2>{{ user.username }}</h2>
                     </div>
                     <div class="user-introduce">
-                        <p>소개</p>
+                        <p>{{ user.profile.message }}</p>
                     </div>
                     <button class="btn btn-secondary">
-                        <a href="{% url 'profilesapp:update' user.pk %}">수정하기</a>
+                        <a href="{% url 'profilesapp:update' user.profile.pk %}">프로필 변경</a>
                     </button>
                 </div>
             </div>
-            <div class="">
-                <div>
-                    kjkdkfjdkjdkjqudnrrnlkjaslkjfl
+            {% if request.user.is_authenticated %}
+            <div class="account">
+                <h1 class="title">개인정보</h1>
+                <div class="nickname tap">
+                    <div class="name">닉네임</div>
+                    <div>{{ user.nickname }}</div>
+                </div>
+                <div class="email tap">
+                    <div class="name">이메일</div>
+                    <div>{{ user.email }}</div>
+                </div>
+                <div class="buttons">
+                    <button class="btn btn-success update">
+                        <a href="{% url 'accountsapp:update' user.pk %}">수정하기</a>
+                    </button>
+                    <button class="btn btn-danger delete">
+                        <a href="">삭제하기</a>
+                    </button>
                 </div>
             </div>
+            {% endif %}
         </div>
     </div>
 </div>

@@ -159,16 +159,24 @@
     border-radius: 10px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    /*margin: 0 20px;*/
     padding: 10px;
-    height: 65vh;
+    height: 70vh;
     margin: 0 auto;
+}
+
+.profile .title {
+    margin: 20px;
+}
+
+.btn > a {
+    color: #ffffff;
+    text-decoration: none;
 }
 
 .profile .user {
     display: flex;
     height: 40%;
-    margin: 20px 0 40px 0;
+    margin: 15px 0 40px 0;
     align-items: center;
     justify-content: center;
 }
@@ -207,4 +215,114 @@
 .profile .user .user-detail button{
     position: absolute;
     right: 30px;
+}
+
+.profile-update {
+    margin: 20px;
+}
+
+.profile-update .user-image {
+    height: 40%;
+    margin: auto;
+}
+
+
+.profile-update .user-detail {
+    width: 100%;
+}
+
+.account .tap {
+    font-size: 20px;
+    margin: 20px;
+    display: flex;
+    height: 7%;
+    border-bottom: 1px solid #ccc;
+}
+
+.account .name {
+    width: 25%;
+    margin-left: 5%;
+}
+
+.account .buttons {
+    display: flex;
+    justify-content: end;
+}
+
+.buttons .btn {
+    margin-right: 20px;
+}
+
+/* profile-update */
+
+.profile-update .profile-img {
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-update .profile-img #preview{
+    width: 150px;
+    height: 150px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+.profile-update .profile-img #image{
+    margin-left: 40px;
+}
+
+.profile-update .user-detail .user-introduce {
+    margin: 20px 0px;
+    padding-top: 30px;
+    border-top: 1px solid #ccc;
+}
+
+.profile-update .user-detail .user-introduce textarea {
+    width: 100%;
+    margin: 20px auto 5px;
+    padding: 10px;
+    height: 25%;
+    resize: none;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    outline-color: #4070f4;
+}
+
+.profile-update .user-detail .btn {
+    float: right;
+}
+
+.account-update {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+}
+
+.account-update label {
+    font-size: 28px;
+}
+
+.account-update input {
+    height: 50px;
+    margin-bottom: 12px;
+    padding: 12px;
+    outline-color: #4070f4;
+    border: none;
+    border-bottom: 2px solid #ccc;
+}
+
+.account-update .disabled{
+    border: none;
+    outline: none;
+}
+
+.profile .btn {
+    margin-left: 20px;
+    width: 20%;
+    float: right;
 }

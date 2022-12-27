@@ -1,15 +1,20 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from django.contrib.auth import authenticate, get_user_model
 from accounts.models import Account
  
 # 회원 가입 폼
 class SignupForm(UserCreationForm):
     email = forms.EmailField(max_length=254, help_text='Required. Add a valid email address.')
- 
+    
     class Meta:
         model = Account
         fields = ('username', 'name', 'nickname', 'email', 'password1', 'password2', )
+        widgets = {
+            'username': forms.TextInput(attrs={
+                'readonly': True,
+                'style': 'display: none;'})
+        }
  
     def clean_username(self):
         username = self.cleaned_data['username']
@@ -56,6 +61,35 @@ class AccountAuthForm(forms.ModelForm):
 
 # 회원정보 수정 폼
 class CustomUserChangeForm(UserChangeForm):
+    
     class Meta:
         model = get_user_model()
         fields = ['username', 'name', 'nickname', 'email']
+        widgets = {
+            'username': forms.TextInput(attrs={
+                'class': 'disabled',
+                'readonly': True
+            }),
+            'name': forms.TextInput(attrs={
+                'class': 'disabled',
+                'readonly': True
+            }),
+        }
+        
+# 비빌번호 변경 폼
+class CustomPasswordChangeForm(PasswordChangeForm):
+    def __init__(self, *args, **kwargs):
+        super(CustomPasswordChangeForm, self).__init__(*args, **kwargs)
+        self.fields['old_password'].label = '기존 비밀번호'
+        self.fields['old_password'].widget.attrs.update({
+            'class': 'form-control',
+            'autofocus': False,
+        })
+        self.fields['new_password1'].label = '새 비밀번호'
+        self.fields['new_password1'].widget.attrs.update({
+            'class': 'form-control',
+        })
+        self.fields['new_password2'].label = '새 비밀번호 확인'
+        self.fields['new_password2'].widget.attrs.update({
+            'class': 'form-control',
+        })

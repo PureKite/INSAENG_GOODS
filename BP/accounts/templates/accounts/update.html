@@ -1,9 +1,38 @@
-{% comment %} {% extends 'base.html' %}
+{% extends 'base.html' %}
 {% load bootstrap4 %}
+{% load static %}
 {% block content %} 
-    <form method="POST">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        <button class="btn btn-primary">수정</button>
-    </form>
-{% endblock %} {% endcomment %}
+<link rel="stylesheet" href="{% static 'css/accounts.css' %}">
+<link rel="stylesheet" href="{% static 'css/main/style_mydesign.css' %}">
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <div class="col-6 bd-sidebar">
+            <div class="bd-sidebar-body">
+                <ul class="nav">
+                    <li><a href="/profiles/mydesign" class="btn btn-lg mt-5" role="button">나의 디자인</a></li>
+                    <li><a href="{% url 'accountsapp:detail' user.pk %}" class="btn btn-lg mt-5" role="button">개인 정보 수정</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="profile">
+            <h1 class="title">개인정보</h1>
+            <form action="{% url 'accountsapp:update' user.pk %}" method="POST" class="account-update">
+                {% csrf_token %}
+                <label for="id_username">아이디</label>
+                {{ form.username }}
+                <label for="id_name">이름</label>
+                {{ form.name }}
+                <label for="id_nickname">닉네임</label>
+                {{ form.nickname }}
+                <label for="id_email">이메일</label>
+                {{ form.email }}
+                <div>
+                    <button class="btn btn-primary">수정하기</button>
+                    <a href="{% url 'accountsapp:password' user.pk %}" class="btn btn-danger" role="button">비밀번호 변경</a>
+                    <a href="{% url 'accountsapp:detail' user.pk %}" class="btn btn-warning">돌아가기</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

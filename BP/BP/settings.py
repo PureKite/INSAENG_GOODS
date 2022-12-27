@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'profiles',
     'article',
     'imageconvert',
-
+    'bootstrap4',
 ]
 
 MIDDLEWARE = [

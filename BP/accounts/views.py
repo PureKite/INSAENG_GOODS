@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
-from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate
-from accounts.forms import SignupForm, AccountAuthForm, CustomUserChangeForm
+from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate, update_session_auth_hash
+from accounts.forms import SignupForm, AccountAuthForm, CustomUserChangeForm, CustomPasswordChangeForm
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
  
  
 def signup(request, *args, **kwargs):
@@ -20,9 +21,8 @@ def signup(request, *args, **kwargs):
             raw_password = form.cleaned_data.get('password1')
             account = authenticate(username=username, password=raw_password)
             auth_login(request, account)
-            # destination = kwargs.get("next")
             destination = get_redirect_if_exists(request)
-            if destination: # if destination != None
+            if destination:
                 return redirect(destination)
             return redirect("mainapp:main")
         else:
@@ -80,18 +80,37 @@ def detail(request, pk):
     context = {
         'user': user
     }
-    print(context)
     return render(request, 'accounts/detail.html', context)
 
-def update(request):
+@login_required
+def update(request, pk):
+    print('11')
     if request.method == 'POST':
+        print('33')
         form = CustomUserChangeForm(request.POST, instance=request.user)
         if form.is_valid():
+            print('as')
             form.save()
-            return redirect('articles:index')
+            return redirect('accountsapp:detail', pk)
     else:
         form = CustomUserChangeForm(instance=request.user)
     context = {
         'form': form
     }
+    print('22')
     return render(request, 'accounts/update.html', context)
+
+
+
+def password_change(request, pk):
+    if request.method == 'POST':
+        password_change_form = CustomPasswordChangeForm(request.user, request.POST)
+        if password_change_form.is_valid():
+            user = password_change_form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, "비밀번호를 성공적으로 변경하였습니다.")
+            return redirect('accountsapp:detail', pk)
+    else:
+        password_change_form = CustomPasswordChangeForm(request.user)
+
+    return render(request, 'accounts/password.html', {'password_change_form':password_change_form})
