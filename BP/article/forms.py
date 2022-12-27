@@ -1,19 +1,19 @@
 from django import forms
-from .models import Post, PostImage
+from .models import Post, PostImage, Comment
 
 goods_type = [
-    ('griptok', '그립톡'), 
-    ('mugcub', '머그컵'),
-    ('keyring', '키링'),
-    ('tshirt', '티셔츠'),   
-    ('phonecase', '핸드폰 케이스'),
+    ('그립톡', '그립톡'), 
+    ('머그컵', '머그컵'),
+    ('키링', '키링'),
+    ('티셔츠', '티셔츠'),   
+    ('핸드폰 케이스', '핸드폰 케이스'),
 ]
 class PostForm(forms.ModelForm):
     Board_gtype = forms.MultipleChoiceField(
         widget=forms.CheckboxSelectMultiple(),
         choices=goods_type,
         error_messages={'required':'굿즈 종류를 선택해주세요.'},
-        required=True
+        required=True,
     )
     
     class Meta:
@@ -48,4 +48,16 @@ class Post_ImageForm(forms.ModelForm):
     class Meta:
         model = PostImage
         fields = ['Board_image',]
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['Comment_content',]
+        widgets = {
+            'Comment_content' : forms.Textarea(attrs={
+                'placeholder':"댓글을 입력해주세요.",
+                'style':'width: 100%; height:10%; resize: none;'
+            }),
+        }
+        
         

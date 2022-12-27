@@ -1,20 +1,19 @@
-from django.shortcuts import render, redirect
-from django.http import Http404
-from django.http import HttpResponse
-from .forms import PostForm, Post_ImageForm
-from .models import Post, PostImage
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import PostForm, Post_ImageForm, CommentForm
+from .models import Post, PostImage, Comment
 from accounts.models import Account
 import logging
-from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator
 import datetime
-
+from django.contrib.auth.decorators import login_required
+import json
+from django.http import JsonResponse, HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 logger = logging.getLogger('mylogger')
- 
+
+@login_required
 def CreatePost(request):
     logger.error(request.user)
-    if not request.user.is_authenticated:
-        return redirect('mainapp:main')
     if request.method == 'POST' and request.FILES['Board_image']:
         post_form = PostForm(request.POST)
         post_imageform = Post_ImageForm(request.POST, request.FILES)
@@ -31,40 +30,32 @@ def CreatePost(request):
                 Board_writer = user,
             )
             p_form.save()
-            post = Post.objects.last()
+            post = p_form
             for image in images:
                 PostImage.objects.create(
                     Post = post,
                     Board_image = image
                 )    
-            return redirect('mainapp:main')
-        #return render(request, 'Create_Post.html',  {'post_form': post_form, 'post_imageform' : post_imageform})
+            return redirect('articleapp:DetailPost',  post.Board_id)
     else:
         post_form = PostForm()
         post_imageform = Post_ImageForm()
     return render(request, 'Create_Post.html',  {'post_form': post_form, 'post_imageform' : post_imageform})
-    
+
+@login_required
 def DetailPost(request, postid):
-    if not request.user.is_authenticated:
-        return redirect('mainapp:main')
     post = get_object_or_404(Post, Board_id=postid)
-    imagelist = PostImage.objects.filter(Post=postid)
-    
-    if imagelist.exists():
-        return render(request, 'Detail_Post.html', {'post':post, 'imagelist':imagelist, 'postid':postid})
-    else:
-        return Http404('해당 게시물을 찾을 수 없습니다.')
-    
+    comment = CommentForm()
+    return render(request, 'Detail_Post.html', {'post':post, 'comment':comment})
+
+@login_required 
 def DeletePost(request, postid):
-    if not request.user.is_authenticated:
-        return redirect('mainapp:main')
     post = get_object_or_404(Post, Board_id=postid)
     post.delete()
     return redirect('mainapp:main')
 
+@login_required
 def UpdatePost(request, postid):
-    if not request.user.is_authenticated:
-        return redirect('mainapp:main')
     post = get_object_or_404(Post, Board_id=postid)
     imagelist = PostImage.objects.filter(Post=postid)
     
@@ -87,16 +78,53 @@ def UpdatePost(request, postid):
                 )
             return redirect('/article/detail/'+str(postid))
         else:
-            return render(request, 'Update_Post.html', {'post_form': post_form, 'post_imageform' : post_imageform, 'postid' : postid})
+            return render(request, 'Update_Post.html', {'post_form': post_form, 'post_imageform' : post_imageform, 'postid':postid})
     else:
         post_form = PostForm(instance=post)
-        post_imageform = Post_ImageForm()
-        return render(request, 'Update_Post.html',  {'post_form': post_form, 'post_imageform' : post_imageform, 'postid' : postid})
+        post_imageform = Post_ImageForm(instance=post)
+        return render(request, 'Update_Post.html',  {'post_form': post_form, 'post_imageform' : post_imageform, 'postid':postid})
+
+@login_required
+def CreateComment(request, postid):
+    c_form = CommentForm(request.POST)
+    if c_form.is_valid():
+        user_id = request.user
+        user = Account.objects.get(username = user_id)
+        post = get_object_or_404(Post, Board_id = postid)
+        f_c_form = Comment(
+            Comment_post = post,
+            Comment_content = c_form.cleaned_data['Comment_content'],
+            Comment_writer = user,
+        )
+        f_c_form.save()
+    return redirect('articleapp:DetailPost', postid)
+
+@login_required
+@csrf_exempt
+def UpdateComment(request):
+    data = json.loads(request.body.decode('utf8'))
+    comment = Comment.objects.filter(id=data.get('id'))
+    context = {
+        'result' : 'no',
+    }
+    if comment is not None:
+        comment.update(Comment_content=data.get('Comment_content'), Comment_datetime=datetime.datetime.now())
+        context = {
+            'result':'ok',
+        }
+        return JsonResponse(context)
+    return JsonResponse(context)
+    
+@login_required
+def DeleteComment(request, postid, commentid):
+    comment = get_object_or_404(Comment, pk=commentid)
+    comment.delete()
+    return redirect('articleapp:DetailPost', postid)
 
 def ListPost(request):
-    login_session = request.session.get('login_session', '')
-    context = {'login_session':login_session}
-    return render(request, 'List_Post.html', context)
+    # login_session = request.session.get('login_session', '')
+    # context = {'login_session':login_session}
+    return render(request, 'List_Post.html')#, context)
 
 def input_test(request):
     if request.POST:
