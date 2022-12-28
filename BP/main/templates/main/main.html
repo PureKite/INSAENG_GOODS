@@ -15,7 +15,7 @@
             {% for post in postlist %}
                 <div class="col">
                     <div class="card shadow-sm">
-                        {% for image in post.postimage_set.all %}
+                        {% for image in post.postimage.all %}
                             <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}">
                                 <a href="{% url 'articleapp:DetailPost' post.Board_id %}">
                                     <img class="card-img-top bd-placeholder-img" width="100%" height="256" role="img" src="{{ image.Board_image.url }}">
