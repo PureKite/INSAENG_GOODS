@@ -7,5 +7,4 @@ logger = logging.getLogger('mylogger')
 
 def main(request):
     postlist = Post.objects.order_by('-Board_datetime')
-    imagelist = PostImage.objects.all()
-    return render(request, 'main/main.html', {'postlist': postlist, 'imagelist': imagelist})
+    return render(request, 'main/main.html', {'postlist': postlist})
