@@ -26,14 +26,14 @@ class Post(models.Model):
     Board_title = models.CharField(max_length=250)
     Board_content = models.TextField()
     Board_datetime = models.DateTimeField(default= datetime.datetime.now())
-    Board_writer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    Board_writer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
 
 class PostImage(models.Model):
     Post = models.ForeignKey('article.Post', on_delete=models.CASCADE, related_name='postimage')
     Board_image = models.ImageField(upload_to=user_directory_path)
     
 class Comment(models.Model):
-    Comment_post = models.ForeignKey('article.Post', on_delete=models.CASCADE)
+    Comment_post = models.ForeignKey('article.Post', on_delete=models.CASCADE, null=True)
     Comment_content = models.CharField(max_length=200)
     Comment_writer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     Comment_datetime = models.DateTimeField(auto_now=True)
