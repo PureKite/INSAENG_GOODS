@@ -2,11 +2,11 @@ from django import forms
 from .models import Post, PostImage, Comment
 
 goods_type = [
-    ('그립톡', '그립톡'), 
-    ('머그컵', '머그컵'),
-    ('키링', '키링'),
-    ('티셔츠', '티셔츠'),   
     ('핸드폰 케이스', '핸드폰 케이스'),
+    ('그립톡', '그립톡'), 
+    ('키링', '키링'),
+    ('티셔츠', '티셔츠'),  
+    ('배경화면', '배경화면'),
 ]
 class PostForm(forms.ModelForm):
     Board_gtype = forms.MultipleChoiceField(
@@ -30,9 +30,11 @@ class PostForm(forms.ModelForm):
                 'class':'form-control',
                 'rows':'10',
                 'placeholder':"내용을 입력해주세요.",
-                'style':'height: 300px; border: none;resize: none;'
+                'style':'height: 300px; border: none; resize: none;'
             }),
         }
+    
+
         
 class Post_ImageForm(forms.ModelForm):
     Board_image = forms.ImageField(

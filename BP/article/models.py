@@ -7,8 +7,8 @@ import os
 # Create your models here.
 
 share_choice = [
-    ('Yes', '한다'),
-    ('No', '안한다'), 
+    ('희망', '희망'),
+    ('비희망', '비희망'), 
 ]
 
 def user_directory_path(instance, filename):
@@ -21,7 +21,7 @@ def user_directory_path(instance, filename):
 
 class Post(models.Model):
     Board_id = models.AutoField(primary_key = True)
-    Board_share = models.CharField(max_length=100, choices=share_choice, default='Yes')
+    Board_share = models.CharField(max_length=100, choices=share_choice, default='희망')
     Board_gtype = models.CharField(max_length=100)
     Board_title = models.CharField(max_length=250)
     Board_content = models.TextField()
@@ -29,7 +29,7 @@ class Post(models.Model):
     Board_writer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 class PostImage(models.Model):
-    Post = models.ForeignKey('article.Post', on_delete=models.CASCADE)
+    Post = models.ForeignKey('article.Post', on_delete=models.CASCADE, related_name='postimage')
     Board_image = models.ImageField(upload_to=user_directory_path)
     
 class Comment(models.Model):

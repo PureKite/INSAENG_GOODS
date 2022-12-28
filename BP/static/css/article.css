@@ -172,7 +172,6 @@ mark.red {
 #comment_content > #c_content{
     width:100%;
     height:100%;
-    border:none;
 }
 #c_date{
     font-size:0.7rem;
@@ -183,4 +182,14 @@ mark.red {
     width:5%;
     height:10%;
     text-align: right;
+}
+#comment_btn{
+    width:5%;
+    height:10%;
+}
+#comment_btn > input[type="button"]{
+    width:80%;
+    height:80%;
+    margin-left:20;
+    margin-right:20;
 }
