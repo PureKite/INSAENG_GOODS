@@ -14,8 +14,4 @@ class ProfileForm(forms.ModelForm):
                 'onchange': 'setThumbnail(event)',
                 'style': 'margin-left: 200px'
             }),
-            
-            # 'message': forms.CharField(attrs={
-                
-            # })
         }

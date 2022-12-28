@@ -319,10 +319,11 @@
 .account-update .disabled{
     border: none;
     outline: none;
+    background-color: rgb(231, 231, 231);
+    border-radius: 6px;
 }
 
-.profile .btn {
-    margin-left: 20px;
-    width: 20%;
+.profile .button-group .btn {
     float: right;
+    margin-left: 10px;
 }

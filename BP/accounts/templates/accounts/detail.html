@@ -30,12 +30,14 @@
                     <div class="user-introduce">
                         <p>{{ user.profile.message }}</p>
                     </div>
+                    {% if request.user.pk == user.pk %}
                     <button class="btn btn-secondary">
                         <a href="{% url 'profilesapp:update' user.profile.pk %}">프로필 변경</a>
                     </button>
+                    {% endif %}
                 </div>
             </div>
-            {% if request.user.is_authenticated %}
+            {% if request.user.pk == user.pk %}
             <div class="account">
                 <h1 class="title">개인정보</h1>
                 <div class="nickname tap">
@@ -47,12 +49,29 @@
                     <div>{{ user.email }}</div>
                 </div>
                 <div class="buttons">
-                    <button class="btn btn-success update">
+                    <button class="btn btn-success">
                         <a href="{% url 'accountsapp:update' user.pk %}">수정하기</a>
                     </button>
-                    <button class="btn btn-danger delete">
-                        <a href="">삭제하기</a>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        회원탈퇴
                     </button>
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-3" id="staticBackdropLabel">회원탈퇴</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <h2 class="fs-4">정말로 탈퇴하시겠습니까?</h2>      
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                                    <button type="button" class="btn btn-danger"><a href="">탈퇴하기</a></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             {% endif %}

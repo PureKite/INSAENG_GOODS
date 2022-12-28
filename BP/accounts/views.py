@@ -101,6 +101,11 @@ def update(request, pk):
     return render(request, 'accounts/update.html', context)
 
 
+@login_required
+def delete(request):
+    pass
+
+
 
 def password_change(request, pk):
     if request.method == 'POST':
