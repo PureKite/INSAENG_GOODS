@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'article',
     'imageconvert',
     'goods',
+    'loading',
 
 ]
 
