@@ -17,7 +17,7 @@
         <hr />
     </div>
     <div class="thumbnail" >
-        {% for image in post.postimage_set.all %}
+        {% for image in post.postimage.all %}
             {% if forloop.counter == 1%}
                 <div id="mainImg"><img src ="{{ image.Board_image.url }}" alt="image"></div><div class="thumbs">
             {% endif %}
@@ -59,28 +59,37 @@
     <div>
         <hr />
         <h4>댓글</h4>
-        <table>
         {% if post.comment_set.all %}
+        <table width=95%>
             {% for comment in post.comment_set.all %}
-                <tr>
-                <td id = 'comment_content' rowspan='2'><input type = 'text' id = 'c_content' class='Content{{ comment.id }}' value='{{ comment.Comment_content|linebreaksbr }}' readonly></td>
-                <td id = 'comment_nad' rowspan='2'>{{ comment.Comment_writer.nickname }}<input type = 'text' id = 'c_date' class='Date{{ comment.id }}' value='{{ comment.Comment_datetime }}' readonly></td>
+            <tr>
+                <td id = 'comment_content'><textarea id = 'c_content' class='Content{{ comment.id }}' readonly>{{ comment.Comment_content|linebreaksbr }}</textarea></td>
+                <td id = 'comment_nad'>{{ comment.Comment_writer.nickname }}<input type = 'text' id = 'c_date' class='Date{{ comment.id }}' value='{{ comment.Comment_datetime }}' readonly></td>
                 {% if request.user == comment.Comment_writer %}
-                    <td class='Update{{ comment.id }}'><input type='button' onclick = 'Update({{ comment.id }});' value='수정'></td>
-                    <td class='Delete{{ comment.id }}'><input type='button' onclick = "location.href = '{% url 'articleapp:DeleteComment' post.Board_id comment.id %}'" value='삭제'></td>
-                    <td class="CommentSubmit{{ comment.id }}"  style="display:none"><input type="button"  value="등록" onclick="CommentSubmit({{ comment.id }})"></td>
-                    <td class="UpdateCancel{{ comment.id }}"  style="display:none"><input type="button"  value="취소" onclick="UpdateCancel({{ comment.id }})"></td>
+                    <td id = 'comment_btn'>
+                        <input type='button' class='Update{{ comment.id }}' onclick = 'Update({{ comment.id }});' value='수정'>
+                        <input type="button" class="CommentSubmit{{ comment.id }}" style="display:none" value="등록" onclick="CommentSubmit({{ comment.id }})">
+                    </td>
+                    <td id = 'comment_btn'>
+                        <input type='button' class='Delete{{ comment.id }}' onclick = "location.href = '{% url 'articleapp:DeleteComment' post.Board_id comment.id %}'" value='삭제'>
+                        <input type="button" class="UpdateCancel{{ comment.id }}" style="display:none" value="취소" onclick="UpdateCancel({{ comment.id }})">
+                    </td>
+                {% else %}
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 {% endif %}
-                </tr>
+            </tr>
             {% endfor %}
-        {% endif %}
         </table>
+        {% endif %}
         <hr />
         <form method='POST' action="{% url 'articleapp:CreateComment' post.Board_id %}">
             {% csrf_token %}
             <div style='width:85%;float:left;'>{{comment.Comment_content}}</div>
             <div style='width:10%float:right;'><input type='submit' class="comment_submit" value='댓글
-작성'></div><div style="clear:both;overflow:auto;">
+작성'></div><div style="clear:both;overflow:auto;"></div>
         </form>
     </div>
 </div>

@@ -1,4 +1,3 @@
-
 function addFile(obj){
     $('.file-list').empty();
     let htmlData = '';
