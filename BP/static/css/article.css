@@ -167,7 +167,7 @@ mark.red {
     margin-right:10%;
 }
 #comment_content{
-    width:70%;
+    width:80%;
     height:10%;
 }
 #comment_content > #c_content{
@@ -176,6 +176,7 @@ mark.red {
     resize: none;
     border: none;
     border-radius: 0.25rem;
+    overflow-y: hidden;
 }
 #c_date{
     border:none;
