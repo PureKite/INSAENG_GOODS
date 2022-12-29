@@ -138,28 +138,12 @@ def DeleteComment(request, postid, commentid):
 
 def ListPost(request):
     postlist = Post.objects.all().order_by('-Board_datetime')
-    logger.error(postlist)
-    imagelist = PostImage.objects.all()
-    logger.error(imagelist)
-    # login_session = request.session.get('login_session', '')
-    # context = {'login_session':login_session}
-    return render(request, 'List_Post.html', {'postlist':postlist, 'imagelist':imagelist})#, context)
+    return render(request, 'List_Post.html', {'postlist':postlist})
 
-def selected(request):
-    context = {}
-    post_list = Post.objects.all()
-    search = request.GET.get('search', '')
-    if search:
-        search_list = post_list.filter(
-            Q(Board_title = search) |
-            Q(Board_content = search) |
-            Q(Board_gtype = search) |
-            Q(Board_share = search) |
-            Q(Board_writer = search)
-        )
-    context['selected'] = selected
-    return render(request, 'List_Post.html', context)
-    
 def search(request):
+    context = dict()
+    search_post = Post.objects.all()
+    
+    
     b = request.GET.get('b','')
     selected = selected.filter(Q())
