@@ -8,7 +8,7 @@ from django.dispatch import receiver
 class Profile(models.Model):
     user = models.OneToOneField(Account, on_delete=models.CASCADE,
                                 related_name='profile')
-    image = models.ImageField(upload_to='profile/', default='profile/user.jpg', blank=True)
+    image = models.ImageField(upload_to='profile/', default='../static/img/user.jpg', blank=True)
     message = models.TextField(max_length=300, default='자기소개를 입력해주세요!', blank=True)
     
     @property
@@ -27,3 +27,4 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=Account)
 def create_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+    
