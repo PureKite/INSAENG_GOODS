@@ -71,6 +71,7 @@
                           if (fileList) {
                             fileList.scrollTo({ top: fileList.scrollHeight });
                           }
+                          document.querySelector('#chooseFile').files = files;
                         }
                     
                         function handleFiles(files) {
@@ -85,14 +86,7 @@
                           renderFile(file);
                         }
                     
-                        function handleSaveClick() {
-                          //이미지파일 타입 정의
-                          const image=canvas.toDataURL();
-                          const link=document.createElement("a");
-                          link.href=image;
-                          link.download="file_name" //파일명
-                          link.click()    //이미지 주소가 담긴 a태그를 클릭해서 실행되도록 클릭되도록함
-                      }
+                      
 
                         function renderFile(file) {
                           let reader = new FileReader();
