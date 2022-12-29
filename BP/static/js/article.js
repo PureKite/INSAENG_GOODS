@@ -140,10 +140,13 @@ const CommentSubmit = (id) => {
     });
 }
 $(function() {
-    $('textarea').each(function() {
+    $('.text_area').each(function() {
         $(this).height($(this).prop('scrollHeight'));
     });
-    $('textarea').on('keydown keyup', function() {
+    $('.text_area').on('keydown keyup', function() {
         $(this).height($(this).prop('scrollHeight'));
     });
+    // $('#id_Comment_content').on('keydown keyup', function() {
+    //     $(this).height($(this).prop('scrollHeight'));
+    // });
 });
