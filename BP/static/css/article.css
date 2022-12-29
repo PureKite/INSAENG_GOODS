@@ -52,6 +52,7 @@ input[type="checkbox"], input[type="radio"]{
     border-radius: 80px 80px 80px 80px;
     color:white;
     padding-left: 10px;
+    font-size:1rem;
 }
 #id_Board_share > li > label, #id_Board_gtype > li > label{
     width:130px;

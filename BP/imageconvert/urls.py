@@ -4,7 +4,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 app_name = 'imageconvert'
-
 urlpatterns = [
+    path('viewimage', views.viewimage, name='viewimage'),
+    path('download', views.downloadFile, name='downloadFile'),
     path('', views.imageconvert),
-] +  static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]

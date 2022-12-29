@@ -11,7 +11,7 @@ urlpatterns = [
     path('', include('main.urls')),
     path('accounts/', include('accounts.urls')),
     path('profiles/', include('profiles.urls')),
-    path('imageconvert/', include('imageconvert.urls')),
+    path('imageconvert/', include('imageconvert.urls', namespace='imageconvert')),
     path('goods/', include('goods.urls')),
     path('loading/', include('loading.urls')),
 ]

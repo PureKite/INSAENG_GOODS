@@ -5,7 +5,7 @@
   height: calc(100vh - 4rem);
   /*background: #dee2e6;*/
   border-right: 3px solid #4070f4;
-  max-width: 220px;
+  max-width: 230px;
   display: flex;
   padding: 0;
   overflow-y: hidden;
@@ -14,6 +14,7 @@
 
 .bd-sidebar-body {
   height: 100%;
+  width: 100%;
   overflow-y: auto;
   display: block;
 }

@@ -63,7 +63,7 @@
         <table>
             {% for comment in post.comment_set.all %}
             <tr>
-                <td id = 'comment_content'><textarea id = 'c_content' class='Content{{ comment.id }}' readonly>{{ comment.Comment_content }}</textarea></td>
+                <td id = 'comment_content'><textarea id = 'c_content' class='Content{{ comment.id }} text_area' readonly>{{ comment.Comment_content }}</textarea></td>
                 <td id = 'comment_nad'>{{ comment.Comment_writer.nickname }}<input type = 'text' id = 'c_date' class='Date{{ comment.id }}' value='{{ comment.Comment_datetime }}' readonly></td>
                 {% if request.user == comment.Comment_writer %}
                     <td id = 'comment_btn'>
