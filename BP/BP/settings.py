@@ -54,7 +54,6 @@ INSTALLED_APPS = [
     'imageconvert',
     'goods',
     'loading',
-    'bootstrap4',
 ]
 
 MIDDLEWARE = [
