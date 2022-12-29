@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<head>
+    <script>
+        let fileId = 0
+        function addFile(){
+            const fileModule = document.getElementById('file_'+fileId);
+            const newNode = fileModule.cloneNode(true);
+            console.log(newNode)
+            
+            fileId++;
+            newNode.id = 'file_'+fileId;
+            fileModule.after(newNode);
+        }
+    </script>
+</head>
+<body>
+    <form action="viewimage" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <span id='file_0'>
+            <fieldset>
+                <legend><h1>파일 업로드</h1></legend>
+                <input name="files" type="file">
+            </fieldset>
+            <select name="model_select" id="model_select">
+                <option value="arcane">arcane</option>
+                <option value="origin">origin</option>
+                <option value="simpson">simpson</option>
+                <option value="thearistocats">thearistocats</option>
+            </select>
+            {% comment %} <div>정답 : <input name="answer" type="text"></div> {% endcomment %}
+        </span>
+
+        <br>
+        <input type="button" value="파일 추가" onclick="addFile()">
+        <div><input type="submit" value="업로드"></div>
+    </form>
+</body>
+{% endblock %}
