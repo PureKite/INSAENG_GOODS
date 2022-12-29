@@ -106,8 +106,8 @@ def unet_generator(inputs, channel=32, num_blocks=4, name='generator', reuse=Fal
         
         return x4
 
-def upload(request):
-    return render(request, 'upload.html')
+def imageconvert(request):
+    return render(request, 'imageconvert.html')
 
 def downloadFile(request):
     image = Images.objects.last()
