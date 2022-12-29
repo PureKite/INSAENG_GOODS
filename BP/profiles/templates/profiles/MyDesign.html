@@ -29,7 +29,7 @@
                                     <p class="card-title h4" href="{% url 'articleapp:DetailPost' post.Board_id %}">{{ post.Board_title }}</p>
                                     <div class="btn-group">
                                         <p class="share">공구</p>
-                                        {% if post.Board_share == 'Yes' %}
+                                        {% if post.Board_share == '희망' %}
                                             <p><img src="{% static 'img/checked.png' %}" alt="" width="20" height="20" style="margin: 5px 0px 0px 10px;"></p>
                                         {% else %}
                                             <p><img src="{% static 'img/cancel.png' %}" alt="" width="20" height="20" style="margin: 5px 0px 0px 10px;"></p>

@@ -85,6 +85,7 @@ const Update = (id) => {
     CommentSubmit.style.display = 'inline-block';
     UpdateCancel.style.display = 'inline-block';
     Content.readOnly = false;
+    Content.style.border = '1px solid black';
 }
 const UpdateCancel = (id) => {
     let Update = document.querySelector(`.Update${id}`);
@@ -98,6 +99,7 @@ const UpdateCancel = (id) => {
     Update.style.display = 'inline-block';
     Delete.style.display = 'inline-block';
     Content.readOnly = true;
+    Content.style.border = 'none';
 }
 const CommentSubmit = (id) => {
     let Content = document.querySelector(`.Content${id}`).value;
@@ -126,6 +128,7 @@ const CommentSubmit = (id) => {
                 UpdateCancel.style.display = 'none';
                 Update.style.display = 'inline-block';
                 Delete.style.display = 'inline-block';
+                Content.style.border = 'none';
                 Date.value = time.toLocaleString('ko-kr').slice(0,4)+'년'+time.toLocaleString('ko-kr').slice(5,8)+'월'
                             +time.toLocaleString('ko-kr').slice(9,12)+'일'+time.toLocaleString('ko-kr').slice(16,21)+time.toLocaleString('ko-kr').slice(13,16);
                 Content.readOnly = true;
@@ -136,3 +139,8 @@ const CommentSubmit = (id) => {
         }
     });
 }
+$(function() {
+    $('textarea').each(function() {
+        $(this).height($(this).prop('scrollHeight'));
+    });
+});
