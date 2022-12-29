@@ -1,11 +1,10 @@
 from django.shortcuts import render
+from article.models import Post, PostImage
+import logging
 from django.http import HttpResponse
 from django.core.paginator import Paginator
+logger = logging.getLogger('mylogger')
 
 def main(request):
-    return render(request, 'main/main.html')
-
-def mydesign(request):
-    return render(request, 'main/MyDesign.html')
-
-
+    postlist = Post.objects.order_by('-Board_datetime')
+    return render(request, 'main/main.html', {'postlist': postlist})

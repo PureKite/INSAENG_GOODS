@@ -1,10 +1,10 @@
 .bd-sidebar {
-  position: fixed;
+  position: sticky;
   top: 4rem;
   z-index: 1000;
   height: calc(100vh - 4rem);
   /*background: #dee2e6;*/
-  /*border-right: 1px solid #4070f4;*/
+  border-right: 3px solid #4070f4;
   max-width: 220px;
   display: flex;
   padding: 0;
@@ -27,8 +27,4 @@
   padding: .25rem 1.5rem;
   font-size: 30px;
   /*border-top: 1px solid #4070f4;*/
-}
-
-#designList {
-  margin-left: 250px;
 }

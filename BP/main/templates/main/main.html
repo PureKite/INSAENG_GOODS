@@ -2,34 +2,78 @@
 {% load static %}
 {% block content %}
     <link href="{% static 'css/main/style_main.css' %}" rel="stylesheet">
-    <div id='maintitle' class="row">
-        <div class="col-lg-6 col-sm-12 text-lg-start text-center">
+    <div id='main_title' class="row justify-content-between">
+        <div class="col-lg-3 col-sm-12 text-lg-start">
             미리보기
         </div>
         <div class="col-lg-6 col-sm-12 text-lg-end">
-            <button id="plus_button" class="btn btn-outline-primary btn-lg" type="button" href="#">더보기</button>
+            <button id="plus_button" class="btn btn-outline-primary btn-lg" type="button" onclick="location.href='/article/'">더보기</button>
         </div>
     </div>
-    <div id="preview" class="justify-content-center">
-        <div class="row">
-            {% for i in "x"|rjust:"6" %}
-                <div class="col-sm-4 mb-5">
-                    <div class="card" style="width: 50%;">
-                        <div class="embed-responsive embed-responsive-4by3">
-                            <a href="#">
-                                <img href="#" class="card-img-top embed-responsive-item" src="{% static 'img/cat.jpg' %}" alt="cat" width="75">
-                            </a>
-                        </div>
+    {% if postlist %}
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for post in postlist %}
+                <div class="col">
+                    <div class="card shadow-sm">
+                        {% for image in post.postimage.all %}
+                            <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}">
+                                <a href="{% url 'articleapp:DetailPost' post.Board_id %}">
+                                    <img class="card-img-top bd-placeholder-img" width="100%" height="256" role="img" src="{{ image.Board_image.url }}">
+                                </a>
+                            </div>
+                        {% endfor %}
                         <div class="card-body">
-                            <a class="card-title h4" href="#">제목</a>
-                            <ul class="navbar-nav ml-auto">
-                                <li class="card-user">작성자</li>
-                                <li class="card-date">일시</li>
-                            </ul>
+                            <p class="card-title h4" href="{% url 'articleapp:DetailPost' post.Board_id %}">{{ post.Board_title }}</p>
+                            <div class="btn-group">
+                                <p class="share">공구</p>
+                                {% if post.Board_share == '희망' %}
+                                    <p><img src="{% static 'img/checked.png' %}" alt="" width="20" height="20" style="margin: 5px 0px 0px 10px;"></p>
+                                {% else %}
+                                    <p><img src="{% static 'img/cancel.png' %}" alt="" width="20" height="20" style="margin: 5px 0px 0px 10px;"></p>
+                                {% endif %}
+                            </div>
+                            <div>
+                                <span class="custom-control custom-switch">
+                                    {% if '그립톡' in post.Board_gtype %}
+                                        <input type="checkbox" class="custom-control-input" id="check" checked>
+                                        <label class="custom-control-label" for="check">그립톡</label>
+                                    {% endif %}
+                                </span>
+                                <span class="custom-control custom-switch">
+                                    {% if '배경화면' in post.Board_gtype %}
+                                        <input type="checkbox" class="custom-control-input" id="check" checked>
+                                        <label class="custom-control-label" for="check">배경화면</label>
+                                    {% endif %}
+                                </span>
+                                <span class="custom-control custom-switch">
+                                    {% if '키링' in post.Board_gtype %}
+                                        <input type="checkbox" class="custom-control-input" id="check" checked>
+                                        <label class="custom-control-label" for="check">키링</label>
+                                    {% endif %}
+                                </span>
+                                <span class="custom-control custom-switch">
+                                    {% if '티셔츠' in post.Board_gtype %}
+                                        <input type="checkbox" class="custom-control-input" id="check" checked>
+                                        <label class="custom-control-label" for="check">티셔츠</label>
+                                    {% endif %}
+                                </span>
+                                <span class="custom-control custom-switch">
+                                    {% if '핸드폰 케이스' in post.Board_gtype %}
+                                        <input type="checkbox" class="custom-control-input" id="check" checked>
+                                        <label class="custom-control-label" for="check">핸드폰 케이스</label>
+                                    {% endif %}
+                                </span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted">{{ post.Board_writer.nickname }}</small>
+                                <small class="text-muted">{{ post.Board_datetime|date:'Y-m-d' }}</small>
+                            </div>
                         </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
-    </div>
+    {% else %}
+        <h5 style="text-align: center; font-size: 30px;">작성된 게시글이 없습니다.</h5>
+    {% endif %}
 {% endblock %}

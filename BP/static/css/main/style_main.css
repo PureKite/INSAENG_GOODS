@@ -1,33 +1,47 @@
 /* main page */
-#maintitle {
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+*{
+    padding:0;
+    margin:0;
+    box-sizing: border-box;
+}
+body{
+    align-items: center;
+    justify-content: center;
+}
+
+.box-shadow{
+    box-shadow: 0px 2px 10px rgba(0,0,0,0.2);
+}
+
+#main_title {
     font-size: 50px;
-    /*margin-top: 10px;*/
-    /*margin-left: 50px;*/
+    margin: 20px 0px 30px 0px;
 }
 
 #plus_button {
     margin-top: 10px;
 }
 
-#preview {
-    /*background-color: #0dcaf0;*/
-    margin: 50px 20px 0px 20px;
-}
-
 .card-title {
     font-size: 35px;
 }
 
-.card-user {
-    font-size: 20px;
-}
-
-.card-date {
-    font-size: 15px;
-    color: #bbccdd;
-}
+/*.card-date {*/
+/*    font-size: 15px;*/
+/*    color: #bbccdd;*/
+/*}*/
 
 a {
     text-decoration: none;
     color: black;
+}
+
+.share {
+    width: 50px;
+    height: 30px;
+    border: 3px solid #b5c8ff;
+    border-radius: 10px;
+    background-color: #b5c8ff;
+    text-align: center;
 }

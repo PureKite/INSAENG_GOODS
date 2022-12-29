@@ -1,0 +1,96 @@
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/article.css' %}">
+<script src="{% static 'js/article.js' %}"></script>
+<div class='detail_body'>
+    <div>
+        <h3>공유 게시판</h3>
+    </div>
+    <div class='b_info'>
+        <hr />
+        <span>공유 게시판 > 게시글</span>
+        <hr />
+    </div>
+    <div class="thumbnail" >
+        {% for image in post.postimage.all %}
+            {% if forloop.counter == 1%}
+                <div id="mainImg"><img src ="{{ image.Board_image.url }}" alt="image"></div><div class="thumbs">
+            {% endif %}
+            <a href="" alt="image{{ forloop.counter }}"><img src ="{{ image.Board_image.url }}"></a>
+        {% endfor %}
+        </div>
+    </div>
+    <div class='detail'>
+        <div style='height:6%; margin-bottom:2%;'>
+            {% if request.user == post.Board_writer%}
+            <input style='float:right;' type='button' class="btn btn-primary" onclick='p_udt({{ post.Board_id }});' value='수정'>
+            <input style='float:right;margin-right:8px;' type='button' class="btn btn-secondary" onclick='p_del({{ post.Board_id }});' value='삭제'>
+            {% endif %}
+        </div>
+        <div>
+        <table class='detail_table'>
+            <tr>
+                <td class='detail_td1' style='border-radius: 10px 0 0 0;'>공구 여부</td>
+                <td class='detail_td2'>{{post.Board_share}}</td>
+                <td class='detail_td1'>작성자</td>
+                <td class='detail_td2'style='border-radius: 0 10px 0 0 ;'>{{post.Board_writer.nickname}}</td>
+            </tr>
+            <tr>
+                <td class='detail_td1'>굿즈 종류</td>
+                <td class='detail_td2'>{{ post.Board_gtype|cut:"["|cut:"'"|cut:"]" }}</td>
+                
+                <td class='detail_td1'>작성일</td>
+                <td class='detail_td2'>{{post.Board_datetime}}</td>
+            </tr>
+            <tr>
+                <td colspan='4' class='detail_title'>{{post.Board_title}}</td>
+            </tr>
+            <tr>
+                <td colspan='4' class='detail_content'>{{post.Board_content|linebreaksbr}}</td>
+            </tr>
+        </table>
+    </div>
+    </div><div style="clear:both;overflow:auto;"></div>
+    <div>
+        <hr />
+        <h4>댓글</h4>
+        {% if post.comment_set.all %}
+        <table>
+            {% for comment in post.comment_set.all %}
+            <tr>
+                <td id = 'comment_content'><textarea id = 'c_content' class='Content{{ comment.id }}' readonly>{{ comment.Comment_content }}</textarea></td>
+                <td id = 'comment_nad'>{{ comment.Comment_writer.nickname }}<input type = 'text' id = 'c_date' class='Date{{ comment.id }}' value='{{ comment.Comment_datetime }}' readonly></td>
+                {% if request.user == comment.Comment_writer %}
+                    <td id = 'comment_btn'>
+                        <input type='button' class='Update{{ comment.id }}' onclick = 'Update({{ comment.id }});' value='수정'>
+                        <input type="button" class="CommentSubmit{{ comment.id }}" style="display:none" value="등록" onclick="CommentSubmit({{ comment.id }})">
+                    </td>
+                    <td id = 'comment_btn'>
+                        <input type='button' class='Delete{{ comment.id }}' onclick = "location.href = '{% url 'articleapp:DeleteComment' post.Board_id comment.id %}'" value='삭제'>
+                        <input type="button" class="UpdateCancel{{ comment.id }}" style="display:none" value="취소" onclick="UpdateCancel({{ comment.id }})">
+                    </td>
+                {% else %}
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+        <hr />
+        <form method='POST' action="{% url 'articleapp:CreateComment' post.Board_id %}">
+            {% csrf_token %}
+            <div style='width:85%;float:left;'>{{comment.Comment_content}}</div>
+            <div style='width:15%;float:right;'><input type='submit' class="comment_submit" value='댓글
+작성'></div><div style="clear:both;overflow:auto;"></div>
+        </form>
+    </div>
+</div>
+{% endblock %}

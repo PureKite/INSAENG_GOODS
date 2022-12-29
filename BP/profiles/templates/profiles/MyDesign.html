@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <link href="{% static 'css/main/style_mydesign.css' %}" rel="stylesheet">
+    <link href="{% static 'css/main/style_main.css' %}" rel="stylesheet">
+    <div class="container-fluid">
+        <div class="row flex-nowrap">
+            <div class="col-md-4 bd-sidebar">
+                <div class="bd-sidebar-body">
+                    <ul class="nav">
+                        <li><a href="/profiles/mydesign" class="btn btn-lg mt-5" role="button">나의 디자인</a></li>
+                        <li><a href="{% url 'accountsapp:detail' user.pk %}" class="btn btn-lg mt-5" role="button">개인 정보 수정</a></li>
+                    </ul>
+                </div>
+            </div>
+             {% if post_list %}
+                <div class="row row-cols-3 row-cols-md-3 mb-3 center pt-5" style="width: 1000px;">
+                    {% for post in post_list %}
+                        <div class="col">
+                            <div class="card mb-4 shadow-sm">
+                                {% for image in post.postimage.all %}
+                                    <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}">
+                                        <a href="{% url 'articleapp:DetailPost' post.Board_id %}">
+                                            <img class="card-img-top bd-placeholder-img" width="100%" height="256" role="img" src="{{ image.Board_image.url }}">
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                                <div class="card-body">
+                                    <p class="card-title h4" href="{% url 'articleapp:DetailPost' post.Board_id %}">{{ post.Board_title }}</p>
+                                    <div class="btn-group">
+                                        <p class="share">공구</p>
+                                        {% if post.Board_share == '희망' %}
+                                            <p><img src="{% static 'img/checked.png' %}" alt="" width="20" height="20" style="margin: 5px 0px 0px 10px;"></p>
+                                        {% else %}
+                                            <p><img src="{% static 'img/cancel.png' %}" alt="" width="20" height="20" style="margin: 5px 0px 0px 10px;"></p>
+                                        {% endif %}
+                                    </div>
+                                    <div>
+                                        <span class="custom-control custom-switch">
+                                    {% if '그립톡' in post.Board_gtype %}
+                                        <input type="checkbox" class="custom-control-input" id="check" checked>
+                                        <label class="custom-control-label" for="check">그립톡</label>
+                                    {% endif %}
+                                    </span>
+                                    <span class="custom-control custom-switch">
+                                        {% if '배경화면' in post.Board_gtype %}
+                                            <input type="checkbox" class="custom-control-input" id="check" checked>
+                                            <label class="custom-control-label" for="check">그립톡</label>
+                                        {% endif %}
+                                    </span>
+                                    <span class="custom-control custom-switch">
+                                        {% if '키링' in post.Board_gtype %}
+                                            <input type="checkbox" class="custom-control-input" id="check" checked>
+                                            <label class="custom-control-label" for="check">키링</label>
+                                        {% endif %}
+                                    </span>
+                                    <span class="custom-control custom-switch">
+                                        {% if '티셔츠' in post.Board_gtype %}
+                                            <input type="checkbox" class="custom-control-input" id="check" checked>
+                                            <label class="custom-control-label" for="check">티셔츠</label>
+                                        {% endif %}
+                                    </span>
+                                    <span class="custom-control custom-switch">
+                                        {% if '핸드폰 케이스' in post.Board_gtype %}
+                                            <input type="checkbox" class="custom-control-input" id="check" checked>
+                                            <label class="custom-control-label" for="check">핸드폰 케이스</label>
+                                        {% endif %}
+                                    </span>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted">{{ post.Board_writer.nickname }}</small>
+                                        <small class="text-muted">{{ post.Board_datetime|date:'Y-m-d' }}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <h5 style="text-align: center; font-size: 30px; padding-top: 50px; width: 1000px;">작성된 게시글이 없습니다.</h5>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

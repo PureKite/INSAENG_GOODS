@@ -7,11 +7,14 @@ from main import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('article/', include('article.urls')),
     path('', include('main.urls')),
-    path('mydesign/', views.mydesign),
     path('accounts/', include('accounts.urls')),
     path('profiles/', include('profiles.urls')),
-    
+    path('imageconvert/', include('imageconvert.urls')),
+    path('goods/', include('goods.urls')),
+    path('loading/', include('loading.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
