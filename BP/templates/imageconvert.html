@@ -5,120 +5,112 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'css/imageconvert/style_imageconvert.css' %}">
 <div class="content">
-    <!DOCTYPE html>
-    <html>
-        <body>
-            <form action="viewimage" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <span id='file_0'>
-                    <fieldset>
-                        <label class="file-label" for="chooseFile">업로드</label>
-                        <input name = "files" class="file" id="chooseFile"
-                          type="file" 
-                          onchange="dropFile.handleFiles(this.files)"
-                          accept="image/png, image/jpeg, image/gif">
-                    
-                    <select name="model_select" id="model_select">
-                        <option value="arcane">arcane</option>
-                        <option value="origin">origin</option>
-                        <option value="simpson">simpson</option>
-                        <option value="thearistocats">thearistocats</option>
-                    </select>
-                    {% comment %} <div>정답 : <input name="answer" type="text"></div> {% endcomment %}
-                </span>
-            
-                <div>                                
-                    <div class="upload-box">
-                        <div id="drop-file" class="drag-file">
-                          <img src="https://img.icons8.com/pastel-glyph/2x/image-file.png" alt="파일 아이콘" class="image">
-                          <p class="message">업로드할 이미지를 끌어다 놓으세요</p>
-                          <img src="" alt="미리보기 이미지" class="preview">
-                        </div>
-                    </div>
+    <form action="viewimage" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <span id='file_0'>
+            <fieldset>
+                <label class="file-label" for="chooseFile">업로드</label>
+                <input name = "files" class="file" id="chooseFile"
+                  type="file"
+                  onchange="dropFile.handleFiles(this.files)"
+                  accept="image/png, image/jpeg, image/gif">
+            </fieldset>
+            <select name="model_select" id="model_select">
+                <option value="arcane">arcane</option>
+                <option value="origin">origin</option>
+                <option value="simpson">simpson</option>
+                <option value="thearistocats">thearistocats</option>
+            </select>
+{#            {% comment %} <div>정답 : <input name="answer" type="text"></div> {% endcomment %}#}
+        </span>
+        <div>
+            <div class="upload-box">
+                <div id="drop-file" class="drag-file">
+                  <img src="https://img.icons8.com/pastel-glyph/2x/image-file.png" alt="파일 아이콘" class="image">
+                  <p class="message">업로드할 이미지를 끌어다 놓으세요</p>
+                  <img src="" alt="미리보기 이미지" class="preview">
                 </div>
-                <script>
-                    function DropFile(dropAreaId, fileListId) {
-                        let dropArea = document.getElementById(dropAreaId);
-                        let fileList = document.getElementById(fileListId);
+            </div>
+        </div>
+        <script>
+            function DropFile(dropAreaId, fileListId) {
+                let dropArea = document.getElementById(dropAreaId);
+                let fileList = document.getElementById(fileListId);
 
-                        console.log(fileListId);
+                console.log(fileListId);
 
-                        function preventDefaults(e) {
-                          e.preventDefault();
-                          e.stopPropagation();
-                        }
-                    
-                        function highlight(e) {
-                          preventDefaults(e);
-                          dropArea.classList.add("highlight");
-                        }
-                    
-                        function unhighlight(e) {
-                          preventDefaults(e);
-                          dropArea.classList.remove("highlight");
-                        }
-                    
-                        function handleDrop(e) {
-                          unhighlight(e);
-                          let dt = e.dataTransfer;
-                          let files = dt.files;
+                function preventDefaults(e) {
+                  e.preventDefault();
+                  e.stopPropagation();
+                }
 
-                          console.log(fileListId);
+                function highlight(e) {
+                  preventDefaults(e);
+                  dropArea.classList.add("highlight");
+                }
 
-                          handleFiles(files);
-                        
-                          const fileList = document.getElementById(fileListId);
-                          if (fileList) {
-                            fileList.scrollTo({ top: fileList.scrollHeight });
-                          }
-                          document.querySelector('#chooseFile').files = files;
-                        }
-                    
-                        function handleFiles(files) {
-                          files = [...files];
-                          // files.forEach(uploadFile);
-                          files.forEach(previewFile);
-                          console.log(fileListId);
-                        }
-                    
-                        function previewFile(file) {
-                          console.log(file);
-                          renderFile(file);
-                        }
-                    
-                      
+                function unhighlight(e) {
+                  preventDefaults(e);
+                  dropArea.classList.remove("highlight");
+                }
 
-                        function renderFile(file) {
-                          let reader = new FileReader();
-                          reader.readAsDataURL(file);
-                          reader.onloadend = function () {
-                            let img = dropArea.getElementsByClassName("preview")[0];
-                            img.src = reader.result;
-                            img.style.display = "block";
-                          };
-                        }
-                    
-                        dropArea.addEventListener("dragenter", highlight, false);
-                        dropArea.addEventListener("dragover", highlight, false);
-                        dropArea.addEventListener("dragleave", unhighlight, false);
-                        dropArea.addEventListener("drop", handleDrop, false);
-                    
-                        return {
-                          handleFiles
-                        };
-                      }
+                function handleDrop(e) {
+                  unhighlight(e);
+                  let dt = e.dataTransfer;
+                  let files = dt.files;
 
-                      const dropFile = new DropFile("drop-file", "files");
-                </script>
-                <div>
-                
-                <br>
-                
-                <div><input type="submit" value="업로드"></div>
+                  console.log(fileListId);
 
-                
-            </form>
-        </body>
-    </html>
+                  handleFiles(files);
+
+                  const fileList = document.getElementById(fileListId);
+                  if (fileList) {
+                    fileList.scrollTo({ top: fileList.scrollHeight });
+                  }
+                  document.querySelector('#chooseFile').files = files;
+                }
+
+                function handleFiles(files) {
+                  files = [...files];
+                  // files.forEach(uploadFile);
+                  files.forEach(previewFile);
+                  console.log(fileListId);
+                }
+
+                function previewFile(file) {
+                  console.log(file);
+                  renderFile(file);
+                }
+
+
+
+                function renderFile(file) {
+                  let reader = new FileReader();
+                  reader.readAsDataURL(file);
+                  reader.onloadend = function () {
+                    let img = dropArea.getElementsByClassName("preview")[0];
+                    img.src = reader.result;
+                    img.style.display = "block";
+                  };
+                }
+
+                dropArea.addEventListener("dragenter", highlight, false);
+                dropArea.addEventListener("dragover", highlight, false);
+                dropArea.addEventListener("dragleave", unhighlight, false);
+                dropArea.addEventListener("drop", handleDrop, false);
+
+                return {
+                  handleFiles
+                };
+              }
+
+              const dropFile = new DropFile("drop-file", "files");
+        </script>
+        <br>
+
+        <div><input type="submit" value="업로드"></div>
+
+
+    </form>
 </div>
 {% endblock %}
