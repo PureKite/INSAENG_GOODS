@@ -9,7 +9,7 @@
                 <div class="bd-sidebar-body">
                     <ul class="nav">
                         <li><a href="/profiles/mydesign" class="btn btn-lg mt-5" role="button">나의 디자인</a></li>
-                        <li><a href="#" class="btn btn-lg mt-5" role="button">개인 정보 수정</a></li>
+                        <li><a href="{% url 'accountsapp:detail' user.pk %}" class="btn btn-lg mt-5" role="button">개인 정보 수정</a></li>
                     </ul>
                 </div>
             </div>
