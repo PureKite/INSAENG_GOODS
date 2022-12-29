@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-<body>
     {% csrf_token %}
     <div class="mainform">
         <div style="display:flex; flex-direction:column;">
@@ -15,5 +14,4 @@
     <br>
     <a href='/'>메인으로 이동</a>
     <a href='/'>굿즈 샘플 생성</a>
-</body>
 {% endblock %}
