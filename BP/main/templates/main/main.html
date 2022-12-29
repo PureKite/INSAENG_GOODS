@@ -11,63 +11,23 @@
         </div>
     </div>
     {% if postlist %}
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div class="row">
             {% for post in postlist %}
-                <div class="col">
+                <div class="col-3">
                     <div class="card shadow-sm">
-                        {% for image in post.postimage.all %}
-                            <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}">
-                                <a href="{% url 'articleapp:DetailPost' post.Board_id %}">
-                                    <img class="card-img-top bd-placeholder-img" width="100%" height="256" role="img" src="{{ image.Board_image.url }}">
-                                </a>
+                        <div id="carouselSlides" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                {% for image in post.postimage.all %}
+                                    <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}" data-bs-interval="3000">
+                                        <a href="{% url 'articleapp:DetailPost' post.Board_id %}">
+                                            <img class="d-block w-100 card-img-top bd-placeholder-img" width="100%" height="256" role="img" src="{{ image.Board_image.url }}">
+                                        </a>
+                                    </div>
+                                {% endfor %}
                             </div>
-                        {% endfor %}
+                        </div>
                         <div class="card-body">
                             <p class="card-title h4" href="{% url 'articleapp:DetailPost' post.Board_id %}">{{ post.Board_title }}</p>
-                            <div class="btn-group">
-                                <p class="share">공구</p>
-                                {% if post.Board_share == '희망' %}
-                                    <p><img src="{% static 'img/checked.png' %}" alt="" width="20" height="20" style="margin: 5px 0px 0px 10px;"></p>
-                                {% else %}
-                                    <p><img src="{% static 'img/cancel.png' %}" alt="" width="20" height="20" style="margin: 5px 0px 0px 10px;"></p>
-                                {% endif %}
-                            </div>
-                            <div>
-                                <span class="custom-control custom-switch">
-                                    {% if '그립톡' in post.Board_gtype %}
-                                        <input type="checkbox" class="custom-control-input" id="check" checked>
-                                        <label class="custom-control-label" for="check">그립톡</label>
-                                    {% endif %}
-                                </span>
-                                <span class="custom-control custom-switch">
-                                    {% if '배경화면' in post.Board_gtype %}
-                                        <input type="checkbox" class="custom-control-input" id="check" checked>
-                                        <label class="custom-control-label" for="check">배경화면</label>
-                                    {% endif %}
-                                </span>
-                                <span class="custom-control custom-switch">
-                                    {% if '키링' in post.Board_gtype %}
-                                        <input type="checkbox" class="custom-control-input" id="check" checked>
-                                        <label class="custom-control-label" for="check">키링</label>
-                                    {% endif %}
-                                </span>
-                                <span class="custom-control custom-switch">
-                                    {% if '티셔츠' in post.Board_gtype %}
-                                        <input type="checkbox" class="custom-control-input" id="check" checked>
-                                        <label class="custom-control-label" for="check">티셔츠</label>
-                                    {% endif %}
-                                </span>
-                                <span class="custom-control custom-switch">
-                                    {% if '핸드폰 케이스' in post.Board_gtype %}
-                                        <input type="checkbox" class="custom-control-input" id="check" checked>
-                                        <label class="custom-control-label" for="check">핸드폰 케이스</label>
-                                    {% endif %}
-                                </span>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted">{{ post.Board_writer.nickname }}</small>
-                                <small class="text-muted">{{ post.Board_datetime|date:'Y-m-d' }}</small>
-                            </div>
                         </div>
                     </div>
                 </div>
