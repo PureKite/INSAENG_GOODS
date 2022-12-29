@@ -1,80 +1,129 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-    <form action="" method="post" enctype="form-data">
+    <link rel="stylesheet" href="{% static 'css/article.css' %}">
+    <form class="form-control" action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <div style="background-color: #00ddff; border-radius: 0.75rem; margin: 1.75rem" class="left-box">
-            <table>
-                <tr>
-                    <td><pre></pre></td>
-                    <div class="right-box">
-                        <button class="btn btn-primary" type="button" onclick="location.href='/article/create'" style="float:right;">글쓰기</button>
-                    </div>
-                </tr>
-                <tr>
-                    <div>
-                        <td>&nbsp;카테고리</td>
-                    </div>
-                    
-                </tr>
-            </table>
-            <table>
-                <tr>
-                    <div>
-                        <td>&nbsp;공구여부&nbsp;</td>
-                        <td>
-                            <input type="radio" name="share" value="yes"> 희망&nbsp;&nbsp;
+        <div class="table-responsive">
+            <div style="background-color: #00ddff; border-radius: 0.75rem; margin: 1.75rem" class="left-box">
+                <table>
+                    <tr>
+                        <td class="thst" height="36px;">굿즈종류</td>
+                        <div class="right-box">
+                            <button class="btn btn-primary" type="button" onclick="location.href='/article/create'" style="float:right;">글쓰기</button>
+                        </div>
+                    </tr>
+                    <tr>
+                        <td class="thst" height="36px;">공구여부</td>
+                        <td class="tdst">
+                            <ul id="id_Board_share">
+                                <li>
+                                    <label for="id_Board_share_0">
+                                        <input type="radio" name="Board_share" value="희망" required="" id="id_Board_share_0" checked="">희망
+                                    </label>
+                                </li>
+                                <li>
+                                    <label for="id_Board_share_1">
+                                        <input type="radio" name="Board_share" value="비희망" required="" id="id_Board_share_1">비희망
+                                    </label>
+                                </li>
+                            </ul>
                         </td>
-                        <td>
-                            <input type="radio" name="share" value="no"> 비희망&nbsp;&nbsp;
+                    </tr>
+                    <tr>
+                        <td class="thst" height="36px;">굿즈종류</td>
+                        <td class="tdst">
+                            <ul id="id_Board_gtype">
+                                <li>
+                                    <label for="id_Board_gtype_0">
+                                        <input type="checkbox" name="selected" value="그립톡" id="selected">그립톡
+                                    </label>
+                                </li>
+                                <li>
+                                    <label for="id_Board_gtype_1">
+                                        <input type="checkbox" name="selected" value="키링" id="selected">키링
+                                    </label>
+                                </li>
+                                <li>
+                                    <label for="id_Board_gtype_2">
+                                        <input type="checkbox" name="selected" value="티셔츠" id="selected">티셔츠
+                                    </label>
+                                </li>
+                                <li>
+                                    <label for="id_Board_gtype_3">
+                                        <input type="checkbox" name="selected" value="핸드폰 케이스" id="selected">핸드폰 케이스
+                                    </label>
+                                </li>
+                            </ul>
                         </td>
-                    </div>
-                </tr>
-            </table>
-            <table>
-                <tr>
-                    <div>
-                        <td>&nbsp;굿즈종류&nbsp;</td>
-                        <td>
-                            <input type="checkbox" name="grip_tok" value="grip_tok"> 그립톡&nbsp;&nbsp;
-                        </td>
-                        <td>
-                            <input type="checkbox" name="desktop" value="desktop"> 바탕화면&nbsp;&nbsp;
-                        </td>
-                        <td>
-                            <input type="checkbox" name="key_ring" value="key_ring"> 키링&nbsp;&nbsp;
-                        </td>
-                        <td>
-                            <input type="checkbox" name="t-shirt" value="t-shirt"> 티셔츠&nbsp;&nbsp;
-                        </td>
-                        <td>
-                            <input type="checkbox" name="phone_case" value="phone_case"> 핸드폰케이스&nbsp;&nbsp;
-                        </td>
-                    </div>
-                    <div class="right-box">
-                        <button class="btn btn-primary" type="submit" style="float:right;">검색</button>
-                    </div>
-                </tr>
-            </table>
-            <table><tr><pre></pre></tr></table>
+                    </tr>
+                </table>
+                <div class="right-box">
+                    <button class="btn btn-primary" type="submit" style="float:right;">검색</button>
+                </div>
+            </div>
         </div>
     </form>
-    <div width="300" class="MainGrid__StyledGrid-sc-1u1dl1e-0 gHAcDL styled-grid">
-        <div class="row g-3">{% comment %} 데이터베이스 연결 후 for문 삭제{% endcomment %}
-            {% for table_data in "x"|rjust:"8" %}
-                <div class="col-sm-3 mb-2">
-                    <a class="d-block pe-lg-4 text-decoration-none lh-sm" href="/docs/5.3/components/alerts/#javascript-behavior">
-                        <div style="background-color: #00ddff; border-radius: 1rem; margin: 1rem">
-                            <a href="#">
-                                <pre><img src="/static/img/cat.jpg" width="99%" height="57%"></pre>
-                                <pre><cite>제목</cite></pre>
-                            </a>
-                            <div class="user">
-                                <a class="userinfo" href="#">by<cite> user</cite></a>
+    {% if postlist %}
+        <div width="300" class="MainGrid__StyledGrid-sc-1u1dl1e-0 gHAcDL styled-grid">
+            <div class="row g-3">
+                <div class="row row-cols-1 row-cols-sm-3 row-cols-md-4 g-3">
+                    {% for post in postlist %}
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                {% for image in post.postimage.all %}
+                                    <div style="background-color: #00ddff; border-radius: 1rem; margin: 1rem">
+                                        <a href="{% url 'articleapp:DetailPost' post.Board_id %}">
+                                            <img src="{{ image.Board_image.url }}" width="99%" height="57%">
+                                        </a>
+                                        <div class="card-body">
+                                            <p class="card-title h4"><cite>{{ post.Board_title }}</cite></p>
+                                            <div>
+                                                <span class="custom-control custom-switch">
+                                                    {% if '그립톡' in post.Board_gtype %}
+                                                        <input type="checkbox" class="custom-control-input" id="check" checked>
+                                                        <label class="custom-control-label" for="check">그립톡</label>
+                                                    {% endif %}
+                                                </span>
+                                                <span class="custom-control custom-switch">
+                                                    {% if '배경화면' in post.Board_gtype %}
+                                                        <input type="checkbox" class="custom-control-input" id="check" checked>
+                                                        <label class="custom-control-label" for="check">배경화면</label>
+                                                    {% endif %}
+                                                </span>
+                                                <span class="custom-control custom-switch">
+                                                    {% if '키링' in post.Board_gtype %}
+                                                        <input type="checkbox" class="custom-control-input" id="check" checked>
+                                                        <label class="custom-control-label" for="check">키링</label>
+                                                    {% endif %}
+                                                </span>
+                                                <span class="custom-control custom-switch">
+                                                    {% if '티셔츠' in post.Board_gtype %}
+                                                        <input type="checkbox" class="custom-control-input" id="check" checked>
+                                                        <label class="custom-control-label" for="check">티셔츠</label>
+                                                    {% endif %}
+                                                </span>
+                                                <span class="custom-control custom-switch">
+                                                    {% if '핸드폰 케이스' in post.Board_gtype %}
+                                                        <input type="checkbox" class="custom-control-input" id="check" checked>
+                                                        <label class="custom-control-label" for="check">핸드폰 케이스</label>
+                                                    {% endif %}
+                                                </span>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <small class="text-muted">{{ post.Board_writer.nickname }}</small>
+                                                <small class="text-muted">{{ post.Board_datetime|date:'Y-m-d' }}</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                </div>
                             </div>
-                        </div>
-                    </a>
+                    {% endfor %}
                 </div>
-            {% endfor %}
+            </div>
         </div>
-    </div>
+    {% else %}
+        <h5 style="text-align: center; font-size: 30px;">작성된 게시글이 없습니다.</h5>
+    {% endif %}
 {% endblock content %} 

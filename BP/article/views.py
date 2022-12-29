@@ -3,12 +3,12 @@ from .forms import PostForm, Post_ImageForm, CommentForm
 from .models import Post, PostImage, Comment
 from accounts.models import Account
 import logging
-from django.core.paginator import Paginator
 import datetime
 from django.contrib.auth.decorators import login_required
 import json
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Q
 logger = logging.getLogger('mylogger')
 
 @login_required
@@ -145,14 +145,21 @@ def ListPost(request):
     # context = {'login_session':login_session}
     return render(request, 'List_Post.html', {'postlist':postlist, 'imagelist':imagelist})#, context)
 
-def input_test(request):
-    if request.POST:
-        list_item = request.POST.getlist('test')
-        print(list_item)
-        
-def page(request):
-    board_list = Post.objects.all()
-    page = request.GET.get('page', '1')
-    paginator = Paginator(board_list, '10')
-    page_obj = paginator.page(page)
-    return render(request, 'template_name', {'page_obj':page_obj})
+def selected(request):
+    context = {}
+    post_list = Post.objects.all()
+    search = request.GET.get('search', '')
+    if search:
+        search_list = post_list.filter(
+            Q(Board_title = search) |
+            Q(Board_content = search) |
+            Q(Board_gtype = search) |
+            Q(Board_share = search) |
+            Q(Board_writer = search)
+        )
+    context['selected'] = selected
+    return render(request, 'List_Post.html', context)
+    
+def search(request):
+    b = request.GET.get('b','')
+    selected = selected.filter(Q())
