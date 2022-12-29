@@ -24,11 +24,7 @@
                         <h2>{{ user.username }}</h2>
                     </div>
                     <div class="user-introduce">
-                        {% if not user.profile.message %}
-                            <p>{{ user.profile.message }}</p>
-                        {% else %}
-                            <p>자기소개를 등록해주세요</p>
-                        {% endif%}
+                        {{ user.profile.message }}
                     </div>
                     {% if request.user.pk == user.pk %}
                     <button class="btn btn-secondary">
