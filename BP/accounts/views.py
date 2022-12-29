@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate, update_session_auth_hash
-from accounts.forms import SignupForm, AccountAuthForm, CustomUserChangeForm, CustomPasswordChangeForm
+from accounts.forms import SignupForm, AccountAuthForm, CustomUserChangeForm, CustomPasswordChangeForm, CheckPasswordForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -103,7 +103,19 @@ def update(request, pk):
 
 @login_required
 def delete(request):
-    pass
+    if request.method == 'POST':
+        form = CheckPasswordForm(request.user, request.POST)
+        
+        if form.is_valid():
+            request.user.delete()
+            logout(request)
+            messages.success(request, "회원탈퇴가 완료되었습니다.")
+            return redirect("mainapp:main")
+    else:
+        form = CheckPasswordForm(request.user)
+
+    return render(request, 'accounts/delete.html', {'form': form})
+
 
 
 

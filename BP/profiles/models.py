@@ -8,8 +8,8 @@ from django.dispatch import receiver
 class Profile(models.Model):
     user = models.OneToOneField(Account, on_delete=models.CASCADE,
                                 related_name='profile')
-    image = models.ImageField(upload_to='profile/', default='user.jpg', blank=True)
-    message = models.TextField(max_length=300, null=True, blank=True)
+    image = models.ImageField(upload_to='profile/', default='profile/user.jpg', blank=True)
+    message = models.TextField(max_length=300, default='자기소개를 입력해주세요!', blank=True)
     
     @property
     def image_url(self):
