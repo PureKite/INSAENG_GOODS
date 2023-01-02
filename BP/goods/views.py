@@ -7,10 +7,8 @@ from django.core.files.storage import FileSystemStorage
 import cv2, sys
 # from rembg import remove
 from PIL import Image, ImageOps, ImageFilter
-from matplotlib import pyplot as plt
 import numpy as np
 from imageconvert.models import Images
-
 # Create your views here.
 def makegoods(request):
     designs = design.objects.filter(design_user = request.user).last()
