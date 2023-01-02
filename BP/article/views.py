@@ -137,12 +137,12 @@ def DeleteComment(request, postid, commentid):
     return redirect('articleapp:DetailPost', postid)
 
 def ListPost(request):
-    postlist = Post.objects.all().order_by('-Board_datetime')
+    postlist = Post.objects.all().order_by('-Board_id')
     if 'search_type' in request.GET:
         result = []
         type = request.GET['search_type']
         search  = request.GET['searched']
-        s = ''
+
         if 'search_share' in request.GET:
             share = request.GET['search_share']
             postlist = postlist.filter(Q(Board_share=share)).distinct()

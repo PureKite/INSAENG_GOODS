@@ -2,6 +2,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
@@ -26,7 +27,7 @@
         </div>
     </div>
     <div class='detail'>
-        <div style='height:6%; margin-bottom:2%;'>
+        <div style='height:6%;margin-bottom:2%;'>
             {% if request.user == post.Board_writer%}
             <input style='float:right;' type='button' class="btn btn-primary" onclick='p_udt({{ post.Board_id }});' value='수정'>
             <input style='float:right;margin-right:8px;' type='button' class="btn btn-secondary" onclick='p_del({{ post.Board_id }});' value='삭제'>
@@ -56,6 +57,10 @@
         </table>
     </div>
     </div><div style="clear:both;overflow:auto;"></div>
+    <div style='height:6%;'>
+        <hr />
+        <a class="btn btn-info float-end" type="button" href="{% url 'articleapp:ListPost' %}"><iconify-icon icon="material-symbols:format-list-bulleted" style='font-size:0.8rem;'></iconify-icon>&nbsp;목록</a>
+    </div>
     <div>
         <hr />
         <h4>댓글</h4>
@@ -63,16 +68,16 @@
         <table>
             {% for comment in post.comment_set.all %}
             <tr>
-                <td id = 'comment_content'><textarea id = 'c_content' class='Content{{ comment.id }} text_area' readonly>{{ comment.Comment_content }}</textarea></td>
+                <td id = 'comment_content'><textarea id = 'c_content' class='Content{{ comment.id }} text_area' disabled>{{ comment.Comment_content }}</textarea></td>
                 <td id = 'comment_nad'>{{ comment.Comment_writer.nickname }}<input type = 'text' id = 'c_date' class='Date{{ comment.id }}' value='{{ comment.Comment_datetime }}' readonly></td>
                 {% if request.user == comment.Comment_writer %}
                     <td id = 'comment_btn'>
-                        <input type='button' class='Update{{ comment.id }}' onclick = 'Update({{ comment.id }});' value='수정'>
-                        <input type="button" class="CommentSubmit{{ comment.id }}" style="display:none" value="등록" onclick="CommentSubmit({{ comment.id }})">
+                        <input type='button' class='Update{{ comment.id }} btn-outline-blue' onclick = 'Update({{ comment.id }});' value='수정'>
+                        <input type="button" class="CommentSubmit{{ comment.id }} btn_blue" style="display:none" value="등록" onclick="CommentSubmit({{ comment.id }})">
                     </td>
                     <td id = 'comment_btn'>
-                        <input type='button' class='Delete{{ comment.id }}' onclick = "location.href = '{% url 'articleapp:DeleteComment' post.Board_id comment.id %}'" value='삭제'>
-                        <input type="button" class="UpdateCancel{{ comment.id }}" style="display:none" value="취소" onclick="UpdateCancel({{ comment.id }})">
+                        <input type='button' class='Delete{{ comment.id }} btn-outline-red' onclick = "location.href = '{% url 'articleapp:DeleteComment' post.Board_id comment.id %}'" value='삭제'>
+                        <input type="button" class="UpdateCancel{{ comment.id }} btn_gray" style="display:none" value="취소" onclick="UpdateCancel({{ comment.id }})">
                     </td>
                 {% else %}
                     <td></td>
@@ -88,8 +93,7 @@
         <form method='POST' action="{% url 'articleapp:CreateComment' post.Board_id %}">
             {% csrf_token %}
             <div style='width:85%;float:left;'>{{comment.Comment_content}}</div>
-            <div style='width:15%;float:right;'><input type='submit' class="comment_submit" value='댓글
-작성'></div><div style="clear:both;overflow:auto;"></div>
+            <div style='width:15%;float:right;'><input type='submit' class="comment_submit btn btn-dark" value='댓글&#10;작성'></div><div style="clear:both;overflow:auto;"></div>
         </form>
     </div>
 </div>

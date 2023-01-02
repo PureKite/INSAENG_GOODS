@@ -84,8 +84,8 @@ const Update = (id) => {
     Delete.style.display = 'none';
     CommentSubmit.style.display = 'inline-block';
     UpdateCancel.style.display = 'inline-block';
-    Content.readOnly = false;
-    Content.style.border = '1px solid black';
+    Content.disabled = false;
+    Content.style.border = '1px solid #ced4da';
 }
 const UpdateCancel = (id) => {
     let Update = document.querySelector(`.Update${id}`);
@@ -98,7 +98,7 @@ const UpdateCancel = (id) => {
     UpdateCancel.style.display = 'none';
     Update.style.display = 'inline-block';
     Delete.style.display = 'inline-block';
-    Content.readOnly = true;
+    Content.disabled = true;
     Content.style.border = 'none';
 }
 const CommentSubmit = (id) => {
@@ -122,16 +122,21 @@ const CommentSubmit = (id) => {
                 let CommentSubmit = document.querySelector(`.CommentSubmit${id}`);
                 let UpdateCancel = document.querySelector(`.UpdateCancel${id}`);
                 let Content = document.querySelector(`.Content${id}`);
-                let Date = document.querySelector(`.Date${id}`);
+                let d = document.querySelector(`.Date${id}`);
                 
                 CommentSubmit.style.display = 'none';
                 UpdateCancel.style.display = 'none';
                 Update.style.display = 'inline-block';
                 Delete.style.display = 'inline-block';
                 Content.style.border = 'none';
-                Date.value = time.toLocaleString('ko-kr').slice(0,4)+'년'+time.toLocaleString('ko-kr').slice(5,8)+'월'
-                            +time.toLocaleString('ko-kr').slice(9,12)+'일'+time.toLocaleString('ko-kr').slice(16,21)+time.toLocaleString('ko-kr').slice(13,16);
-                Content.readOnly = true;
+                const date = new Date();
+                const year = date.getFullYear();
+                const month = date.getMonth() + 1;
+                const day = date.getDate(); 
+                const hours = date.getHours();
+                const minutes = date.getMinutes();
+                d.value = year+'년 '+month+'월 '+day+'일 '+(hours%12)+':'+minutes+' '+date.toLocaleTimeString('ko-kr').slice(0,2);
+                Content.disabled = true;
             }
         },
         error: function(){

@@ -133,6 +133,9 @@ mark.red {
     border-bottom: 1px solid #99b2ff;
     font-size: 17;
     height:68%;
+    word-wrap:break-word;
+    word-break:break-all;
+    width:80%;
 }
 .detail{
     width:50%;
@@ -200,7 +203,34 @@ mark.red {
     margin-left:20%;
     margin-right:20%;
 }
-
+#comment_btn > .btn-outline-blue{
+    border-radius: 0.25rem;
+    color: #0d6efd;
+    border-color: #0d6efd;
+    border:1px solid #0d6efd;
+    background-color: white;
+}
+#comment_btn > .btn-outline-red{
+    border-radius: 0.25rem;
+    color: red;
+    border-color: red;
+    border:1px solid red;
+    background-color: white;
+}
+#comment_btn > .btn_blue{
+    border-radius: 0.25rem;
+    color: #fff;
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    border:1px solid;
+}
+#comment_btn > .btn_gray{
+    border-radius: 0.25rem;
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+    border:1px solid;
+}
 a:hover{
     text-decoration: none;
     color:#000000;
@@ -237,7 +267,13 @@ a:hover{
 }
 .search_ed{
     height: 100%;
-    font-size:1rem;
+    font-size:0.9rem;
     padding-top:0.1rem;
     padding-bottom:0.1rem;
+}
+.text_area:disabled{
+    background-color: white;
+}
+.text_area{
+    background-color: rgb(239, 239, 239);
 }
