@@ -13,9 +13,9 @@ from pathlib import Path
 from tqdm import tqdm
 from pathlib import Path
 from accounts.models import Account
-from rembg import remove
+from rembg.rembg import remove
 from PIL import Image, ImageOps, ImageFilter
-
+from django.contrib.auth.decorators import login_required
 
 def rembg(in_img,output_img):  #input_img: 원본 이미지 경로 /  output_img: 저장 경로 / white_img: 흰 배경 이미지 경로
     
@@ -171,6 +171,7 @@ def unet_generator(inputs, channel=32, num_blocks=4, name='generator', reuse=Fal
         
         return x4
 
+@login_required
 def imageconvert(request):
     return render(request, 'imageconvert.html')
 

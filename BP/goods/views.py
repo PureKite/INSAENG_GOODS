@@ -12,7 +12,6 @@ import numpy as np
 from imageconvert.models import Images
 # Create your views here.
 def makegoods(request):
-    designs = design.objects.filter(design_user=request.user).last()
     image = Images.objects.filter(user_id=request.user.id).last()
     img_path = image.cvt_img
 
@@ -48,6 +47,7 @@ def makegoods(request):
     kr_save_path = ROOT_PATH + '\\media\\goods_kr\\' + img_name
     ts_save_path = ROOT_PATH + '\\media\\goods_ts\\' + img_name
 
+    designs = design()
     designs.design_user = request.user
     designs.save()
     designs.design_hp = 'goods_hp/' + img_name
