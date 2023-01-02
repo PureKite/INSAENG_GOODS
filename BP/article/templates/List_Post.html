@@ -111,8 +111,8 @@
             </div>
         {% endfor %}
     </div>
+    {% else %}
+        <h5 style="text-align: center; font-size: 1rem;">게시글이 없습니다.</h5>
+    {% endif %}
 </div>
-{% else %}
-    <h5 style="text-align: center; font-size: 1rem;">게시글이 없습니다.</h5>
-{% endif %}
 {% endblock content %} 
