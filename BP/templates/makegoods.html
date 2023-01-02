@@ -61,7 +61,7 @@
                             <img src='{{ design.design_hp.url }}' alt="" width="300" height="300">
                         </div>
                         <div style="margin-top:10; text-align: center;">
-                            <form action="{% url 'goods:downloadFile'  %}">
+                            <form action="{% url 'goods:downloadFile_hp'  %}">
                                 <button style="padding:5px; border-radius:5px;" onclick="">다운로드</button>
                             </form>
                         </div>
@@ -71,7 +71,9 @@
                             <img href="/" src="{{ design.design_gr.url }}" alt="" width="300" height="300">
                         </div>
                         <div style="margin-top:10; text-align: center;">
-                            <button style="padding:5px; border-radius:5px;" onclick="">다운로드</button>
+                            <form action="{% url 'goods:downloadFile_gr'  %}">
+                                <button style="padding:5px; border-radius:5px;" onclick="">다운로드</button>
+                            </form>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="kr">
@@ -79,7 +81,9 @@
                             <img href="/" src="{{ design.design_kr.url }}" alt="" width="300" height="300">
                         </div>
                         <div style="margin-top:10; text-align: center;">
-                            <button style="padding:5px; border-radius:5px; border-radius:5px;" onclick="">다운로드</button>
+                            <form action="{% url 'goods:downloadFile_kr'  %}">
+                                <button style="padding:5px; border-radius:5px;" onclick="">다운로드</button>
+                            </form>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="ts">
@@ -87,7 +91,9 @@
                             <img href="/" src="{{ design.design_ts.url }}" alt="" width="300" height="300">
                         </div>
                         <div style="margin-top:10; text-align: center;">
-                            <button style="padding:5px; border-radius:5px;" onclick="">다운로드</button>
+                            <form action="{% url 'goods:downloadFile_ts'  %}">
+                                <button style="padding:5px; border-radius:5px;" onclick="">다운로드</button>
+                            </form>
                         </div>
                     </div>
                     </div>

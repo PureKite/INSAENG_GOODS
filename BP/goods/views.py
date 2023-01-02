@@ -12,7 +12,7 @@ import numpy as np
 from imageconvert.models import Images
 # Create your views here.
 def makegoods(request):
-    designs = design.objects.filter(design_user=request.user).last()
+    # designs = design.objects.filter(design_user=request.user).last()
     image = Images.objects.filter(user_id=request.user.id).last()
     img_path = image.cvt_img
 
@@ -38,8 +38,8 @@ def makegoods(request):
     re_kr_img = foreground.resize((240, 240))
     kr_bg.paste(re_kr_img, (130,555))
 
-    re_ts_img = foreground.resize((80, 80))
-    ts_bg.paste(re_ts_img, (100, 90))
+    re_ts_img = foreground.resize((180, 180))
+    ts_bg.paste(re_ts_img, (163, 110))
 
     img_name = img_path.path.split('\\')[-1]
     ROOT_PATH = str(Path(__file__).resolve().parent.parent)
@@ -48,6 +48,7 @@ def makegoods(request):
     kr_save_path = ROOT_PATH + '\\media\\goods_kr\\' + img_name
     ts_save_path = ROOT_PATH + '\\media\\goods_ts\\' + img_name
 
+    designs = design()
     designs.design_user = request.user
     designs.save()
     designs.design_hp = 'goods_hp/' + img_name
@@ -63,10 +64,50 @@ def makegoods(request):
 
     return render(request, 'makegoods.html', {'design': designs})
 
-def downloadFile(request):
-    file_path = os.path.abspath("static/img/")
-    file_name = os.path.basename("static/img/test_hp.jpg")
+def downloadFile_hp(request):
+    designs = design.objects.filter(design_user_id=request.user.id).last()
+    f_p = designs.design_hp 
+    
+    file_path = os.path.abspath("media/goods_hp")
+    file_name = os.path.basename("media/"+ str(f_p))
+    
     fs = FileSystemStorage(file_path)
     response = FileResponse(fs.open(file_name, 'rb'))
-    response['Content-Disposition'] = 'attachment; filename="test_hp.jpg"'
+    response['Content-Disposition'] = 'attachment; filename="HandPhoneCase.jpg"'
+    return response
+
+def downloadFile_gr(request):
+    designs = design.objects.filter(design_user_id=request.user.id).last()
+    f_p = designs.design_gr 
+    
+    file_path = os.path.abspath("media/goods_gt")
+    file_name = os.path.basename("media/"+ str(f_p))
+    
+    fs = FileSystemStorage(file_path)
+    response = FileResponse(fs.open(file_name, 'rb'))
+    response['Content-Disposition'] = 'attachment; filename="GripTok.jpg"'
+    return response
+
+def downloadFile_kr(request):
+    designs = design.objects.filter(design_user_id=request.user.id).last()
+    f_p = designs.design_kr
+    
+    file_path = os.path.abspath("media/goods_kr")
+    file_name = os.path.basename("media/"+ str(f_p))
+    
+    fs = FileSystemStorage(file_path)
+    response = FileResponse(fs.open(file_name, 'rb'))
+    response['Content-Disposition'] = 'attachment; filename="KeyRing.jpg"'
+    return response
+
+def downloadFile_ts(request):
+    designs = design.objects.filter(design_user_id=request.user.id).last()
+    f_p = designs.design_ts
+    
+    file_path = os.path.abspath("media/goods_ts")
+    file_name = os.path.basename("media/"+ str(f_p))
+    
+    fs = FileSystemStorage(file_path)
+    response = FileResponse(fs.open(file_name, 'rb'))
+    response['Content-Disposition'] = 'attachment; filename="T-Shirt.jpg"'
     return response
