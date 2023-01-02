@@ -137,8 +137,12 @@ def DeleteComment(request, postid, commentid):
     return redirect('articleapp:DetailPost', postid)
 
 def ListPost(request):
-    postlist = Post.objects.all().order_by('-Board_datetime')
-    return render(request, 'List_Post.html', {'postlist':postlist})
+    postlist = Post.objects.all().order_by('-Board_id')
+    logger.error(postlist)
+    context = {
+        'postlist': postlist,
+    }
+    return render(request, 'List_Post.html', context)
 
 def search(request):
     context = dict()
