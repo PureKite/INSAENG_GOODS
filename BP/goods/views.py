@@ -18,14 +18,16 @@ def makegoods(request):
 
     hp = 'static/img/design/hp.jpg'
     gt = 'static/img/design/gt.jpg'
-    kr = 'static/img/design/kr.jpg'
-    ts = 'static/img/design/ts.jpg'
+    kr = 'static/img/design/kr.png'
+    ts = 'static/img/design/ts.png'
 
     foreground = Image.open(img_path)
     hp_bg = Image.open(hp)
     gt_bg = Image.open(gt)
     kr_bg = Image.open(kr)
+    kr_bg = kr_bg.convert("RGB")
     ts_bg = Image.open(ts)
+    ts_bg = ts_bg.convert("RGB")
 
     re_hp_img = foreground.resize((200, 200))
     hp_bg.paste(re_hp_img, (225, 250))
@@ -34,7 +36,7 @@ def makegoods(request):
     gt_bg.paste(re_gt_img, (200, 200))
 
     re_kr_img = foreground.resize((240, 240))
-    kr_bg.paste(re_kr_img, (135, 550))
+    kr_bg.paste(re_kr_img, (130,555))
 
     re_ts_img = foreground.resize((80, 80))
     ts_bg.paste(re_ts_img, (100, 90))
