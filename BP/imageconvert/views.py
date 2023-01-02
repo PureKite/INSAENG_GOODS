@@ -13,7 +13,7 @@ from pathlib import Path
 from tqdm import tqdm
 from pathlib import Path
 from accounts.models import Account
-from rembg.rembg import remove
+from rembg import remove
 from PIL import Image, ImageOps, ImageFilter
 from django.contrib.auth.decorators import login_required
 
