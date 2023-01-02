@@ -4,6 +4,13 @@ import os
 from django.http import FileResponse
 from django.core.files.storage import FileSystemStorage
 
+import cv2, sys
+# from rembg import remove
+from PIL import Image, ImageOps, ImageFilter
+from matplotlib import pyplot as plt
+import numpy as np
+from imageconvert.models import Images
+
 # Create your views here.
 def makegoods(request):
     designs = design.objects.filter(design_user = request.user).last()
@@ -17,3 +24,10 @@ def downloadFile(request):
     response['Content-Disposition'] = 'attachment; filename="test_hp.jpg"'
     return response
 
+def autodesign(request):
+    image = Images.objects.filter(user_id=request.user.id)
+    print(image.values())
+    context = {
+        'image': image,
+    }
+    return render(request, 'loading.html', context)

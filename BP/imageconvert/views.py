@@ -12,6 +12,7 @@ from django.core.files.storage import FileSystemStorage
 from pathlib import Path
 from tqdm import tqdm
 from pathlib import Path
+from accounts.models import Account
 
 def resize_crop(image):
     h, w, c = np.shape(image)
@@ -159,6 +160,7 @@ def viewimage(request):
     if request.method == 'POST' and request.FILES['files']:
         file = request.FILES['files']
         images = Images()
+        images.user_id = request.user
         images.raw_img = file
         images.save()
         model_select = request.POST.get('model_select')
@@ -166,7 +168,6 @@ def viewimage(request):
         ROOT_PATH = str(Path(__file__).resolve().parent.parent)
         img_name = load_path.split('\\')[-1]
         save_path = ROOT_PATH + '\\media\\cvt_img\\'  + img_name # 끝 파일이름만 따와서 앞에 폴더명만 변경
-        
         # 모델 로딩
         if model_select in ['arcane', 'origin', 'simpson', 'thearistocats']:
             model_path = ''.join([ROOT_PATH, '\\model\\saved_models_', model_select])
