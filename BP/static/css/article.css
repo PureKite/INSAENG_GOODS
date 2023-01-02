@@ -214,3 +214,24 @@ a:hover{
     transform: translateY(-5px);
     transition: 0.5s;
 }
+.search_type{
+    font-size: 1rem;
+    width:15%;
+    height: 90%;
+    text-align: center;
+    margin-right:1%;
+    border:none;
+}
+.in_s{
+    width:45%;
+    height:90%;
+    border:none;
+    border-bottom:1px solid #99b2ff;
+    margin-right:2%;
+}
+.search_ed{
+    height: 100%;
+    font-size:1rem;
+    padding-top:0.1rem;
+    padding-bottom:0.1rem;
+}

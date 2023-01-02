@@ -2,46 +2,59 @@
 {% load static %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/article.css' %}">
-<form action="" class="my-4" method="post" enctype="form-data">
-    {% csrf_token %}
+<form action="" class="my-4" method="get" enctype="form-data">
+    {% comment %} {% csrf_token %} {% endcomment %}
     <div class="text-center my-3">
         <span class="fs-1">공유게시판</span>
-        <a class="btn btn-success float-end" type="button" href="{% url 'articleapp:CreatePost' %}"><i class="uil uil-pen"></i>&nbsp; 글쓰기</a>
+        {% if user.is_authenticated %}
+            <a class="btn btn-success float-end" type="button" href="{% url 'articleapp:CreatePost' %}"><i class="uil uil-pen"></i>&nbsp; 글쓰기</a>
+        {% endif %}
+        <hr>
     </div>
     <div class="row">
         <div class="col-2 text-center">
-            <h4>공구여부</h4>
+            <h5>공구여부</h5>
         </div>
         <div class="col align-middle">
-            <input id="share" type="radio" name="share" value="yes">
-            <label class="mx-2" for="share">희망</label>
-            <input id="not" type="radio" name="share" value="no">
-            <label class="mx-2" for="not">비희망</label>
+            <input type="radio" name="search_share" value="희망" id="search_share0">
+            <label class="mx-2" for="search_share0">희망</label>
+            <input type="radio" name="search_share" value="비희망" id="search_share1">
+            <label class="mx-2" for="search_share1">비희망</label>
         </div>
     </div>
     <div class="row">
         <div class="col-2 text-center">
-            <h4>굿즈종류</h4>
+            <h5>굿즈종류</h5>
         </div>
         <div class="col">
-            <input id="grip_tok" type="checkbox" name="grip_tok" value="grip_tok">
-            <label class="mx-2" for="grip_tok">그립톡</label>
-            <input id="desktop" type="checkbox" name="desktop" value="desktop">
-            <label class="mx-2" for="desktop">바탕화면</label>
-            <input id="key_ring" type="checkbox" name="key_ring" value="key_ring">
-            <label class="mx-2" for="key_ring">키링</label>
-            <input id="t-shirt" type="checkbox" name="t-shirt" value="t-shirt">
-            <label class="mx-2" for="t-shirt">티셔츠</label>
-            <input id="phone_case" type="checkbox" name="phone_case" value="phone_case">
-            <label class="mx-2" for="phone_case">핸드폰케이스</label>
-        </div>
-        <div class="col-1">
-            <button class="btn btn-primary" type="submit"><i class="uil uil-search"></i>&nbsp; 검색</button>
+            <input type="checkbox" name="search_gtype" value="그립톡" id="search_gtype0">
+            <label class="mx-2" for="search_gtype0">그립톡</label>
+            <input type="checkbox" name="search_gtype" value="배경화면" id="search_gtype1">
+            <label class="mx-2" for="search_gtype1">배경화면</label>
+            <input type="checkbox" name="search_gtype" value="키링" id="search_gtype2">
+            <label class="mx-2" for="search_gtype2">키링</label>
+            <input type="checkbox" name="search_gtype" value="티셔츠" id="search_gtype3">
+            <label class="mx-2" for="search_gtype3">티셔츠</label>
+            <input type="checkbox" name="search_gtype" value="핸드폰케이스" id="search_gtype4">
+            <label class="mx-2" for="search_gtype4">핸드폰케이스</label>
         </div>
     </div>
-
+    <div class='row'>
+        <div class='col'>
+            <select name = 'search_type' id = 'search_tp' class="search_type">
+                <option value = 's_total'>전체</option>
+                <option value = 's_title'>제목</option>
+                <option value = 's_content'>내용</option>
+                <option value = 's_writer'>작성자</option>
+            </select>
+            <input type='search' value='{{ search }}' placeholder='검색어를 입력해주세요.' name='searched' class='in_s'>
+            <button class="btn btn-primary search_ed" type="submit"><i class="uil uil-search"></i>&nbsp; 검색</button>
+        </div>
+    </div>
 </form>
+<hr>
 <div class="MainGrid__StyledGrid-sc-1u1dl1e-0 gHAcDL styled-grid">
+    {%if postlist%}
     <div class="row">
         {% for post in postlist %}
         <div class="col-3 my-2">
@@ -66,7 +79,7 @@
                                 <span class="custom-control custom-switch">
                                     {% if '그립톡' in post.Board_gtype %}
                                         그립톡
-                                        {% endif %}
+                                    {% endif %}
                                     </span>
                                     <span class="custom-control custom-switch">
                                         {% if '배경화면' in post.Board_gtype %}
@@ -84,8 +97,8 @@
                                     {% endif %}
                                 </span>
                                 <span class="custom-control custom-switch">
-                                    {% if '핸드폰 케이스' in post.Board_gtype %}
-                                    핸드폰 케이스
+                                    {% if '핸드폰케이스' in post.Board_gtype %}
+                                    핸드폰케이스
                                     {% endif %}
                                 </span>
                             </div>
@@ -104,4 +117,7 @@
         {% endfor %}
     </div>
 </div>
+{% else %}
+    <h5 style="text-align: center; font-size: 1rem;">게시글이 없습니다.</h5>
+{% endif %}
 {% endblock content %} 

@@ -2,7 +2,7 @@ from django import forms
 from .models import Post, PostImage, Comment
 
 goods_type = [
-    ('핸드폰케이스', '핸드폰 케이스'),
+    ('핸드폰케이스', '핸드폰케이스'),
     ('그립톡', '그립톡'), 
     ('키링', '키링'),
     ('티셔츠', '티셔츠'),  

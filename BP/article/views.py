@@ -137,17 +137,45 @@ def DeleteComment(request, postid, commentid):
     return redirect('articleapp:DetailPost', postid)
 
 def ListPost(request):
-    postlist = Post.objects.all().order_by('-Board_id')
-    logger.error(postlist)
-    context = {
-        'postlist': postlist,
-    }
+    postlist = Post.objects.all().order_by('-Board_datetime')
+    if 'search_type' in request.GET:
+        result = []
+        type = request.GET['search_type']
+        search  = request.GET['searched']
+        s = ''
+        if 'search_share' in request.GET:
+            share = request.GET['search_share']
+            postlist = postlist.filter(Q(Board_share=share)).distinct()
+            
+        if 'search_gtype' in request.GET: # 두 가지 선택되면 두 가지 동시선택된 게시물만..
+            gtype = request.GET.getlist('search_gtype')
+            for i in gtype:
+                postlist = postlist.filter(Q(Board_gtype__icontains = i)).distinct()
+        
+            
+        if request.GET['searched'] != '':
+            kewards = search.split(' ')
+            if type == 's_total':
+                for kw in kewards:
+                    result += postlist.filter(Q(Board_title__icontains=kw) | 
+                                            Q(Board_content__icontains=kw)| 
+                                            Q(Board_writer__nickname__icontains=kw)).distinct()
+            elif type == 's_title':
+                for kw in kewards:
+                    result += postlist.filter(Q(Board_title__icontains=kw)).distinct()
+            elif type == 's_content':
+                for kw in kewards:
+                    result += postlist.filter(Q(Board_content__icontains=kw)).distinct()
+            else:
+                for kw in kewards:
+                    result += postlist.filter(Q(Board_writer__nickname__icontains=kw)).distinct()
+        else:
+            result = postlist
+        
+        context = {
+            'postlist':result,
+            'search':search,
+        }
+    else:
+        context = {'postlist':postlist}
     return render(request, 'List_Post.html', context)
-
-def search(request):
-    context = dict()
-    search_post = Post.objects.all()
-    
-    
-    b = request.GET.get('b','')
-    selected = selected.filter(Q())
