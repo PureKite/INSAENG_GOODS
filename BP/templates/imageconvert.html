@@ -22,8 +22,10 @@
                 <option value="thearistocats">thearistocats</option>
             </select>
             <br>
-            <input type='radio' name='rembg' value='no' />원본 그대로
-            <input type='radio' name='rembg' value='yes' />배경 제거
+            <select name="radio_isChecked" id="radio_isChecked">
+              <option value="origin">배경 유지</option>
+              <option value="rembg">배경 제거</option>
+            </select>
             <br>
 {#            {% comment %} <div>정답 : <input name="answer" type="text"></div> {% endcomment %}#}
         </span>

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import *
 import numpy as np
-import cv2, joblib
+import cv2, joblib,sys
 import logging
 import string
 import os
@@ -13,6 +13,70 @@ from pathlib import Path
 from tqdm import tqdm
 from pathlib import Path
 from accounts.models import Account
+from rembg import remove
+from PIL import Image, ImageOps, ImageFilter
+
+
+def rembg(in_img,output_img):  #input_img: 원본 이미지 경로 /  output_img: 저장 경로 / white_img: 흰 배경 이미지 경로
+    
+  input_path = in_img
+  input = Image.open(input_path)
+  output = remove(input)
+  ROOT_PATH = str(Path(__file__).resolve().parent.parent)
+  background = Image.open(ROOT_PATH + '\\static\\img\\design\\white.jpg')
+  logging.warning(background)
+  foreground = output
+  (img_h, img_w) = foreground.size
+  
+  resize_back =  background.resize((img_h, img_w))
+  resize_back.paste(foreground, (0, 0), foreground)
+  img = np.array(resize_back)
+
+  image_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+  #b,g,r = cv2.split(img)
+
+  blur = cv2.GaussianBlur(image_gray, ksize=(5,5), sigmaX=0)
+  #ret, thresh1 = cv2.threshold(blur, 127, 255, cv2.THRESH_BINARY)
+  edged = cv2.Canny(blur, 10, 250)
+  kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7,7))
+  closed = cv2.morphologyEx(edged, cv2.MORPH_CLOSE, kernel)
+  contours, _ = cv2.findContours(closed.copy(),cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+  #total=0
+  contours_xy = np.array(contours)
+  contours_xy.shape
+  x_min, x_max = 0,0
+  value = list()
+  for i in range(len(contours_xy)):
+      for j in range(len(contours_xy[i])):
+          value.append(contours_xy[i][j][0][0])
+          x_min = min(value)
+          x_max = max(value)
+  # print(x_min)
+  # print(x_max)
+
+  y_min, y_max = 0,0
+  value = list()
+  for i in range(len(contours_xy)):
+      for j in range(len(contours_xy[i])):
+          value.append(contours_xy[i][j][0][1])
+          y_min = min(value)
+          y_max = max(value)
+  # print(y_min)
+  # print(y_max)
+
+  x = x_min
+  y = y_min
+  w = x_max-x_min
+  h = y_max-y_min
+
+  fi_img = output.crop((x,y,x+w,y+h))
+  fi_img.save(output_img)
+  
+  print(fi_img)
+  print("돌아갔음")
+  #return output_img
+
+
 
 def resize_crop(image):
     h, w, c = np.shape(image)
@@ -128,8 +192,10 @@ def cartoonize(model_path, load_path, save_path):
         None
 
     tf.reset_default_graph()
-
+    #ROOT_PATH = str(Path(__file__).resolve().parent.parent)
     input_photo = tf.placeholder(tf.float32, [1, None, None, 3])
+    #input_photo = Image.open(ROOT_PATH + '\\static\\img\\cat.jpg')
+    print(input_photo)
     network_out = unet_generator(input_photo)
     final_out = guided_filter(input_photo, network_out, r=1, eps=5e-3)
 
@@ -168,6 +234,11 @@ def viewimage(request):
         ROOT_PATH = str(Path(__file__).resolve().parent.parent)
         img_name = load_path.split('\\')[-1]
         save_path = ROOT_PATH + '\\media\\cvt_img\\'  + img_name # 끝 파일이름만 따와서 앞에 폴더명만 변경
+        radio_isChecked = request.POST.get('radio_isChecked')
+        
+        
+        
+            
         # 모델 로딩
         if model_select in ['arcane', 'origin', 'simpson', 'thearistocats']:
             model_path = ''.join([ROOT_PATH, '\\model\\saved_models_', model_select])
@@ -175,10 +246,19 @@ def viewimage(request):
         else :
             pass # 다른 모델
         
+        #if radio_isChecked in ['rembg', 'origin']  and radio_isChecked == 'rembg': 
+        #    rembg(load_path, save_path)
+        #    logging.warning("확인용")
+            
+            
+        
         images.cvt_img = 'cvt_img/' + img_name
         images.save()
         
-
+        if radio_isChecked in ['rembg', 'origin']  and radio_isChecked == 'rembg': 
+          rembg(images.cvt_img.path, save_path)
+          images.save()
+            
         context = {
             'images': images,
         }
