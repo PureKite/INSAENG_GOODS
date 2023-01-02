@@ -44,7 +44,7 @@
 <div class="MainGrid__StyledGrid-sc-1u1dl1e-0 gHAcDL styled-grid">
     <div class="row">
         {% for post in postlist %}
-        <div class="col-3 my-2" style="min-height:10rem;">
+        <div class="col-3 my-2">
             <div>
                 <a class="card shadow"  href="{% url 'articleapp:DetailPost' post.Board_id %}">
                     {% for image in post.postimage.all %}
@@ -98,7 +98,7 @@
                                 <small class="text-muted">{{ post.Board_datetime|date:'Y-m-d' }}</small>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         {% endfor %}
