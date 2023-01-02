@@ -214,6 +214,12 @@ a:hover{
     transform: translateY(-5px);
     transition: 0.5s;
 }
+
+.badge {
+    color:#000000;
+    background-color: #dddddd;
+}
+
 .search_type{
     font-size: 1rem;
     width:15%;
