@@ -108,8 +108,8 @@ def delete(request):
         
         if form.is_valid():
             request.user.delete()
-            logout(request)
             messages.success(request, "회원탈퇴가 완료되었습니다.")
+            auth_logout(request)
             return redirect("mainapp:main")
     else:
         form = CheckPasswordForm(request.user)

@@ -1,80 +1,107 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-    <form action="" method="post" enctype="form-data">
-        {% csrf_token %}
-        <div style="background-color: #00ddff; border-radius: 0.75rem; margin: 1.75rem" class="left-box">
-            <table>
-                <tr>
-                    <td><pre></pre></td>
-                    <div class="right-box">
-                        <button class="btn btn-primary" type="button" onclick="location.href='/article/create'" style="float:right;">글쓰기</button>
-                    </div>
-                </tr>
-                <tr>
-                    <div>
-                        <td>&nbsp;카테고리</td>
-                    </div>
-                    
-                </tr>
-            </table>
-            <table>
-                <tr>
-                    <div>
-                        <td>&nbsp;공구여부&nbsp;</td>
-                        <td>
-                            <input type="radio" name="share" value="yes"> 희망&nbsp;&nbsp;
-                        </td>
-                        <td>
-                            <input type="radio" name="share" value="no"> 비희망&nbsp;&nbsp;
-                        </td>
-                    </div>
-                </tr>
-            </table>
-            <table>
-                <tr>
-                    <div>
-                        <td>&nbsp;굿즈종류&nbsp;</td>
-                        <td>
-                            <input type="checkbox" name="grip_tok" value="grip_tok"> 그립톡&nbsp;&nbsp;
-                        </td>
-                        <td>
-                            <input type="checkbox" name="desktop" value="desktop"> 바탕화면&nbsp;&nbsp;
-                        </td>
-                        <td>
-                            <input type="checkbox" name="key_ring" value="key_ring"> 키링&nbsp;&nbsp;
-                        </td>
-                        <td>
-                            <input type="checkbox" name="t-shirt" value="t-shirt"> 티셔츠&nbsp;&nbsp;
-                        </td>
-                        <td>
-                            <input type="checkbox" name="phone_case" value="phone_case"> 핸드폰케이스&nbsp;&nbsp;
-                        </td>
-                    </div>
-                    <div class="right-box">
-                        <button class="btn btn-primary" type="submit" style="float:right;">검색</button>
-                    </div>
-                </tr>
-            </table>
-            <table><tr><pre></pre></tr></table>
+<link rel="stylesheet" href="{% static 'css/article.css' %}">
+<form action="" class="my-4" method="post" enctype="form-data">
+    {% csrf_token %}
+    <div class="text-center my-3">
+        <span class="fs-1">공유게시판</span>
+        <a class="btn btn-success float-end" type="button" href="{% url 'articleapp:CreatePost' %}"><i class="uil uil-pen"></i>&nbsp; 글쓰기</a>
+    </div>
+    <div class="row">
+        <div class="col-2 text-center">
+            <h4>공구여부</h4>
         </div>
-    </form>
-    <div width="300" class="MainGrid__StyledGrid-sc-1u1dl1e-0 gHAcDL styled-grid">
-        <div class="row g-3">{% comment %} 데이터베이스 연결 후 for문 삭제{% endcomment %}
-            {% for table_data in "x"|rjust:"8" %}
-                <div class="col-sm-3 mb-2">
-                    <a class="d-block pe-lg-4 text-decoration-none lh-sm" href="/docs/5.3/components/alerts/#javascript-behavior">
-                        <div style="background-color: #00ddff; border-radius: 1rem; margin: 1rem">
-                            <a href="#">
-                                <pre><img src="/static/img/cat.jpg" width="99%" height="57%"></pre>
-                                <pre><cite>제목</cite></pre>
-                            </a>
-                            <div class="user">
-                                <a class="userinfo" href="#">by<cite> user</cite></a>
+        <div class="col align-middle">
+            <input id="share" type="radio" name="share" value="yes">
+            <label class="mx-2" for="share">희망</label>
+            <input id="not" type="radio" name="share" value="no">
+            <label class="mx-2" for="not">비희망</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2 text-center">
+            <h4>굿즈종류</h4>
+        </div>
+        <div class="col">
+            <input id="grip_tok" type="checkbox" name="grip_tok" value="grip_tok">
+            <label class="mx-2" for="grip_tok">그립톡</label>
+            <input id="desktop" type="checkbox" name="desktop" value="desktop">
+            <label class="mx-2" for="desktop">바탕화면</label>
+            <input id="key_ring" type="checkbox" name="key_ring" value="key_ring">
+            <label class="mx-2" for="key_ring">키링</label>
+            <input id="t-shirt" type="checkbox" name="t-shirt" value="t-shirt">
+            <label class="mx-2" for="t-shirt">티셔츠</label>
+            <input id="phone_case" type="checkbox" name="phone_case" value="phone_case">
+            <label class="mx-2" for="phone_case">핸드폰케이스</label>
+        </div>
+        <div class="col-1">
+            <button class="btn btn-primary" type="submit"><i class="uil uil-search"></i>&nbsp; 검색</button>
+        </div>
+    </div>
+
+</form>
+<div class="MainGrid__StyledGrid-sc-1u1dl1e-0 gHAcDL styled-grid">
+    <div class="row">
+        {% for post in postlist %}
+        <div class="col-3 my-2" style="min-height:10rem;">
+            <div>
+                <a class="card shadow"  href="{% url 'articleapp:DetailPost' post.Board_id %}">
+                    {% for image in post.postimage.all %}
+                    <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}">
+                        <img class="card-img-top bd-placeholder-img" style="height:10rem;; object-fit: cover;" role="img" src="{{ image.Board_image.url }}">
+                    </div>
+                    {% endfor %}
+                        <div class="card-body">
+                            <p class="card-title h4" href="{% url 'articleapp:DetailPost' post.Board_id %}">{{ post.Board_title }}</p>
+                            <div class="btn-group align-middle">
+                                공구
+                                {% if post.Board_share == '희망' %}
+                                <p><img src="{% static 'img/checked.png' %}" alt="" style="width:20px; height:20px; margin: 0px 5px"></p>
+                                {% else %}
+                                <p><img src="{% static 'img/cancel.png' %}" alt="" style="width:20px; height:20px; margin: 0px 5px"></p>
+                                {% endif %}
+                            </div>
+                            <div>
+                                <span class="custom-control custom-switch">
+                                    {% if '그립톡' in post.Board_gtype %}
+                                        그립톡
+                                        {% endif %}
+                                    </span>
+                                    <span class="custom-control custom-switch">
+                                        {% if '배경화면' in post.Board_gtype %}
+                                    배경화면
+                                    {% endif %}
+                                </span>
+                                <span class="custom-control custom-switch">
+                                    {% if '키링' in post.Board_gtype %}
+                                    키링
+                                    {% endif %}
+                                </span>
+                                <span class="custom-control custom-switch">
+                                    {% if '티셔츠' in post.Board_gtype %}
+                                    티셔츠
+                                    {% endif %}
+                                </span>
+                                <span class="custom-control custom-switch">
+                                    {% if '핸드폰 케이스' in post.Board_gtype %}
+                                    핸드폰 케이스
+                                    {% endif %}
+                                </span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <img src="{{post.Board_writer.profile.image.url}}"
+                                    style="height:2rem; width:2rem; border-radius:1rem;">
+                                    <small class="text-muted">{{ post.Board_writer.nickname }}</small>
+                                </div>
+                                <small class="text-muted">{{ post.Board_datetime|date:'Y-m-d' }}</small>
                             </div>
                         </div>
                     </a>
                 </div>
-            {% endfor %}
-        </div>
+            </div>
+        {% endfor %}
     </div>
+</div>
 {% endblock content %} 

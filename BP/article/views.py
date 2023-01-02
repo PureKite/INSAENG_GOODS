@@ -137,13 +137,12 @@ def DeleteComment(request, postid, commentid):
     return redirect('articleapp:DetailPost', postid)
 
 def ListPost(request):
-    postlist = Post.objects.all().order_by('-Board_datetime')
+    postlist = Post.objects.all().order_by('-Board_id')
     logger.error(postlist)
-    imagelist = PostImage.objects.all()
-    logger.error(imagelist)
-    # login_session = request.session.get('login_session', '')
-    # context = {'login_session':login_session}
-    return render(request, 'List_Post.html', {'postlist':postlist, 'imagelist':imagelist})#, context)
+    context = {
+        'postlist': postlist,
+    }
+    return render(request, 'List_Post.html', context)
 
 def input_test(request):
     if request.POST:
