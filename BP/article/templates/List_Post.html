@@ -2,117 +2,126 @@
 {% load static %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/article.css' %}">
-<form action="" class="my-4" method="get" enctype="form-data">
-    {% csrf_token %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+<div class='detail_body'>
     <div class="text-center mt-3">
-        <span class="fs-1">공유게시판</span>
         {% if user.is_authenticated %}
             <a class="btn btn-success float-end" type="button" href="{% url 'articleapp:CreatePost' %}"><i class="uil uil-pen"></i>&nbsp; 글쓰기</a>
         {% endif %}
-    <hr>
     </div>
-    <div class="row">
-        <div class="col-2 text-center">
-            <h5>공구여부</h5>
-        </div>
-        <div class="col align-middle">
-            <input type="radio" name="search_share" value="희망" id="search_share0">
-            <label class="mx-2" for="search_share0">희망</label>
-            <input type="radio" name="search_share" value="비희망" id="search_share1">
-            <label class="mx-2" for="search_share1">비희망</label>
-        </div>
+    <div style='margin-top: 1rem!important'>
+        <h3>공유 게시판</h3>
     </div>
-    <div class="row">
-        <div class="col-2 text-center">
-            <h5>굿즈종류</h5>
-        </div>
-        <div class="col">
-            <input type="checkbox" name="search_gtype" value="그립톡" id="search_gtype0">
-            <label class="mx-2" for="search_gtype0">그립톡</label>
-            <input type="checkbox" name="search_gtype" value="키링" id="search_gtype2">
-            <label class="mx-2" for="search_gtype2">키링</label>
-            <input type="checkbox" name="search_gtype" value="티셔츠" id="search_gtype3">
-            <label class="mx-2" for="search_gtype3">티셔츠</label>
-            <input type="checkbox" name="search_gtype" value="핸드폰케이스" id="search_gtype4">
-            <label class="mx-2" for="search_gtype4">핸드폰케이스</label>
-        </div>
+    <div class='b_info'>
+        <hr />
+        <span>공유 게시판 > 목록</span>
+        <hr />
     </div>
-    <div class="row">
-        <div class="col-2">
-            <select name="search_type" id="search_tp" class="search_type w-100">
-                <option value="s_total">전체</option>
-                <option value="s_title">제목</option>
-                <option value="s_content">내용</option>
-                <option value="s_writer">작성자</option>
-            </select>
-        </div>
-        <div class="col">
-            <input type="search" value="{{ search }}" placeholder="검색어를 입력해주세요." name="searched" class="in_s p-2">
-            <button class="btn btn-primary search_ed" type="submit"><i class="uil uil-search"></i>&nbsp; 검색</button>
-        </div>
-    </div>
-</form>
-<hr>
-<div class="MainGrid__StyledGrid-sc-1u1dl1e-0 gHAcDL styled-grid">
-    {%if postlist%}
-    <div class="row">
-        {% for post in postlist %}
-        <div class="col-3 my-2">
-            <div>
-                <a class="card shadow"  href="{% url 'articleapp:DetailPost' post.Board_id %}">
-                    {% for image in post.postimage.all %}
-                    <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}">
-                        <img class="card-img-top bd-placeholder-img" style="height:10rem; object-fit: cover;" role="img" src="{{ image.Board_image.url }}">
-                    </div>
-                    {% endfor %}
-                        <div class="card-body">
-                            <p class="card-title h4" href="{% url 'articleapp:DetailPost' post.Board_id %}">{{ post.Board_title }}</p>
-                            <div class="btn-group align-middle">
-                                공구
-                                {% if post.Board_share == '희망' %}
-                                <p><img src="{% static 'img/checked.png' %}" alt="" style="width:20px; height:20px; margin: 0px 5px"></p>
-                                {% else %}
-                                <p><img src="{% static 'img/cancel.png' %}" alt="" style="width:20px; height:20px; margin: 0px 5px"></p>
-                                {% endif %}
-                            </div>
-                            <div>
-                                {% if '그립톡' in post.Board_gtype %}
-                                <span class="custom-control custom-switch badge">
-                                    그립톡
-                                </span>
-                                {% endif %}
-                                {% if '키링' in post.Board_gtype %}
-                                <span class="custom-control custom-switch badge">
-                                    키링
-                                </span>
-                                {% endif %}
-                                {% if '티셔츠' in post.Board_gtype %}
-                                <span class="custom-control custom-switch badge">
-                                    티셔츠
-                                </span>
-                                {% endif %}
-                                {% if '핸드폰' in post.Board_gtype %}
-                                <span class="custom-control custom-switch badge">
-                                    핸드폰케이스
-                                </span>
-                                {% endif %}
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center mt-2">
-                                <div>
-                                    <img src="{{post.Board_writer.profile.image.url}}"
-                                    style="height:2rem; width:2rem; border-radius:1rem;">
-                                    <small class="text-muted">{{ post.Board_writer.nickname }}</small>
-                                </div>
-                                <small class="text-muted">{{ post.Board_datetime|date:'Y-m-d' }}</small>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+    <form action="" class="my-4 form_st" method="get" enctype="form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-2 text-center">
+                <h5>공구여부</h5>
             </div>
-        {% endfor %}
+            <div class="col align-middle">
+                <input type="radio" name="search_share" value="희망" id="search_share0">
+                <label class="mx-2" for="search_share0">희망</label>
+                <input type="radio" name="search_share" value="비희망" id="search_share1">
+                <label class="mx-2" for="search_share1">비희망</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 text-center">
+                <h5>굿즈종류</h5>
+            </div>
+            <div class="col">
+                <input type="checkbox" name="search_gtype" value="그립톡" id="search_gtype0">
+                <label class="mx-2" for="search_gtype0">그립톡</label>
+                <input type="checkbox" name="search_gtype" value="키링" id="search_gtype2">
+                <label class="mx-2" for="search_gtype2">키링</label>
+                <input type="checkbox" name="search_gtype" value="티셔츠" id="search_gtype3">
+                <label class="mx-2" for="search_gtype3">티셔츠</label>
+                <input type="checkbox" name="search_gtype" value="핸드폰케이스" id="search_gtype4">
+                <label class="mx-2" for="search_gtype4">핸드폰케이스</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <select name="search_type" id="search_tp" class="search_type w-100">
+                    <option value="s_total">전체</option>
+                    <option value="s_title">제목</option>
+                    <option value="s_content">내용</option>
+                    <option value="s_writer">작성자</option>
+                </select>
+            </div>
+            <div class="col">
+                <input type="search" value="{{ search }}" placeholder="검색어를 입력해주세요." name="searched" class="in_s p-2">
+                <button class="btn btn-primary search_ed" type="submit"><i class="uil uil-search"></i>&nbsp; 검색</button>
+            </div>
+        </div>
+    </form>
+    <hr>
+    <div class="MainGrid__StyledGrid-sc-1u1dl1e-0 gHAcDL styled-grid">
+        {%if postlist%}
+        <div class="row">
+            {% for post in postlist %}
+            <div class="col-3 my-2">
+                <div>
+                    <a class="card shadow"  href="{% url 'articleapp:DetailPost' post.Board_id %}">
+                        {% for image in post.postimage.all %}
+                        <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}">
+                            <img class="card-img-top bd-placeholder-img" style="height:10rem; object-fit: cover;" role="img" src="{{ image.Board_image.url }}">
+                        </div>
+                        {% endfor %}
+                            <div class="card-body">
+                                <p class="card-title h4" href="{% url 'articleapp:DetailPost' post.Board_id %}">{{ post.Board_title }}</p>
+                                <div class="btn-group align-middle">
+                                    공구&nbsp;
+                                    {% if post.Board_share == '희망' %}
+                                    <i class="bi bi-check-square-fill"style='font-size:1.1rem;color:green;padding-top:0.2rem;'></i>
+                                    {% else %}
+                                    <i class="bi bi-x-square-fill" style='font-size:1.1rem;color:red;padding-top:0.2rem;'></i>
+                                    {% endif %}
+                                </div>
+                                <div>
+                                    {% if '그립톡' in post.Board_gtype %}
+                                    <span class="custom-control custom-switch badge">
+                                        그립톡
+                                    </span>
+                                    {% endif %}
+                                    {% if '키링' in post.Board_gtype %}
+                                    <span class="custom-control custom-switch badge">
+                                        키링
+                                    </span>
+                                    {% endif %}
+                                    {% if '티셔츠' in post.Board_gtype %}
+                                    <span class="custom-control custom-switch badge">
+                                        티셔츠
+                                    </span>
+                                    {% endif %}
+                                    {% if '핸드폰케이스' in post.Board_gtype %}
+                                    <span class="custom-control custom-switch badge">
+                                        핸드폰케이스
+                                    </span>
+                                    {% endif %}
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mt-2">
+                                    <div>
+                                        <img src="{{post.Board_writer.profile.image.url}}"
+                                        style="height:2rem; width:2rem; border-radius:1rem;">
+                                        <small class="text-muted">{{ post.Board_writer.nickname }}</small>
+                                    </div>
+                                    <small class="text-muted">{{ post.Board_datetime|date:'Y-m-d' }}</small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        {% else %}
+            <h5 style="text-align: center; font-size: 1rem;">게시글이 없습니다.</h5>
+        {% endif %}
     </div>
-    {% else %}
-        <h5 style="text-align: center; font-size: 1rem;">게시글이 없습니다.</h5>
-    {% endif %}
 </div>
 {% endblock content %} 

@@ -3,17 +3,16 @@
 {% block content %}
     <link href="{% static 'css/main/style_main.css' %}" rel="stylesheet">
     <div id='main_title' class="row justify-content-between">
-        <div class="col-lg-3 col-sm-12 text-lg-start">
-            미리보기
-        </div>
-        <div class="col-lg-6 col-sm-12 text-lg-end">
-            <button id="plus_button" class="btn btn-outline-primary btn-lg" type="button" onclick="location.href='/article/'">더보기</button>
-        </div>
+        <h4>인생굿즈</h4>
+        <hr />
+    </div>
+    <div class="row justify-content-end" style='margin-bottom:2rem;margin-right:0.2rem;'>
+        <button id="plus_button" class="btn btn-outline-primary" type="button" onclick="location.href='/article/'">전체보기</button>
     </div>
     {% if postlist %}
         <div class="row">
             {% for post in postlist %}
-                <div class="col-3">
+                <div class="col-3" style='margin-bottom:2rem;'>
                     <div class="card shadow-sm">
                         <div id="carouselSlides" class="carousel slide" data-bs-ride="carousel">
                             <div class="carousel-inner">
@@ -34,6 +33,8 @@
             {% endfor %}
         </div>
     {% else %}
-        <h5 style="text-align: center; font-size: 30px;">작성된 게시글이 없습니다.</h5>
+    <div class='row'>
+        <h5 style="text-align: center; font-size: 15px;">작성된 게시글이 없습니다.</h5>
+    </div>
     {% endif %}
 {% endblock %}

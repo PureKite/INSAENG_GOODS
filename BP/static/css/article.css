@@ -79,6 +79,10 @@ mark.red {
     color:#ff0000;
     background: none;
 }
+mark.white{
+    color:white;
+    background: none;
+}
 .thumbnail{
     width:50%;
     float:left;
@@ -231,6 +235,14 @@ mark.red {
     border-color: #6c757d;
     border:1px solid;
 }
+.btn-puple{
+    border-radius: 0.25rem;
+    color: #fff;
+    background-color: #99b2ff;
+    border-color: #99b2ff;
+    border:1px solid;
+    
+}
 a:hover{
     text-decoration: none;
     color:#000000;
@@ -276,4 +288,12 @@ a:hover{
 }
 .text_area{
     background-color: rgb(239, 239, 239);
+}
+.form_st{
+    border:1px solid #cacdcf;
+    border-radius: 0.25rem;
+    padding:2%;
+}
+.mx-2{
+    width:9%;
 }

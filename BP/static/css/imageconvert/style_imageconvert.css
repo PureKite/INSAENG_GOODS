@@ -1,22 +1,21 @@
-
-.file-label {
+.file-label{
     margin-top: 10px;
-    background-color: #1f1f1f;
+    background-color: #6288f9;
     color: #fff;
     text-align: center;
     padding: 10px 0;
-    width: 5%;
+    width: 10%;
     border-radius: 6px;
     cursor: pointer;
-  }
+    float:right;
+}
 .file {
     display: none;
 }
 
-.upload-box {
-  width: 80%;
+.upload-box, .mainform {
+  width: 100%;
   box-sizing: border-box;
-  margin-right: 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -26,12 +25,14 @@
 .upload-box .drag-file {
   position: relative;
   width: 80%;
-  height: 512px;
+  height: 600px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border: 3px dashed #dbdbdb;
+  background-color: #ededed;
+  /* background-color: none; */
 }
 
 .upload-box .drag-file.highlight {
@@ -53,4 +54,90 @@
   height: 0;
   width: 100%;
   height: 100%;
+}
+
+.detail_body{
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
+.b_info{
+  height:50px;
+  background-color: #b5c8ff;
+  margin:0 0 0 0;
+}
+.b_info>span{
+  float:right;
+  padding-right:1.5rem;
+}
+hr{
+  background-color: #b5c8ff;
+}
+#model_select, #radio_isChecked{
+  width:20%;
+  text-align: center;
+  height: 5%;
+  font-size: 1.2rem;
+  margin-right: 1rem;
+  justify-content : center;
+  color:#6288f9;
+  border: 1px solid #6288f9;
+  border-radius: 0.25rem;
+}
+#model_select > option, #radio_isChecked > option{
+  background-color: #eeeeee;
+}
+.imgup{
+  width:10%;
+  text-align: center;
+  height: 5%;
+  font-size: 1.2rem;
+  margin-right: 1rem;
+  justify-content : center;
+}
+.mainform > img{
+  width: 80%;
+  height: 600px;
+  margin-top:2rem;
+}
+.dwn{
+  width:100%; 
+  height:2.5rem;
+}
+.img_dwn {
+  margin-top: 10px;
+  background-color: #6288f9;
+  color: #fff;
+  text-align: center;
+  width: 10%;
+  height:80%;
+  border-radius: 6px;
+  cursor: pointer;
+  border:none;
+  float:right;
+  margin-right: 10%;
+  padding:0.25rem;
+}
+.pagemove{
+  font-size:1.3rem;
+  width: 100%;
+  text-align: right;
+}
+.pagemove > a{
+  color:black;
+  background-color: #eeeeee;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  padding: 0.2rem;
+}
+.pagemove > a:hover{
+  color:#285eff;
+  text-decoration:underline;
 }

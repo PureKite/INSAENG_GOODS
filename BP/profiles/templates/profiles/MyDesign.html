@@ -3,6 +3,7 @@
 {% block content %}
     <link href="{% static 'css/main/style_mydesign.css' %}" rel="stylesheet">
     <link href="{% static 'css/main/style_main.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
     <div class="container-fluid">
         <div class="row flex-nowrap">
             <div class="col-md-4 bd-sidebar">
@@ -12,7 +13,7 @@
                         <li><a href="{% url 'accountsapp:detail' user.pk %}" class="btn btn-lg mt-5" role="button">개인 정보 수정</a></li>
                     </ul>
                 </div>
-            </div>
+            </div  class="MainGrid__StyledGrid-sc-1u1dl1e-0 gHAcDL styled-grid">
              {% if post_list %}
                 <div class="row row-cols-3 row-cols-md-3 mb-3 center pt-5" style="width: 1000px;">
                     {% for post in post_list %}
@@ -31,47 +32,37 @@
                                 </div>
                                 <div class="card-body">
                                     <p class="card-title h4" href="{% url 'articleapp:DetailPost' post.Board_id %}">{{ post.Board_title }}</p>
-                                    <div class="btn-group">
-                                        <p class="share">공구</p>
+                                    <div class="btn-group align-middle">
+                                        공구&nbsp;
                                         {% if post.Board_share == '희망' %}
-                                            <p><img src="{% static 'img/checked.png' %}" alt="" width="20" height="20" style="margin: 5px 0px 0px 10px;"></p>
+                                        <i class="bi bi-check-square-fill"style='font-size:1.1rem;color:green;padding-top:0.2rem;'></i>
                                         {% else %}
-                                            <p><img src="{% static 'img/cancel.png' %}" alt="" width="20" height="20" style="margin: 5px 0px 0px 10px;"></p>
+                                        <i class="bi bi-x-square-fill" style='font-size:1.1rem;color:red;padding-top:0.2rem;'></i>
                                         {% endif %}
                                     </div>
                                     <div>
-                                        <span class="custom-control custom-switch">
-                                    {% if '그립톡' in post.Board_gtype %}
-                                        <input type="checkbox" class="custom-control-input" id="check" checked>
-                                        <label class="custom-control-label" for="check">그립톡</label>
-                                    {% endif %}
-                                    </span>
-                                    <span class="custom-control custom-switch">
-                                        {% if '배경화면' in post.Board_gtype %}
-                                            <input type="checkbox" class="custom-control-input" id="check" checked>
-                                            <label class="custom-control-label" for="check">그립톡</label>
+                                        {% if '그립톡' in post.Board_gtype %}
+                                        <span class="custom-control custom-switch badge">
+                                            그립톡
+                                        </span>
                                         {% endif %}
-                                    </span>
-                                    <span class="custom-control custom-switch">
                                         {% if '키링' in post.Board_gtype %}
-                                            <input type="checkbox" class="custom-control-input" id="check" checked>
-                                            <label class="custom-control-label" for="check">키링</label>
+                                        <span class="custom-control custom-switch badge">
+                                            키링
+                                        </span>
                                         {% endif %}
-                                    </span>
-                                    <span class="custom-control custom-switch">
                                         {% if '티셔츠' in post.Board_gtype %}
-                                            <input type="checkbox" class="custom-control-input" id="check" checked>
-                                            <label class="custom-control-label" for="check">티셔츠</label>
+                                        <span class="custom-control custom-switch badge">
+                                            티셔츠
+                                        </span>
                                         {% endif %}
-                                    </span>
-                                    <span class="custom-control custom-switch">
                                         {% if '핸드폰케이스' in post.Board_gtype %}
-                                            <input type="checkbox" class="custom-control-input" id="check" checked>
-                                            <label class="custom-control-label" for="check">핸드폰 케이스</label>
+                                        <span class="custom-control custom-switch badge">
+                                            핸드폰케이스
+                                        </span>
                                         {% endif %}
-                                    </span>
                                     </div>
-                                    <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex justify-content-between align-items-center mt-2">
                                         <small class="text-muted">{{ post.Board_writer.nickname }}</small>
                                         <small class="text-muted">{{ post.Board_datetime|date:'Y-m-d' }}</small>
                                     </div>

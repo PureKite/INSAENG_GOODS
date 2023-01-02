@@ -135,6 +135,9 @@ const CommentSubmit = (id) => {
                 const day = date.getDate(); 
                 const hours = date.getHours();
                 const minutes = date.getMinutes();
+                if (minutes < 10){
+                    minutes = '0' + str(minutes);
+                }
                 d.value = year+'년 '+month+'월 '+day+'일 '+(hours%12)+':'+minutes+' '+date.toLocaleTimeString('ko-kr').slice(0,2);
                 Content.disabled = true;
             }

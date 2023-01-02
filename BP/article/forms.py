@@ -57,7 +57,7 @@ class CommentForm(forms.ModelForm):
         widgets = {
             'Comment_content' : forms.Textarea(attrs={
                 'placeholder':"댓글을 입력해주세요.",
-                'style':'width: 100%; height:10%; resize: none;border-radius: 0.25rem;border: 1px solid #ced4da;'
+                'style':'width: 100%; height:10%; resize: none;border-radius: 0.25rem;border: 1px solid #ced4da;',
             }),
         }
         

@@ -1,34 +1,30 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-
-
 <link rel="stylesheet" type="text/css" href="{% static 'css/imageconvert/style_imageconvert.css' %}">
-<div class="content">
+<div class='detail_body'>
+  <div style='margin-top: 1rem!important'>
+    <h3>굿즈 만들기</h3>
+  </div>
+  <div class='b_info'>
+      <hr />
+      <span>굿즈 만들기 > 이미지 업로드</span>
+      <hr />
+  </div>
     <form action="viewimage" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <span id='file_0'>
+        <div class='row'>
+          <span id='file_0'>
             <fieldset>
-                <label class="file-label" for="chooseFile">업로드</label>
+                <label class="file-label" for="chooseFile">사진 첨부</label>
                 <input name = "files" class="file" id="chooseFile"
                   type="file"
                   onchange="dropFile.handleFiles(this.files)"
                   accept="image/png, image/jpeg, image/gif">
             </fieldset>
-            <select name="model_select" id="model_select">
-                <option value="arcane">arcane</option>
-                <option value="origin">origin</option>
-                <option value="simpson">simpson</option>
-                <option value="thearistocats">thearistocats</option>
-            </select>
-            <br>
-            <select name="radio_isChecked" id="radio_isChecked">
-              <option value="origin">배경 유지</option>
-              <option value="rembg">배경 제거</option>
-            </select>
-            <br>
-{#            {% comment %} <div>정답 : <input name="answer" type="text"></div> {% endcomment %}#}
-        </span>
+          </span> 
+        </div>
+        <br>
         <div>
             <div class="upload-box">
                 <div id="drop-file" class="drag-file">
@@ -37,86 +33,96 @@
                   <img src="" alt="미리보기 이미지" class="preview">
                 </div>
             </div>
+            
         </div>
-        <script>
-            function DropFile(dropAreaId, fileListId) {
-                let dropArea = document.getElementById(dropAreaId);
-                let fileList = document.getElementById(fileListId);
+      <script>
+          function DropFile(dropAreaId, fileListId) {
+              let dropArea = document.getElementById(dropAreaId);
+              let fileList = document.getElementById(fileListId);
+
+              console.log(fileListId);
+
+              function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+              }
+
+              function highlight(e) {
+                preventDefaults(e);
+                dropArea.classList.add("highlight");
+              }
+
+              function unhighlight(e) {
+                preventDefaults(e);
+                dropArea.classList.remove("highlight");
+              }
+
+              function handleDrop(e) {
+                unhighlight(e);
+                let dt = e.dataTransfer;
+                let files = dt.files;
 
                 console.log(fileListId);
 
-                function preventDefaults(e) {
-                  e.preventDefault();
-                  e.stopPropagation();
+                handleFiles(files);
+
+                const fileList = document.getElementById(fileListId);
+                if (fileList) {
+                  fileList.scrollTo({ top: fileList.scrollHeight });
                 }
+                document.querySelector('#chooseFile').files = files;
+              }
 
-                function highlight(e) {
-                  preventDefaults(e);
-                  dropArea.classList.add("highlight");
-                }
+              function handleFiles(files) {
+                files = [...files];
+                // files.forEach(uploadFile);
+                files.forEach(previewFile);
+                console.log(fileListId);
+              }
 
-                function unhighlight(e) {
-                  preventDefaults(e);
-                  dropArea.classList.remove("highlight");
-                }
-
-                function handleDrop(e) {
-                  unhighlight(e);
-                  let dt = e.dataTransfer;
-                  let files = dt.files;
-
-                  console.log(fileListId);
-
-                  handleFiles(files);
-
-                  const fileList = document.getElementById(fileListId);
-                  if (fileList) {
-                    fileList.scrollTo({ top: fileList.scrollHeight });
-                  }
-                  document.querySelector('#chooseFile').files = files;
-                }
-
-                function handleFiles(files) {
-                  files = [...files];
-                  // files.forEach(uploadFile);
-                  files.forEach(previewFile);
-                  console.log(fileListId);
-                }
-
-                function previewFile(file) {
-                  console.log(file);
-                  renderFile(file);
-                }
+              function previewFile(file) {
+                console.log(file);
+                renderFile(file);
+              }
 
 
 
-                function renderFile(file) {
-                  let reader = new FileReader();
-                  reader.readAsDataURL(file);
-                  reader.onloadend = function () {
-                    let img = dropArea.getElementsByClassName("preview")[0];
-                    img.src = reader.result;
-                    img.style.display = "block";
-                  };
-                }
-
-                dropArea.addEventListener("dragenter", highlight, false);
-                dropArea.addEventListener("dragover", highlight, false);
-                dropArea.addEventListener("dragleave", unhighlight, false);
-                dropArea.addEventListener("drop", handleDrop, false);
-
-                return {
-                  handleFiles
+              function renderFile(file) {
+                let reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onloadend = function () {
+                  let img = dropArea.getElementsByClassName("preview")[0];
+                  img.src = reader.result;
+                  img.style.display = "block";
+                  dropArea.style.backgroundColor='transparent';
                 };
               }
 
-              const dropFile = new DropFile("drop-file", "files");
-        </script>
-        <br>
+              dropArea.addEventListener("dragenter", highlight, false);
+              dropArea.addEventListener("dragover", highlight, false);
+              dropArea.addEventListener("dragleave", unhighlight, false);
+              dropArea.addEventListener("drop", handleDrop, false);
 
-        <div><input type="submit" value="업로드"></div>
-
-
+              return {
+                handleFiles
+              };
+            }
+            const dropFile = new DropFile("drop-file", "files");
+      </script>
+      <hr />
+        <div style='display: flex;justify-content: center;align-items: center;'>
+          <select name="model_select" id="model_select" class = 'selectpicker' data-style="btn-inverse">
+            <option value="arcane">아케인</option>
+            <option value="origin">오리진</option>
+            <option value="simpson">심슨</option>
+            <option value="thearistocats">아리스토캣</option>
+          </select>
+          <select name="radio_isChecked" id="radio_isChecked">
+            <option value="origin">배경 유지</option>
+            <option value="rembg">배경 제거</option>
+          </select>
+          <input type="submit" value="업로드" class='imgup btn btn-primary'>
+      </div>
     </form>
 </div>
 {% endblock %}

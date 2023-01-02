@@ -20,8 +20,8 @@
         <nav id="navbar" class="navbar navbar-default navbar-expand-sm fixed-top bg-light">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/">
-                    <img href="/" src="{% static 'img/Logo.png' %}" alt="" width="100" height="70">
-                    <span class="fs-1 mx-3">인생굿즈</span>
+                    <img href="/" src="{% static 'img/Logo.png' %}" alt="" width="100" height="50">
+                    {% comment %} <span class="fs-1 mx-3">인생굿즈</span> {% endcomment %}
                 </a>
                 <button class="navbar-toggler" type="button"
                         data-bs-toggle="collapse"
@@ -60,7 +60,7 @@
                 </div>
             </div>
         </nav>
-        <div style="padding-top:0px;" class='container'>
+        <div class='container'>
             <!-- 채울 부분 -->
             {% block content%}
 

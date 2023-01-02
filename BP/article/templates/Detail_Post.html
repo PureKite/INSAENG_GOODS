@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="{% static 'css/article.css' %}">
 <script src="{% static 'js/article.js' %}"></script>
 <div class='detail_body'>
-    <div>
+    <div style='margin-top: 1rem!important'>
         <h3>공유 게시판</h3>
     </div>
     <div class='b_info'>
@@ -58,8 +58,7 @@
     </div>
     </div><div style="clear:both;overflow:auto;"></div>
     <div style='height:6%;'>
-        <hr />
-        <a class="btn btn-info float-end" type="button" href="{% url 'articleapp:ListPost' %}"><iconify-icon icon="material-symbols:format-list-bulleted" style='font-size:0.8rem;'></iconify-icon>&nbsp;목록</a>
+        <a class="btn btn-puple float-end" type="button" href="{% url 'articleapp:ListPost' %}"><iconify-icon icon="material-symbols:format-list-bulleted" style='font-size:0.8rem;'></iconify-icon>&nbsp;목록</a>
     </div>
     <div>
         <hr />
@@ -68,7 +67,7 @@
         <table>
             {% for comment in post.comment_set.all %}
             <tr>
-                <td id = 'comment_content'><textarea id = 'c_content' class='Content{{ comment.id }} text_area' disabled>{{ comment.Comment_content }}</textarea></td>
+                <td id = 'comment_content'><textarea rows='1' id = 'c_content' class='Content{{ comment.id }} text_area' disabled>{{ comment.Comment_content }}</textarea></td>
                 <td id = 'comment_nad'>{{ comment.Comment_writer.nickname }}<input type = 'text' id = 'c_date' class='Date{{ comment.id }}' value='{{ comment.Comment_datetime }}' readonly></td>
                 {% if request.user == comment.Comment_writer %}
                     <td id = 'comment_btn'>
