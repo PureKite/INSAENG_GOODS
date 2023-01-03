@@ -8,25 +8,21 @@
 {% load i18n %}
 {% load account socialaccount %}
 {% get_providers as socialaccount_providers %}
-<h4>소셜로그인</h4>
-<div class="d-flex mb-4 justify-content-around">
-    {% for provider in socialaccount_providers %}
-        {% if provider.name == "Naver" %}
-            <div>
-                <a href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
-                    <img src="{{ naver_button }}"
-                        onmouseover="this.src='{{ naver_button_hover }}'"
-                        onmouseleave="this.src='{{ naver_button }}'"height="40">
-            </div>
-        {% elif provider.name == "Kakao" %}
-            <div>
-                <a href="{% provider_login_url 'kakao' method='oauth2' %}">
-                    <img src="{{ kakao_button }}"
-                        onmouseover="this.src='{{ kakao_button_hover }}'"
-                        onmouseleave="this.src='{{ kakao_button }}'"height="40">
-            </div>
-        {% endif %}
-    {% endfor %}
+<div class="social">
+    <h4>소셜로그인</h4>
+    <div class="d-flex mb-4 justify-content-around">
+        {% for provider in socialaccount_providers %}
+            {% if provider.name == "Naver" %}
+                <div class="button">
+                    <a href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
+                        <img src="{{ naver_button }}" height="40">
+                </div>
+            {% elif provider.name == "Kakao" %}
+                <div class="button">
+                    <a href="{% provider_login_url 'kakao' method='oauth2' %}">
+                        <img src="{{ kakao_button }}" height="40">
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
 </div>
-
-</html>

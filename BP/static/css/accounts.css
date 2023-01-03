@@ -327,3 +327,11 @@
     float: right;
     margin-left: 10px;
 }
+
+.social {
+    margin: 2rem 2rem 4rem;
+}
+
+.social .button {
+    margin: 4px;
+}
