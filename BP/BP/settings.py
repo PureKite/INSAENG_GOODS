@@ -46,6 +46,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',  # 사이트 정보를 설정하기 위해 필요
+    # allauth 관련 앱 목록 추가
+    'allauth',
+    'allauth.account',  # 가입한 계정을 관리하기 위한 것.
+    'allauth.socialaccount',  # 소셜 계정을 관리하기 위한 것.
+    'allauth.socialaccount.providers.naver',
+    'allauth.socialaccount.providers.kakao',
     'accounts.apps.AccountsConfig',
     'django_cleanup.apps.CleanupConfig',
     'main',
@@ -55,6 +62,13 @@ INSTALLED_APPS = [
     'goods',
     'loading',
     'media',
+]
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 MIDDLEWARE = [
@@ -83,6 +97,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -152,3 +167,6 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+SITE_ID = 1
+LOGIN_REDIRECT_URL = '/'
