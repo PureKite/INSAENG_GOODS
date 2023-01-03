@@ -47,3 +47,13 @@ a {
     background-color: #b5c8ff;
     text-align: center;
 }
+.ex{
+    background-color: #cbd4ed;
+    width:50%;
+    font-size:1.5rem;
+}
+mark.underl{
+    text-decoration: underline;
+    background-color: transparent;
+    font-size:1.8rem;
+}
