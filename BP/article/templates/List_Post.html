@@ -74,7 +74,7 @@
                         </div>
                         {% endfor %}
                             <div class="card-body">
-                                <p class="card-title h4" href="{% url 'articleapp:DetailPost' post.Board_id %}">{{ post.Board_title }}</p>
+                                <p class="card-title h4" href="{% url 'articleapp:DetailPost' post.Board_id %}">{{ post.Board_title|truncatechars:13 }}</p>
                                 <div class="btn-group align-middle">
                                     공구&nbsp;
                                     {% if post.Board_share == '희망' %}

@@ -1,12 +1,19 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    <link href="{% static 'css/main/style_main.css' %}" rel="stylesheet">
-    <div id='main_title' class="row justify-content-between">
-        <h4>인생굿즈</h4>
-        <hr />
+<link href="{% static 'css/main/style_main.css' %}" rel="stylesheet">
+    <div>
+        <p class='ex' style='text-align:left;float:left;'>『&nbsp;나의 이미지를<mark class="underl">일러스트로</mark>&nbsp;』</p>
+        <p class='ex' style='text-align:right; float:right;'>『&nbsp;일러스트 이미지를 나만의 <mark class="underl">굿즈로</mark>&nbsp;』</p>
+        <a href='/imageconvert/'><img src='static\img\메인 사진.png' width=49% height=45% style='border-radius:3rem;padding:1rem;'></a>
+        <a href='/imageconvert/'><img src='static\img\사진.png' width=49% height=45% style='border-radius:3rem;padding:1rem;'></a>
+        <hr/>
     </div>
-    <div class="row justify-content-end" style='margin-bottom:2rem;margin-right:0.2rem;'>
+    <div id='main_title' class="row justify-content-between">
+        <h4>게시판 미리보기</h4>
+    </div>
+    <br>
+    <div class="row justify-content-end" style='margin-bottom:1rem;margin-right:0.2rem;'>
         <button id="plus_button" class="btn btn-outline-primary" type="button" onclick="location.href='/article/'">전체보기</button>
     </div>
     {% if postlist %}
@@ -26,7 +33,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <p class="card-title h4" href="{% url 'articleapp:DetailPost' post.Board_id %}">{{ post.Board_title }}</p>
+                            <p class="card-title h4" href="{% url 'articleapp:DetailPost' post.Board_id %}">{{ post.Board_title|truncatechars:9 }}</p>
                         </div>
                     </div>
                 </div>

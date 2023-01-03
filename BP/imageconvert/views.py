@@ -19,10 +19,21 @@ from PIL import Image, ImageOps, ImageFilter
 from django.contrib.auth.decorators import login_required
 # -*- coding:utf-8 -*-
 
-def rembg(in_img,output_img):  #input_img: 원본 이미지 경로 /  output_img: 저장 경로 / white_img: 흰 배경 이미지 경로
-    
+def rembg(in_img,output_img):  # 배경만 제거
+  
   input_path = in_img
-  input = Image.open(input_path).convert("RGBA")
+  input = Image.open(input_path)
+  output = remove(input)
+  
+  fi_img = output
+  fi_img.save(output_img)
+  
+  print("돌아갔음")
+ 
+
+def rmblank(in_img,output_img):  # 배경제거 + 여백제거
+  input_path = in_img
+  input = Image.open(input_path)
   output = remove(input)
   ROOT_PATH = str(Path(__file__).resolve().parent.parent)
   background = Image.open(ROOT_PATH + '\\static\\img\\design\\white.jpg')
@@ -53,7 +64,8 @@ def rembg(in_img,output_img):  #input_img: 원본 이미지 경로 /  output_img
           value.append(contours_xy[i][j][0][0])
           x_min = min(value)
           x_max = max(value)
-
+  # print(x_min)
+  # print(x_max)
 
   y_min, y_max = 0,0
   value = list()
@@ -62,7 +74,8 @@ def rembg(in_img,output_img):  #input_img: 원본 이미지 경로 /  output_img
           value.append(contours_xy[i][j][0][1])
           y_min = min(value)
           y_max = max(value)
-
+  # print(y_min)
+  # print(y_max)
 
   x = x_min
   y = y_min
@@ -71,7 +84,10 @@ def rembg(in_img,output_img):  #input_img: 원본 이미지 경로 /  output_img
 
   fi_img = output.crop((x,y,x+w,y+h))
   fi_img.save(output_img)
-  #return output_img
+  
+  print(fi_img)
+  print("돌아갔음")
+ 
 
 
 
@@ -241,32 +257,36 @@ def viewimage(request):
 
         save_path = ROOT_PATH + '\\media\\cvt_img\\'  + img_name # 끝 파일이름만 따와서 앞에 폴더명만 변경
         radio_isChecked = request.POST.get('radio_isChecked')
-
+    
         
-        # 모델 로딩
-        if model_select in ['arcane', 'origin', 'simpson', 'thearistocats']:
+      
+        if radio_isChecked in ['rembg', 'origin']  and radio_isChecked == 'rembg': 
+          rmblank(load_path, save_path) # 배경 + 여백 제거 , 여기서  아래 모델에 값 전달해야됨
+          images.cvt_img = 'cvt_img/' + img_name
+          images.save()
+          
+        if radio_isChecked in ['rembg', 'origin']  and radio_isChecked == 'rembg' and model_select in ['arcane', 'origin', 'simpson', 'thearistocats'] :
+            model_path = ''.join([ROOT_PATH, '\\model\\saved_models_', model_select])
+            cartoonize(model_path, images.cvt_img.path, save_path) # 이미지가 곧바로 DB로 저장되는 건지 imagefield에 맞게 저장되는 건지 확인필요
+        
+        elif radio_isChecked in ['rembg', 'origin']  and radio_isChecked == 'origin' and model_select in ['arcane', 'origin', 'simpson', 'thearistocats'] :
             model_path = ''.join([ROOT_PATH, '\\model\\saved_models_', model_select])
             cartoonize(model_path, load_path, save_path) # 이미지가 곧바로 DB로 저장되는 건지 imagefield에 맞게 저장되는 건지 확인필요
         else :
             pass # 다른 모델
         
-        #if radio_isChecked in ['rembg', 'origin']  and radio_isChecked == 'rembg': 
-        #    rembg(load_path, save_path)
-        #    logging.warning("확인용")
             
-            
-        
+
         images.cvt_img = 'cvt_img/' + img_name
         images.save()
         
         if radio_isChecked in ['rembg', 'origin']  and radio_isChecked == 'rembg': 
-          rembg(images.cvt_img.path, save_path)
+          rmblank(images.cvt_img.path, save_path) #배경만 지우기
           images.save()
             
         context = {
             'images': images,
-        }
-            
+        }   
         return render(request, 'viewimage.html', context)
 
     # http method의 GET은 처리하지 않는다. 사이트 테스트용으로 남겨둠
