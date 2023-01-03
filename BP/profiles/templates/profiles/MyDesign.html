@@ -1,79 +1,80 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    <link href="{% static 'css/main/style_mydesign.css' %}" rel="stylesheet">
-    <link href="{% static 'css/main/style_main.css' %}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-    <div class="container-fluid">
-        <div class="row flex-nowrap">
-            <div class="col-md-4 bd-sidebar">
-                <div class="bd-sidebar-body">
-                    <ul class="nav">
-                        <li><a href="/profiles/mydesign" class="btn btn-lg mt-5" role="button">나의 디자인</a></li>
-                        <li><a href="{% url 'accountsapp:detail' user.pk %}" class="btn btn-lg mt-5" role="button">개인 정보 수정</a></li>
-                    </ul>
-                </div>
-            </div  class="MainGrid__StyledGrid-sc-1u1dl1e-0 gHAcDL styled-grid">
-             {% if post_list %}
-                <div class="row row-cols-3 row-cols-md-3 mb-3 center pt-5" style="width: 1000px;">
-                    {% for post in post_list %}
-                        <div class="col-3">
-                            <div class="card mb-4 shadow-sm">
-                                <div id="carouselSlides" class="carousel slide" data-bs-ride="carousel">
-                                    <div class="carousel-inner">
-                                        {% for image in post.postimage.all %}
-                                            <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}" data-bs-interval="3000">
-                                                <a href="{% url 'articleapp:DetailPost' post.Board_id %}">
-                                                    <img class="d-block w-100 card-img-top bd-placeholder-img" width="100%" height="256" role="img" src="{{ image.Board_image.url }}">
-                                                </a>
-                                            </div>
-                                        {% endfor %}
-                                    </div>
+<link href="{% static 'css/main/style_mydesign.css' %}" rel="stylesheet">
+<link href="{% static 'css/main/style_main.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <div class="col-md-4 bd-sidebar">
+            <div class="bd-sidebar-body">
+                <ul class="nav">
+                    <li><a href="/profiles/mydesign" class="btn btn-lg mt-5" role="button">나의 디자인</a></li>
+                    <li><a href="{% url 'accountsapp:detail' user.pk %}" class="btn btn-lg mt-5" role="button">개인 정보 수정</a></li>
+                </ul>
+            </div>
+        </div>
+        <div  class="MainGrid__StyledGrid-sc-1u1dl1e-0 gHAcDL styled-grid">
+            {% if post_list %}
+            <div class="row row-cols-3 row-cols-md-3 mb-3 center pt-5" style="width: 1000px;">
+                {% for post in post_list %}
+                    <div class="col-3">
+                        <div class="card mb-4 shadow-sm">
+                            <div id="carouselSlides" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    {% for image in post.postimage.all %}
+                                        <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}" data-bs-interval="3000">
+                                            <a href="{% url 'articleapp:DetailPost' post.Board_id %}">
+                                                <img class="d-block w-100 card-img-top bd-placeholder-img" width="100%" height="256" role="img" src="{{ image.Board_image.url }}">
+                                            </a>
+                                        </div>
+                                    {% endfor %}
                                 </div>
-                                <div class="card-body">
-                                    <p class="card-title h4" href="{% url 'articleapp:DetailPost' post.Board_id %}">{{ post.Board_title }}</p>
-                                    <div class="btn-group align-middle">
-                                        공구&nbsp;
-                                        {% if post.Board_share == '희망' %}
-                                        <i class="bi bi-check-square-fill"style='font-size:1.1rem;color:green;padding-top:0.2rem;'></i>
-                                        {% else %}
-                                        <i class="bi bi-x-square-fill" style='font-size:1.1rem;color:red;padding-top:0.2rem;'></i>
-                                        {% endif %}
-                                    </div>
-                                    <div>
-                                        {% if '그립톡' in post.Board_gtype %}
-                                        <span class="custom-control custom-switch badge">
-                                            그립톡
-                                        </span>
-                                        {% endif %}
-                                        {% if '키링' in post.Board_gtype %}
-                                        <span class="custom-control custom-switch badge">
-                                            키링
-                                        </span>
-                                        {% endif %}
-                                        {% if '티셔츠' in post.Board_gtype %}
-                                        <span class="custom-control custom-switch badge">
-                                            티셔츠
-                                        </span>
-                                        {% endif %}
-                                        {% if '핸드폰케이스' in post.Board_gtype %}
-                                        <span class="custom-control custom-switch badge">
-                                            핸드폰케이스
-                                        </span>
-                                        {% endif %}
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-center mt-2">
-                                        <small class="text-muted">{{ post.Board_writer.nickname }}</small>
-                                        <small class="text-muted">{{ post.Board_datetime|date:'Y-m-d' }}</small>
-                                    </div>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-title h4" href="{% url 'articleapp:DetailPost' post.Board_id %}">{{ post.Board_title|truncatechars:9 }}</p>
+                                <div class="btn-group align-middle">
+                                    공구&nbsp;
+                                    {% if post.Board_share == '희망' %}
+                                    <i class="bi bi-check-square-fill"style='font-size:1.1rem;color:green;padding-top:0.2rem;'></i>
+                                    {% else %}
+                                    <i class="bi bi-x-square-fill" style='font-size:1.1rem;color:red;padding-top:0.2rem;'></i>
+                                    {% endif %}
+                                </div>
+                                <div>
+                                    {% if '그립톡' in post.Board_gtype %}
+                                    <span class="custom-control custom-switch badge">
+                                        그립톡
+                                    </span>
+                                    {% endif %}
+                                    {% if '키링' in post.Board_gtype %}
+                                    <span class="custom-control custom-switch badge">
+                                        키링
+                                    </span>
+                                    {% endif %}
+                                    {% if '티셔츠' in post.Board_gtype %}
+                                    <span class="custom-control custom-switch badge">
+                                        티셔츠
+                                    </span>
+                                    {% endif %}
+                                    {% if '핸드폰케이스' in post.Board_gtype %}
+                                    <span class="custom-control custom-switch badge">
+                                        핸드폰케이스
+                                    </span>
+                                    {% endif %}
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mt-2">
+                                    <small class="text-muted">{{ post.Board_writer.nickname }}</small>
+                                    <small class="text-muted">{{ post.Board_datetime|date:'Y-m-d' }}</small>
                                 </div>
                             </div>
                         </div>
-                    {% endfor %}
-                </div>
-            {% else %}
-                <h5 style="text-align: center; font-size: 30px; padding-top: 50px; width: 1000px;">작성된 게시글이 없습니다.</h5>
-            {% endif %}
-        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <h5 style="text-align: center; font-size: 30px; padding-top: 50px; width: 1000px;">작성된 게시글이 없습니다.</h5>
+        {% endif %}
     </div>
+</div>
 {% endblock %}

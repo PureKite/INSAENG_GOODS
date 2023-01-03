@@ -111,7 +111,8 @@
       </script>
       <hr />
         <div style='display: flex;justify-content: center;align-items: center;'>
-          <select name="model_select" id="model_select" class = 'selectpicker' data-style="btn-inverse">
+          <select name="model_select" id="model_select">
+            <option value="">화풍 선택</option>
             <option value="arcane">아케인</option>
             <option value="origin">오리진</option>
             <option value="simpson">심슨</option>
@@ -123,6 +124,13 @@
           </select>
           <input type="submit" value="업로드" class='imgup btn btn-primary'>
       </div>
+      {% if messages %}
+        <ul class="messages"> 
+          {% for message in messages %}
+            <li style='text-align:center; color:red;list-style: none;' {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</span>
+          {% endfor %}
+        </ul>
+      {% endif %}
     </form>
 </div>
 {% endblock %}

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import *
 import numpy as np
 import cv2, joblib,sys
@@ -19,6 +19,7 @@ from rembg import remove1
 from rembg import remove2
 from PIL import Image, ImageOps, ImageFilter
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 # -*- coding:utf-8 -*-
 
 def rembg(in_img):  #input_img: 원본 이미지 경로 /  output_img: 저장 경로 / white_img: 흰 배경 이미지 경로
@@ -233,7 +234,7 @@ def cartoonize(model_path, load_path, save_path):
     return output
 
 def viewimage(request):
-    if request.method == 'POST' and request.FILES['files']:
+    if request.method == 'POST' and request.FILES.get('files'):
         file = request.FILES['files']
         images = Images()
         images.user_id = request.user
@@ -265,7 +266,9 @@ def viewimage(request):
             print("@@#####$#$#$#$#$#$")
             print(type(output))
         else :
-            pass # 다른 모델
+            messages.warning(request, "화풍을 선택해주세요.")
+            return redirect('/imageconvert')
+
         
         if radio_isChecked in ['rembg', 'origin']  and radio_isChecked == 'rembg':
             iin_path = images.cvt_img
@@ -294,5 +297,7 @@ def viewimage(request):
 
     # http method의 GET은 처리하지 않는다. 사이트 테스트용으로 남겨둠
     else:
-        test = request.GET['test']
-        logger.error(('Something went wrong!!',test))
+        # test = request.GET['test']
+        # logger.error(('Something went wrong!!',test))
+        messages.warning(request, "사진을 넣어주세요.")
+        return redirect('/imageconvert')
