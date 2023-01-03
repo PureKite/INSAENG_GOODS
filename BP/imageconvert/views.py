@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import *
 import numpy as np
 import cv2, joblib,sys
+from datetime import datetime
 import logging
 import string
 import os
@@ -16,11 +17,12 @@ from accounts.models import Account
 from rembg import remove
 from PIL import Image, ImageOps, ImageFilter
 from django.contrib.auth.decorators import login_required
+# -*- coding:utf-8 -*-
 
 def rembg(in_img,output_img):  #input_img: 원본 이미지 경로 /  output_img: 저장 경로 / white_img: 흰 배경 이미지 경로
     
   input_path = in_img
-  input = Image.open(input_path)
+  input = Image.open(input_path).convert("RGBA")
   output = remove(input)
   ROOT_PATH = str(Path(__file__).resolve().parent.parent)
   background = Image.open(ROOT_PATH + '\\static\\img\\design\\white.jpg')
@@ -51,8 +53,7 @@ def rembg(in_img,output_img):  #input_img: 원본 이미지 경로 /  output_img
           value.append(contours_xy[i][j][0][0])
           x_min = min(value)
           x_max = max(value)
-  # print(x_min)
-  # print(x_max)
+
 
   y_min, y_max = 0,0
   value = list()
@@ -61,8 +62,7 @@ def rembg(in_img,output_img):  #input_img: 원본 이미지 경로 /  output_img
           value.append(contours_xy[i][j][0][1])
           y_min = min(value)
           y_max = max(value)
-  # print(y_min)
-  # print(y_max)
+
 
   x = x_min
   y = y_min
@@ -71,9 +71,6 @@ def rembg(in_img,output_img):  #input_img: 원본 이미지 경로 /  output_img
 
   fi_img = output.crop((x,y,x+w,y+h))
   fi_img.save(output_img)
-  
-  print(fi_img)
-  print("돌아갔음")
   #return output_img
 
 
@@ -196,7 +193,6 @@ def cartoonize(model_path, load_path, save_path):
     #ROOT_PATH = str(Path(__file__).resolve().parent.parent)
     input_photo = tf.placeholder(tf.float32, [1, None, None, 3])
     #input_photo = Image.open(ROOT_PATH + '\\static\\img\\cat.jpg')
-    print(input_photo)
     network_out = unet_generator(input_photo)
     final_out = guided_filter(input_photo, network_out, r=1, eps=5e-3)
 
@@ -212,7 +208,9 @@ def cartoonize(model_path, load_path, save_path):
     saver.restore(sess, tf.train.latest_checkpoint(model_path))
     # load_path = os.path.join(Path(__file__).resolve().parent.parent, 'test_images')
     # save_path = os.path.join(Path(__file__).resolve().parent.parent, 'cartoonized_images')
-    image = cv2.imread(load_path)
+    
+    img_array = np.fromfile(load_path, np.uint8)
+    image = cv2.imdecode(img_array, cv2.IMREAD_COLOR)
     image = resize_crop(image)
     batch_image = image.astype(np.float32)/127.5 - 1
     batch_image = np.expand_dims(batch_image, axis=0)
@@ -234,12 +232,17 @@ def viewimage(request):
         load_path = images.raw_img.path
         ROOT_PATH = str(Path(__file__).resolve().parent.parent)
         img_name = load_path.split('\\')[-1]
+
+        src = os.path.splitext(img_name)
+        src = list(src)
+        src[0] = "ConvertImage_"+ str(images.user_id)+ "_" +str(datetime.now().microsecond)
+        src = tuple(src)
+        img_name = src[0]+'.png'
+
         save_path = ROOT_PATH + '\\media\\cvt_img\\'  + img_name # 끝 파일이름만 따와서 앞에 폴더명만 변경
         radio_isChecked = request.POST.get('radio_isChecked')
+
         
-        
-        
-            
         # 모델 로딩
         if model_select in ['arcane', 'origin', 'simpson', 'thearistocats']:
             model_path = ''.join([ROOT_PATH, '\\model\\saved_models_', model_select])
