@@ -27,19 +27,34 @@ def makegoods(request):
     gt_bg = Image.open(gt)
     kr_bg = Image.open(kr)
     ts_bg = Image.open(ts)
-
-    re_hp_img = foreground.resize((200, 200))
-    hp_bg.paste(re_hp_img, (225, 250), re_hp_img)
-
-    re_gt_img = foreground.resize((295, 295))
-    gt_bg.paste(re_gt_img, (200, 200), re_gt_img)
-
-    re_kr_img = foreground.resize((240, 240))
-    kr_bg.paste(re_kr_img, (130,555), re_kr_img)
-
-    re_ts_img = foreground.resize((180, 180))
-    ts_bg.paste(re_ts_img, (163, 110), re_ts_img)
-
+    try:
+        re_hp_img = foreground.resize((200, 200))
+        hp_bg.paste(re_hp_img, (225, 250), re_hp_img)
+    
+        re_gt_img = foreground.resize((295, 295))
+        gt_bg.paste(re_gt_img, (200, 200), re_gt_img)
+    
+        re_kr_img = foreground.resize((240, 240))
+        kr_bg.paste(re_kr_img, (130,555), re_kr_img)
+    
+        re_ts_img = foreground.resize((180, 180))
+        ts_bg.paste(re_ts_img, (163, 110), re_ts_img)
+        
+    except:
+        re_hp_img = foreground.resize((200, 200))
+        hp_bg.paste(re_hp_img, (225, 250))
+    
+        re_gt_img = foreground.resize((295, 295))
+        gt_bg.paste(re_gt_img, (200, 200))
+    
+        re_kr_img = foreground.resize((240, 240))
+        kr_bg.paste(re_kr_img, (130,555))
+    
+        re_ts_img = foreground.resize((180, 180))
+        ts_bg.paste(re_ts_img, (163, 110))
+        
+        
+    
     img_name = img_path.path.split('\\')[-1]
     ROOT_PATH = str(Path(__file__).resolve().parent.parent)
     hp_save_path = ROOT_PATH + '\\media\\goods_hp\\' + img_name

@@ -256,7 +256,7 @@ def viewimage(request):
         
         if radio_isChecked in ['rembg', 'origin']  and radio_isChecked == 'rembg': 
           mask1 , x, y, w, h = rembg(load_path)         
-        
+         
         # 모델 로딩
         if model_select in ['arcane', 'origin', 'simpson', 'thearistocats']:
             model_path = ''.join([ROOT_PATH, '\\model\\saved_models_', model_select])
