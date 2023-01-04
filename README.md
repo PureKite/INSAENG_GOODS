@@ -1,92 +1,217 @@
-# InSaeng_Goods
+<h1 align="center">Welcome to InSaeng Goods <img src="https://raw.githubusercontent.com/MartinHeinz/MartinHeinz/master/wave.gif" width="48px"></h1>
+<p>
+</p>
+
+<center>
+    <img src="./Logo.png" alt="MODU" style="zoom:76%;" align="center"/>
+</center>
 
 
 
-## Getting started
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+> INSAENG GOODS / 인생굿즈 (AIVLE 2기 최종프로젝트)
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+### 🏠 [Github]() :clapper:[Demo 시연영상]() :page_with_curl:[프로젝트 명세서]() :microphone:[Presentation]()
 
-## Add your files
+<br>
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+## 📕 Description
 
+```sh
+인생굿즈는 개성을 중시하고 자신을 표현하는데 망설임이 없는 MZ세대를 위해 자신만의 이미지를 일러스트화 하고 굿즈 도안까지 생성할 수 있도록 도와주는 서비스 입니다.
 ```
-cd existing_repo
-git remote add origin http://aivle.co.kr/gitlab/aivle-2-ai/1-19/insaeng_goods.git
-git branch -M main
-git push -uf origin main
+
+
+
+## :pushpin: Project Goal
+
+```sh
+ 주 소비층으로 떠오른 MZ세대는 개성을 중시하고 자신을 표현하는데 망설임이 없습니다. 같은 물건을 사더라도 세상에 단 하나뿐인 유니크한 제품을 선호합니다. 이니셜을 새기는 등 자신만의 커스터마이징을 통해 소장가치를 높이고 정체성을 드러내고 있습니다.
+
+ 또한 '이유 불문하고 나를 위해 아낌없이 쓰는 소비 행위'를 일컬었던 미코노미가 '나에게 가치 있는 소비에 적극적으로 지갑을 연다'는 의미로 통용되며, MZ세대에게는 자신의 가치관과 스스로의 만족도가 구매를 결정하는 주요 요인이 되었습니다.
+ 
+ 인생굿즈는 획일화된 제품에서 벗어나 자신만의 개성있는 이미지와 도안을 AI를 활용하여 쉽게 생성하고 이를 공유하는 플랫폼을 제공함으로서 MZ세대에게 자신만의 굿즈를 만들 수 있는 기회와 서비스를 제공합니다.
 ```
 
-## Integrate with your tools
 
-- [ ] [Set up project integrations](http://aivle.co.kr/gitlab/aivle-2-ai/1-19/insaeng_goods/-/settings/integrations)
 
-## Collaborate with your team
+## :mag: 서비스 기능
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+<center>
+    <img src="./README.assets/requirements.png" alt="INSAENG"  align="center"/>
+</center>
 
-## Test and Deploy
 
-Use the built-in continuous integration in GitLab.
+## :mag: Overview
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+### 1. 유저 로그인  & 회원가입 페이지(User Login & Signup Page) 
 
-***
+<center>
+    <img src="./README.assets/1.png" alt="INSAENG"/>
+</center>
 
-# Editing this README
+<center>
+    <img src="./README.assets/2.png" alt="INSAENG"/>
+</center>
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+Django Form을 활용한 로그인 및 회원가입
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+<center>
+    <img src="./README.assets/3.png" alt="INSAENG"/>
+</center>
 
-## Name
-Choose a self-explaining name for your project.
+<center>
+    <img src="./README.assets/4.png" alt="INSAENG"/>
+</center>
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+Kakao와 Naver API를 이용한 소셜 로그인 (Allauth)
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+<br>
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+### 2. AI 모델을 활용한 이미지 변환 및 굿즈 도안 제작
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+<center>
+    <img src="./README.assets/5.png" alt="INSAENG"/>
+</center>
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+<center>
+    <img src="./README.assets/6.png" alt="INSAENG"/>
+</center>
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+<center>
+    <img src="./README.assets/7.png" alt="INSAENG"/>
+</center>
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+이미지 변환
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+<center>
+    <img src="./README.assets/8.png" alt="INSAENG"/>
+</center>
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+이미지 변환 및 배경 제거
 
-## License
-For open source projects, say how it is licensed.
+<center>
+    <img src="./README.assets/10.png" alt="INSAENG"/>
+</center>
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+
+굿즈 도안 생성 및 굿즈 제작 업체와 연결
+
+<br>
+
+### 3. 프로필 & 개인정보 변경 및 탈퇴
+
+<center>
+    <img src="./README.assets/11.png" alt="INSAENG"/>
+</center>
+
+<center>
+    <img src="./README.assets/12.png" alt="INSAENG"/>
+</center>
+
+<center>
+    <img src="./README.assets/13.png" alt="INSAENG"/>
+</center>
+
+<center>
+    <img src="./README.assets/14.png" alt="INSAENG"/>
+</center>
+
+<center>
+    <img src="./README.assets/15.png" alt="INSAENG"/>
+</center>
+
+<center>
+    <img src="./README.assets/16.png" alt="INSAENG"/>
+</center>
+
+<center>
+    <img src="./README.assets/17.png" alt="INSAENG"/>
+</center>
+
+프로필 및 개인정보 수정, 삭제
+
+<br>
+
+### 4. 게시판을 활용한 게시글 및 댓글 작성
+
+<center>
+    <img src="./README.assets/21.png" alt="MODU"/>
+</center>
+
+<center>
+    <img src="./README.assets/22.png" alt="MODU"/>
+</center>
+
+<center>
+    <img src="./README.assets/23.png" alt="MODU"/>
+</center>
+
+<center>
+    <img src="./README.assets/24.png" alt="MODU"/>
+</center>
+
+<br>
+
+
+
+## :wrench: Tech Stack
+
+
+<center>
+    <img src="./README.assets/stack.png" alt=""/>
+</center>
+
+
+
+## 🛶 Service flow
+
+<center>
+    <img src="./README.assets/flow.png" alt="MODU"/>
+</center>
+
+<br>
+
+## :pencil2: ERD
+
+<center>
+    <img src="./README.assets/erd.png" alt="ERD"/>
+</center>
+<br>
+
+## :runner: Steps to run
+
+```bash
+$ cd BP
+$ python -m venv venv
+$ source venv/Scripts/activate
+$ python install -r requirements.txt
+$ python manage.py runserver
+```
+
+<br>
+
+## 🤼‍♂️Author
+
+Team Leader : 🐯**Moon Kanghyeon**
+
+Backend : 🐶 **Kim Yeji**
+
+Backend: 🐺 **Moon Jiho**
+
+Frontend : 🐱 **Kang Byeongkuk**
+
+Frontend : 🦁 **Soon Suyeon**
+
+AI-modeling: 🐹 **Pyo Dongwoo**
+
+AI-modeling: 🐸 **Park Hyeonjong**
+
+<hr>
+
+## 📝 License
+
+Copyright © 2023  INSAENG GOODS  <br>
+
