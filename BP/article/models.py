@@ -25,7 +25,7 @@ class Post(models.Model):
     Board_gtype = models.CharField(max_length=100)
     Board_title = models.CharField(max_length=250)
     Board_content = models.TextField()
-    Board_datetime = models.DateTimeField(default= datetime.datetime.now())
+    Board_datetime = models.DateTimeField(default=timezone.now)
     Board_writer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
 
 class PostImage(models.Model):
