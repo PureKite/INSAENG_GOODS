@@ -247,7 +247,7 @@ def viewimage(request):
 
         src = os.path.splitext(img_name)
         src = list(src)
-        src[0] = "ConvertImage_"+ str(images.user_id)+ "_" +str(datetime.now().microsecond)
+        src[0] = "ConvertImage_"+str(datetime.now().microsecond)
         src = tuple(src)
         img_name = src[0]+'.png'
 
