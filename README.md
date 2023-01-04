@@ -1,10 +1,10 @@
 <h1 align="center">Welcome to InSaeng Goods <img src="https://raw.githubusercontent.com/MartinHeinz/MartinHeinz/master/wave.gif" width="48px"></h1>
 <p>
 </p>
-
 <center>
-    <img src="./Logo.png" alt="MODU" style="zoom:76%;" align="center"/>
+    <img src="./README.assets/Logo.png" alt="INSAENG GOODS" style="zoom:100%;" align="center"/>
 </center>
+
 
 
 
