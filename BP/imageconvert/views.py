@@ -299,7 +299,7 @@ def viewimage(request):
             output1.save(save_path)
         #endregion
         else :
-            messages.warning(request, "선택해주세요!!.")
+            messages.warning(request, "목록을 선택해주세요!!!")
             return redirect('/imageconvert')
         
         
