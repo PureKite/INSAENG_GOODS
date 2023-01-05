@@ -254,7 +254,9 @@ def viewimage(request):
         save_path = ROOT_PATH + '\\media\\cvt_img\\'  + img_name # 끝 파일이름만 따와서 앞에 폴더명만 변경
         radio_isChecked = request.POST.get('radio_isChecked')
         
-        if radio_isChecked in ['rembg', 'origin']  and radio_isChecked == 'rembg': 
+        
+        #region 모델을 선택 했을 때 배경 제거 / 유지
+        if radio_isChecked in ['rembg', 'origin']  and radio_isChecked == 'rembg' and model_select in ['arcane', 'origin', 'simpson', 'thearistocats']: 
           mask1 , x, y, w, h = rembg(load_path)         
          
         # 모델 로딩
@@ -266,24 +268,37 @@ def viewimage(request):
             print("@@#####$#$#$#$#$#$")
             print(type(output))
         else :
-            messages.warning(request, "화풍을 선택해주세요.")
-            return redirect('/imageconvert')
+            ##messages.warning(request, "화풍을 선택해주세요.")
+            ##return redirect('/imageconvert')
+            pass
 
         
-        if radio_isChecked in ['rembg', 'origin']  and radio_isChecked == 'rembg':
+        if radio_isChecked in ['rembg', 'origin']  and radio_isChecked == 'rembg' and model_select in ['arcane', 'origin', 'simpson', 'thearistocats']:
             iin_path = images.cvt_img
             iinput = Image.open(iin_path)
             
-            output1 = remove2(iinput, mask1)
-            # output2 = Image.fromarray(output1)
+            
+            output1 = remove2(iinput,mask1)
             output1 = output1.crop((x,y,x+w,y+h))
-            # output3 = cv2.cvtColor(output2, cv2.COLOR_BGR2RGB)
+            
             print("#####$#$#$#$#$#$")
             print(type(output1))
             output1.save(save_path)
-            # output2 = np.array(output1)
-            # fi_img = output2.crop((x,y,x+w,y+h))
-            # output1.save(save_path)
+            
+        #endregion
+        #region 모델 선택안함 + 배경 제거 
+        if model_select == 'noneselect' and radio_isChecked in ['rembg', 'origin']  and radio_isChecked == 'rembg' :
+            iin_path = images.raw_img
+            iinput = Image.open(iin_path)
+            
+            mask1 , x, y, w, h = rembg(load_path)  
+            output1 = remove(iinput,mask1)
+            output1 = output1.crop((x,y,x+w,y+h))
+            print("#####$#$#$#$#$#$")
+            print(type(output1))
+            output1.save(save_path)
+        #endregion
+        
         
         images.cvt_img = 'cvt_img/' + img_name
         images.save()
