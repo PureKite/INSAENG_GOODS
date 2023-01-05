@@ -207,7 +207,6 @@ def remove1(
 
 def remove2(
     data: Union[bytes, PILImage, np.ndarray],
-    mask1,
     alpha_matting: bool = False,
     alpha_matting_foreground_threshold: int = 240,
     alpha_matting_background_threshold: int = 10,
@@ -233,7 +232,8 @@ def remove2(
         session = new_session("u2net")
 
     
-    masks = mask1
+    masks = session.predict(img)
+    ret1 = masks
     cutouts = []
 
     for mask in masks:

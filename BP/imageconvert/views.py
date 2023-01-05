@@ -274,8 +274,7 @@ def viewimage(request):
             iin_path = images.cvt_img
             iinput = Image.open(iin_path)
             
-            
-            output1 = remove2(iinput,mask1)
+            output1 = remove2(iinput, mask1)
             # output2 = Image.fromarray(output1)
             output1 = output1.crop((x,y,x+w,y+h))
             # output3 = cv2.cvtColor(output2, cv2.COLOR_BGR2RGB)
