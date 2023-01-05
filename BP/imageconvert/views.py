@@ -298,6 +298,9 @@ def viewimage(request):
             print(type(output1))
             output1.save(save_path)
         #endregion
+        elif model_select == 'noneselect':
+            messages.warning(request, "배경 제거만 원하시면 배경 제거를 선택해주세요.")
+            return redirect('/imageconvert')
         
         
         images.cvt_img = 'cvt_img/' + img_name
