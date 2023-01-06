@@ -28,12 +28,12 @@ def rembg(in_img):  #input_img: 원본 이미지 경로 /  output_img: 저장 �
   input = Image.open(input_path).convert("RGBA")
   
   test1 = remove1(input)
-  print("########$$$$$$$")
+  print("TEST1")
   print(type(test1))
   #print(test1)   
   output = remove2(input,test1)
   
-  print("$$$$$$####$$$$$$$")
+  print("TEST2")
   print(type(output))
   
   ROOT_PATH = str(Path(__file__).resolve().parent.parent)
@@ -89,14 +89,14 @@ def rembg(in_img):  #input_img: 원본 이미지 경로 /  output_img: 저장 �
 
 def resize_crop(image):
     h, w, c = np.shape(image)
-    if min(h, w) > 720:
-        if h > w:
-            h, w = int(720*h/w), 720
-        else:
-            h, w = 720, int(720*w/h)
-    image = cv2.resize(image, (w, h),
-                       interpolation=cv2.INTER_AREA)
-    h, w = (h//8)*8, (w//8)*8
+    #if min(h, w) > 720:
+    #    if h > w:
+    #        h, w = int(720*h/w), 720
+    #    else:
+    #        h, w = 720, int(720*w/h)
+    #image = cv2.resize(image, (w, h),
+    #                   interpolation=cv2.INTER_AREA)
+    #h, w = (h//8)*8, (w//8)*8
     image = image[:h, :w, :]
     return image
 
@@ -265,7 +265,7 @@ def viewimage(request):
             output = cartoonize(model_path, load_path, save_path) # 이미지가 곧바로 DB로 저장되는 건지 imagefield에 맞게 저장되는 건지 확인필요
             images.cvt_img = 'cvt_img/' + img_name
             images.save()
-            print("@@#####$#$#$#$#$#$")
+            print("test3")
             print(type(output))
         else :
             ##messages.warning(request, "화풍을 선택해주세요.")
@@ -281,7 +281,7 @@ def viewimage(request):
             output1 = remove2(iinput,mask1)
             output1 = output1.crop((x,y,x+w,y+h))
             
-            print("#####$#$#$#$#$#$")
+            print("test4")
             print(type(output1))
             output1.save(save_path)
             
@@ -294,13 +294,13 @@ def viewimage(request):
             mask1 , x, y, w, h = rembg(load_path)  
             output1 = remove(iinput,mask1)
             output1 = output1.crop((x,y,x+w,y+h))
-            print("#####$#$#$#$#$#$")
+            print("test5")
             print(type(output1))
             output1.save(save_path)
         #endregion
-        else :
-            messages.warning(request, "목록을 선택해주세요!!!")
-            return redirect('/imageconvert')
+        #else :
+        #    messages.warning(request, "목록을 선택해주세요!!!")
+        #    return redirect('/imageconvert')
         
         
         images.cvt_img = 'cvt_img/' + img_name
