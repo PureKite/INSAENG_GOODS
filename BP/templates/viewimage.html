@@ -14,7 +14,7 @@
     </div>
     {% csrf_token %}
     <div class="mainform">
-        <img src="{{ images.cvt_img.url }}" width=600px; height=600px;>
+        <img src="{{ images.cvt_img.url }}" style='object-fit:contain'>
     </div>
     <div class='dwn'>
         <form action="{% url 'imageconvert:downloadFile' %}">

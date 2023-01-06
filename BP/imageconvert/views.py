@@ -337,7 +337,7 @@ def viewimage(request):
             
             
             output1 = remove2(iinput,mask1)
-            output1 = output1.crop((x,y,x+w,y+h))
+            # output1 = output1.crop((x,y,x+w,y+h))
             
             print("test4")
             print(type(output1))
@@ -350,7 +350,7 @@ def viewimage(request):
             iinput = Image.open(iin_path)
             mask1 , x, y, w, h = rembg(load_path)
             output1 = remove(iinput,mask1)
-            output1 = output1.crop((x,y,x+w,y+h))
+            # output1 = output1.crop((x,y,x+w,y+h))
             
             print("test5")
             print(type(output1))

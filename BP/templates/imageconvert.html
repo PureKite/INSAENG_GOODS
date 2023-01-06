@@ -94,6 +94,7 @@
                   let img = dropArea.getElementsByClassName("preview")[0];
                   img.src = reader.result;
                   img.style.display = "block";
+                  img.style.objectFit = 'contain';
                   dropArea.style.backgroundColor='transparent';
                 };
               }
