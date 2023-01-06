@@ -26,7 +26,7 @@ def rembg(in_img):  #input_img: 원본 이미지 경로 /  output_img: 저장 �
     
   input_path = in_img
   input = Image.open(input_path).convert("RGBA")
-  
+  #input = resize_crop(input)
   test1 = remove1(input)
   print("TEST1")
   print(type(test1))
@@ -89,14 +89,14 @@ def rembg(in_img):  #input_img: 원본 이미지 경로 /  output_img: 저장 �
 
 def resize_crop(image):
     h, w, c = np.shape(image)
-    #if min(h, w) > 720:
-    #    if h > w:
-    #        h, w = int(720*h/w), 720
-    #    else:
-    #        h, w = 720, int(720*w/h)
-    #image = cv2.resize(image, (w, h),
-    #                   interpolation=cv2.INTER_AREA)
-    #h, w = (h//8)*8, (w//8)*8
+    if min(h, w) > 720:
+        if h > w:
+            h, w = int(720*h/w), 720
+        else:
+            h, w = 720, int(720*w/h)
+    image = cv2.resize(image, (w, h),
+                       interpolation=cv2.INTER_AREA)
+    h, w = (h//8)*8, (w//8)*8
     image = image[:h, :w, :]
     return image
 
@@ -224,6 +224,7 @@ def cartoonize(model_path, load_path, save_path):
     img_array = np.fromfile(load_path, np.uint8)
     image = cv2.imdecode(img_array, cv2.IMREAD_COLOR)
     image = resize_crop(image)
+    temp = Image.fromarray(image) # 여기서 배열에 들어있는 이미지가 리사이즈된 상태로 배경 자르는 코드로 넘겨짐
     batch_image = image.astype(np.float32)/127.5 - 1
     batch_image = np.expand_dims(batch_image, axis=0)
     output = sess.run(final_out, feed_dict={input_photo: batch_image})
@@ -231,7 +232,50 @@ def cartoonize(model_path, load_path, save_path):
     output = np.clip(output, 0, 255).astype(np.uint8)
     cv2.imwrite(save_path, output)
     
-    return output
+    #region 여기서 이미지 마스크 따기
+    input = temp.convert("RGBA") # 배열에 담긴 이미지를 변환해서 이 리전에서 마스크값으로 바꿔줌
+    test1 = remove1(input)
+    output = remove2(input,test1)
+    ROOT_PATH = str(Path(__file__).resolve().parent.parent)
+    background = Image.open(ROOT_PATH + '\\static\\img\\design\\white.jpg')
+    logging.warning(background)    
+    foreground = output
+    (img_h, img_w) = foreground.size
+    resize_back =  background.resize((img_h, img_w))
+    resize_back.paste(foreground, (0, 0), foreground)
+    img = np.array(resize_back)
+    image_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)  
+    blur = cv2.GaussianBlur(image_gray, ksize=(5,5), sigmaX=0)
+    edged = cv2.Canny(blur, 10, 250)
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7,7))
+    closed = cv2.morphologyEx(edged, cv2.MORPH_CLOSE, kernel)
+    contours, _ = cv2.findContours(closed.copy(),cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    contours_xy = np.array(contours)
+    contours_xy.shape
+    x_min, x_max = 0,0
+    value = list()
+    for i in range(len(contours_xy)):
+      for j in range(len(contours_xy[i])):
+          value.append(contours_xy[i][j][0][0])
+          x_min = min(value)
+          x_max = max(value)
+
+
+    y_min, y_max = 0,0
+    value = list()
+    for i in range(len(contours_xy)):
+        for j in range(len(contours_xy[i])):
+            value.append(contours_xy[i][j][0][1])
+            y_min = min(value)
+            y_max = max(value)
+    x = x_min
+    y = y_min
+    w = x_max-x_min
+    h = y_max-y_min
+    
+    
+      #endregion 
+    return output, test1, x,y,w,h # 이미지랑 마스크값 리턴
 
 def viewimage(request):
     if request.method == 'POST' and request.FILES.get('files'):
@@ -254,24 +298,36 @@ def viewimage(request):
         save_path = ROOT_PATH + '\\media\\cvt_img\\'  + img_name # 끝 파일이름만 따와서 앞에 폴더명만 변경
         radio_isChecked = request.POST.get('radio_isChecked')
         
+        #region 모델을 아무것도 선택하지 않았을 때
+        
+        if model_select != 'noneselect' and model_select !=  'arcane' and model_select !=  'origin' and model_select != 'simpson'and model_select !=  'thearistocats' :
+            messages.warning(request, "사진을 변환할 화풍을 선택해주세요.")
+            return redirect('/imageconvert')
+        
+        if radio_isChecked != 'rembg' and radio_isChecked != 'origin' :
+            messages.warning(request, "배경 제거 여부를 선택해주세요.")
+            return redirect('/imageconvert')
+    
+      
+        #endregion
+        
         
         #region 모델을 선택 했을 때 배경 제거 / 유지
-        if radio_isChecked in ['rembg', 'origin']  and radio_isChecked == 'rembg' and model_select in ['arcane', 'origin', 'simpson', 'thearistocats']: 
-          mask1 , x, y, w, h = rembg(load_path)         
+        #if radio_isChecked in ['rembg', 'origin']  and radio_isChecked == 'rembg' and model_select in ['arcane', 'origin', 'simpson', 'thearistocats']: 
+        #  mask1 , x, y, w, h = rembg(load_path)         
          
         # 모델 로딩
         if model_select in ['arcane', 'origin', 'simpson', 'thearistocats']:
             model_path = ''.join([ROOT_PATH, '\\model\\saved_models_', model_select])
-            output = cartoonize(model_path, load_path, save_path) # 이미지가 곧바로 DB로 저장되는 건지 imagefield에 맞게 저장되는 건지 확인필요
+            output, mask1 , x, y, w, h  = cartoonize(model_path, load_path, save_path) # 이미지가 곧바로 DB로 저장되는 건지 imagefield에 맞게 저장되는 건지 확인필요
             images.cvt_img = 'cvt_img/' + img_name
             images.save()
-            print("test3")
-            print(type(output))
+            
         else :
             ##messages.warning(request, "화풍을 선택해주세요.")
             ##return redirect('/imageconvert')
             pass
-
+     
         
         if radio_isChecked in ['rembg', 'origin']  and radio_isChecked == 'rembg' and model_select in ['arcane', 'origin', 'simpson', 'thearistocats']:
             iin_path = images.cvt_img
