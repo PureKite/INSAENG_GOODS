@@ -22,6 +22,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 # -*- coding:utf-8 -*-
 
+
+global output1
 def rembg(in_img):  #input_img: 원본 이미지 경로 /  output_img: 저장 경로 / white_img: 흰 배경 이미지 경로
     
   input_path = in_img
@@ -346,13 +348,16 @@ def viewimage(request):
         if model_select == 'noneselect' and radio_isChecked in ['rembg', 'origin']  and radio_isChecked == 'rembg' :
             iin_path = images.raw_img
             iinput = Image.open(iin_path)
-            
-            mask1 , x, y, w, h = rembg(load_path)  
+            mask1 , x, y, w, h = rembg(load_path)
             output1 = remove(iinput,mask1)
             output1 = output1.crop((x,y,x+w,y+h))
+            
             print("test5")
             print(type(output1))
             output1.save(save_path)
+        elif model_select == 'noneselect' and radio_isChecked in ['rembg', 'origin']  and radio_isChecked == 'origin' :
+            messages.warning(request, "화풍을 선택하지 않았습니다. 배경제거를 선택해주세요.")
+            return redirect('/imageconvert')
         #endregion
         #else :
         #    messages.warning(request, "목록을 선택해주세요!!!")
