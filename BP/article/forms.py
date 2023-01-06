@@ -2,10 +2,11 @@ from django import forms
 from .models import Post, PostImage, Comment
 
 goods_type = [
-    ('핸드폰케이스', '핸드폰케이스'),
     ('그립톡', '그립톡'), 
     ('키링', '키링'),
-    ('티셔츠', '티셔츠')
+    ('티셔츠', '티셔츠'),
+    ('핸드폰케이스', '핸드폰케이스'),
+     ('해당없음', '해당없음'),
 ]
 class PostForm(forms.ModelForm):
     Board_gtype = forms.MultipleChoiceField(

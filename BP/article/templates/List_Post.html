@@ -43,6 +43,8 @@
                 <label class="mx-2" for="search_gtype3">티셔츠</label>
                 <input type="checkbox" name="search_gtype" value="핸드폰케이스" id="search_gtype4">
                 <label class="mx-2" for="search_gtype4">핸드폰케이스</label>
+                <input type="checkbox" name="search_gtype" value="해당없음" id="search_gtype5">
+                <label class="mx-2" for="search_gtype5">해당없음</label>
             </div>
         </div>
         <div class="row">
@@ -69,9 +71,9 @@
                 <div>
                     <a class="card shadow"  href="{% url 'articleapp:DetailPost' post.Board_id %}">
                         {% for image in post.postimage.all %}
-                        <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}">
-                            <img class="card-img-top bd-placeholder-img" style="height:10rem; object-fit: cover;" role="img" src="{{ image.Board_image.url }}">
-                        </div>
+                            <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}">
+                                <img class="card-img-top bd-placeholder-img" style="height:10rem; object-fit: cover;" role="img" src="{{ image.Board_image.url }}">
+                            </div>
                         {% endfor %}
                             <div class="card-body">
                                 <p class="card-title h4" href="{% url 'articleapp:DetailPost' post.Board_id %}">{{ post.Board_title|truncatechars:13 }}</p>
@@ -104,6 +106,11 @@
                                         핸드폰케이스
                                     </span>
                                     {% endif %}
+                                    {% if '해당없음' in post.Board_gtype %}
+                                    <span class="custom-control custom-switch badge">
+                                        해당없음
+                                    </span>
+                                    {% endif %}
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center mt-2">
                                     <div>
@@ -114,7 +121,7 @@
                                     <small class="text-muted">{{ post.Board_datetime|date:'Y-m-d' }}</small>
                                 </div>
                             </div>
-                        </a>
+                    </a>
                     </div>
                 </div>
             {% endfor %}
