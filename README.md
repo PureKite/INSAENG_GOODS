@@ -215,6 +215,9 @@ AI-modeling: 🐹 **Pyo Dongwoo**
 
 AI-modeling: 🐸 **Park Hyeonjong**
 
+<br>
+## 🏆♂️Award
+에이블스쿨 빅프로젝트 최우수상
 <hr>
 
 ## 📝 License
