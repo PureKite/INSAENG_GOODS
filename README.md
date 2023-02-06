@@ -199,7 +199,7 @@ $ python manage.py runserver
 
 <br>
 
-## 🤼‍♂️Author
+## 🤼‍♂️ Author
 
 Team Leader : 🐯**Moon Kanghyeon**
 
@@ -216,8 +216,12 @@ AI-modeling: 🐹 **Pyo Dongwoo**
 AI-modeling: 🐸 **Park Hyeonjong**
 
 <br>
-## 🏆♂️Award
+
+## 🏆 Award
 에이블스쿨 빅프로젝트 최우수상
+
+<br>
+
 <hr>
 
 ## 📝 License
